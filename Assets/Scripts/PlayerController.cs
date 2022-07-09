@@ -20,10 +20,12 @@ public class PlayerController : MonoBehaviour
     Vector2 mousePos;
 
     Rigidbody2D rb;
+    displayObject disp;
     public Camera cam;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        disp = GetComponent<displayObject>();
     }
 
     void Update() {
@@ -59,6 +61,8 @@ public class PlayerController : MonoBehaviour
         //자연스럽게 회전하도록 중간값 설정
         float angle = Mathf.SmoothDampAngle(transform.localEulerAngles.z, targetAngle, ref turnSmoothVelocity, Time.deltaTime * turnSmoothTime);
         rb.rotation = angle;
+        //회전 애니메이션 설정
+        disp.rotation = new Vector3(0, 0, (transform.localEulerAngles.z + 90) % 360);
     }
     //가속
     void ApplyForce() {
