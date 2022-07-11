@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     float rotationAngle;
     float turnSmoothVelocity;
     Vector2 mousePos;
+    bool stopControl = false;
 
     Rigidbody2D rb;
     displayObject disp;
@@ -36,11 +37,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        ApplySteering();
-        KillOrthogonalVelocity();
-        ApplyForce();
+        if (!stopControl) {
+            ApplySteering();
+            KillOrthogonalVelocity();
+            ApplyForce();
+        }
     }
-
     //플레이어 회전
     void ApplySteering() {
         //움직이는 속도에 따라 마우스 따라가는 속도 조정
@@ -88,4 +90,8 @@ public class PlayerController : MonoBehaviour
         Vector2 rightVelocity = transform.right * Vector2.Dot(rb.velocity, transform.right);
         rb.velocity = forwardVelocity + rightVelocity * driftFactor;
     }
+    void StopMovement() {
+        rb.velocity = Vector2.zero;
+    }
+    
 }

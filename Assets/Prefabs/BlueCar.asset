@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb6c7db4655afe41b08252ee64693c1, type: 3}
   m_Name: BlueCar
   m_EditorClassIdentifier: 
-  stack: []
+  stack:
+  - {fileID: -7800161668622684062, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}
+  - {fileID: -8333019242391883341, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}
+  - {fileID: -1083421823339012687, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}
+  - {fileID: 3202038935580800848, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}
+  - {fileID: -558174560895434615, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}
+  - {fileID: -8500072616830221442, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}
+  - {fileID: -171697754145859286, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}
+  - {fileID: 1913540658446355880, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}
+  - {fileID: -5607542848966128481, guid: 440032d0a927f4248b34dc10c69a4af1, type: 3}

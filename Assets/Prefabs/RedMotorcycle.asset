@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb6c7db4655afe41b08252ee64693c1, type: 3}
   m_Name: RedMotorcycle
   m_EditorClassIdentifier: 
-  stack: []
+  stack:
+  - {fileID: 467650125598585033, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: -1622508817089884163, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: -1627645537414176895, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: -9156382920704210012, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: -2529440961623647306, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: -9186292071905659889, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: -3362802218827856240, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: 2939790282607614768, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: -6406172203554865110, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
+  - {fileID: -4551082751430021189, guid: 5d3584c03894e2b47ab017eac146e62a, type: 3}
