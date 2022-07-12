@@ -54,6 +54,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -352,6 +353,17 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      RedMotorcycle_4: -2529440961623647306
+      RedMotorcycle_7: 2939790282607614768
+      RedMotorcycle_2: -1627645537414176895
+      RedMotorcycle_8: -6406172203554865110
+      RedMotorcycle_1: -1622508817089884163
+      RedMotorcycle_6: -3362802218827856240
+      RedMotorcycle_0: 467650125598585033
+      RedMotorcycle_9: -4551082751430021189
+      RedMotorcycle_5: -9186292071905659889
+      RedMotorcycle_3: -9156382920704210012
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
