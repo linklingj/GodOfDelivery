@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public float acceleration;
     public float maxSpeed;
+    public float reverseSpeed;
     public float driftFactor;
     public float driveTurnSmoothTime;
     public float roadDrag;
@@ -18,11 +19,13 @@ public class PlayerController : MonoBehaviour
     float steeringInput;
     float turnSmoothVelocity;
     Vector2 mousePos;
+    Vector2 lookDir;
     bool stopControl = false;
 
     Rigidbody2D rb;
     displayObject disp;
     public Camera cam;
+    public TrailRenderer[] tireMarks;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -36,6 +39,8 @@ public class PlayerController : MonoBehaviour
         deccelerationInput = Input.GetAxisRaw("deccelerate");
         //회전 애니메이션 설정
         disp.rotation = new Vector3(0, 0, (transform.localEulerAngles.z + 90) % 360);
+        //바퀴자국
+        CheckTrail();
     }
 
     void FixedUpdate() {
@@ -59,7 +64,7 @@ public class PlayerController : MonoBehaviour
         else
             turnSmoothTime = driveTurnSmoothTime;
         //마우스위치 방향벡터로 각 구함
-        Vector2 lookDir = mousePos - rb.position;
+        lookDir = mousePos - rb.position;
         float targetAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         
         //자연스럽게 회전하도록 중간값 설정
@@ -77,7 +82,14 @@ public class PlayerController : MonoBehaviour
         } else {
             rb.drag = 0;
         }
-        Vector2 forceVector = transform.up * accelerationInput * acceleration;
+        Vector2 forceVector;
+        if (deccelerationInput == 1) {
+            //후진
+            forceVector = -transform.up * deccelerationInput * reverseSpeed;
+        } else {
+            //전진
+            forceVector = transform.up * accelerationInput * acceleration;
+        }
         rb.AddForce(forceVector, ForceMode2D.Force);
         //최대속도 넘지 않도록
         if(rb.velocity.magnitude > maxSpeed) {
@@ -90,11 +102,30 @@ public class PlayerController : MonoBehaviour
         Vector2 rightVelocity = transform.right * Vector2.Dot(rb.velocity, transform.right);
         rb.velocity = forwardVelocity + rightVelocity * driftFactor;
     }
-    void StopMovement() {
-        rb.velocity = Vector2.zero;
-    }
-    private void OnCollisionEnter(Collision other) {
+    private void OnCollisionEnter2D(Collision2D col) {
         Debug.Log("hit");
     }
-    
+    private void OnCollisionStay2D(Collision2D col) {
+        if (col.transform.CompareTag("Grass")) {
+            Debug.Log("grass");
+        }
+    }
+    //바퀴자국 생성
+    void CheckTrail() {
+        if (getMovementDiff() > 0.2f && velMag > maxSpeed * 0.6f) {
+            foreach(TrailRenderer tr in tireMarks) {
+                tr.emitting = true;
+            }
+        } else {
+            foreach(TrailRenderer tr in tireMarks) {
+                tr.emitting = false;
+            }
+        }
+    }
+    //마우스 방향과 이동방향의 차이를 리턴한다.
+    float getMovementDiff() {
+        float degree = (transform.eulerAngles.z + 90) % 360;
+        Vector2 playerDir = new Vector2(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad));
+        return Mathf.Abs((lookDir.normalized - playerDir).magnitude);
+    }
 }

@@ -46,6 +46,7 @@ SpriteAtlas:
     packables:
     - {fileID: 2800000, guid: 237d69b23feb42544bae964bf9fcbe3f, type: 3}
     - {fileID: 2800000, guid: 1706ebdca3393754caa08fafb917502f, type: 3}
+    - {fileID: 2800000, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -1087,6 +1088,23 @@ SpriteAtlas:
   - {fileID: 4598774801263119352, guid: 237d69b23feb42544bae964bf9fcbe3f, type: 3}
   - {fileID: -4625445715249517449, guid: 237d69b23feb42544bae964bf9fcbe3f, type: 3}
   - {fileID: 3307852767335364519, guid: 237d69b23feb42544bae964bf9fcbe3f, type: 3}
+  - {fileID: -1704905781, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 198099531, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -1643061545, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 625724173, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -88123976, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 908044173, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -859052610, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -1690330827, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -209979723, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -245168641, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 456286097, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -1984584996, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 1726119128, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -812973473, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -130921644, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -1057502169, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 1925261908, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -1604994547839496973, guid: 1706ebdca3393754caa08fafb917502f, type: 3}
   - {fileID: -8385176329704044982, guid: 1706ebdca3393754caa08fafb917502f, type: 3}
   - {fileID: -8724352161565215846, guid: 1706ebdca3393754caa08fafb917502f, type: 3}
@@ -2610,6 +2628,23 @@ SpriteAtlas:
   - roguelikeCity_transparent_727
   - roguelikeCity_transparent_747
   - roguelikeCity_transparent_757
+  - roguelikeSheet_transparent_1
+  - roguelikeSheet_transparent_0
+  - roguelikeSheet_transparent_3
+  - roguelikeSheet_transparent_2
+  - roguelikeSheet_transparent_5
+  - roguelikeSheet_transparent_4
+  - roguelikeSheet_transparent_7
+  - roguelikeSheet_transparent_6
+  - roguelikeSheet_transparent_9
+  - roguelikeSheet_transparent_8
+  - roguelikeSheet_transparent_10
+  - roguelikeSheet_transparent_11
+  - roguelikeSheet_transparent_12
+  - roguelikeSheet_transparent_13
+  - roguelikeSheet_transparent_14
+  - roguelikeSheet_transparent_15
+  - roguelikeSheet_transparent_16
   - tilemap_308
   - tilemap_392
   - tilemap_393
