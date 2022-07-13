@@ -105,11 +105,6 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col) {
         Debug.Log("hit");
     }
-    private void OnCollisionStay2D(Collision2D col) {
-        if (col.transform.CompareTag("Grass")) {
-            Debug.Log("grass");
-        }
-    }
     //바퀴자국 생성
     void CheckTrail() {
         if (getMovementDiff() > 0.2f && velMag > maxSpeed * 0.6f) {
