@@ -11,11 +11,11 @@ public class PlayerController : MonoBehaviour
     public float roadDrag;
     public float dragTime;
     public float breakForce;
+    public float velMag;
 
     float accelerationInput;
     float deccelerationInput;
     float steeringInput;
-    float rotationAngle;
     float turnSmoothVelocity;
     Vector2 mousePos;
     bool stopControl = false;
@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         accelerationInput = Input.GetAxisRaw("accelerate");
         deccelerationInput = Input.GetAxisRaw("deccelerate");
+        //회전 애니메이션 설정
+        disp.rotation = new Vector3(0, 0, (transform.localEulerAngles.z + 90) % 360);
     }
 
     void FixedUpdate() {
@@ -47,7 +49,7 @@ public class PlayerController : MonoBehaviour
     void ApplySteering() {
         //움직이는 속도에 따라 마우스 따라가는 속도 조정
         float turnSmoothTime;
-        float velMag = rb.velocity.magnitude;
+        velMag = rb.velocity.magnitude;
         if (velMag < 0.2f)
             return;
         else if (velMag < maxSpeed/3)
@@ -63,8 +65,6 @@ public class PlayerController : MonoBehaviour
         //자연스럽게 회전하도록 중간값 설정
         float angle = Mathf.SmoothDampAngle(transform.localEulerAngles.z, targetAngle, ref turnSmoothVelocity, Time.deltaTime * turnSmoothTime);
         rb.rotation = angle;
-        //회전 애니메이션 설정
-        disp.rotation = new Vector3(0, 0, (transform.localEulerAngles.z + 90) % 360);
     }
     //가속
     void ApplyForce() {
@@ -92,6 +92,9 @@ public class PlayerController : MonoBehaviour
     }
     void StopMovement() {
         rb.velocity = Vector2.zero;
+    }
+    private void OnCollisionEnter(Collision other) {
+        Debug.Log("hit");
     }
     
 }
