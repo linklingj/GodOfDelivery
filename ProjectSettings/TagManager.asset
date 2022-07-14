@@ -52,12 +52,15 @@ TagManager:
   - name: Background1
     uniqueID: 2248984317
     locked: 0
+  - name: Character
+    uniqueID: 1597953179
+    locked: 0
+  - name: BGOver
+    uniqueID: 3087761923
+    locked: 0
   - name: UI2
     uniqueID: 1732019629
     locked: 0
   - name: UI1
     uniqueID: 2231075735
-    locked: 0
-  - name: Character
-    uniqueID: 1597953179
     locked: 0

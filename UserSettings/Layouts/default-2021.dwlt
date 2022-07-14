@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1357
   m_ShowMode: 4
-  m_Title: Sprite Editor
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 27397
+  controlID: 13080
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 27430
+  controlID: 13058
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -174,7 +174,7 @@ MonoBehaviour:
   - {fileID: 14}
   - {fileID: 15}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 1
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -621,9 +621,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -21.674377, y: 31.339487, z: 0.21651062}
+    m_Target: {x: 2.161499, y: 0.45302936, z: 0.64739794}
     speed: 2
-    m_Value: {x: -21.674377, y: 31.339487, z: 0.21651062}
+    m_Value: {x: 3.3928633, y: 0.35209787, z: 0.6596382}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -674,9 +674,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 11.012369
+    m_Target: 28.424538
     speed: 2
-    m_Value: 11.012369
+    m_Value: 27.200514
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -776,10 +776,10 @@ MonoBehaviour:
     m_SaveData: []
   m_ShowAlpha: 0
   m_MipLevel: 0
-  m_Zoom: 6.8944545
-  m_ScrollPosition: {x: 569.7898, y: 1120.8086}
+  m_Zoom: 4.8378277
+  m_ScrollPosition: {x: 461.4272, y: 422.99265}
   m_SelectedObject: {fileID: 0}
-  m_SelectedSpriteRectGUID: 13839eb7f47180af0800000000000000
+  m_SelectedSpriteRectGUID: 00000000000000000000000000000000
   m_LastUsedModuleTypeName: 
 --- !u!114 &16
 MonoBehaviour:
@@ -813,7 +813,7 @@ MonoBehaviour:
     m_CachedPref: -118
     m_ControlHash: 1964396721
     m_PrefName: Preview_TilemapBrushInspector
-  m_Palette: {fileID: 3843825024828711603, guid: f9f2115a112f881428fb4054698fe3ff, type: 3}
+  m_Palette: {fileID: 7095984813338282238, guid: c293df4be803655468594d0eb8a22b7b, type: 3}
   m_DrawGridGizmo: 1
   m_DrawGizmos: 0
 --- !u!114 &17
@@ -849,7 +849,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 46f0feff9ef0feff583cffffc03cffff7c81ffffcc81ffff60d5ffffc4d5ffff2cfbffff805200005c8000006880000082890000a48f000030960000
+      m_ExpandedIDs: 5073ffff2cfbffff5c5200006852000092520000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -929,7 +929,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 1e910000
     m_LastClickedID: 37150
-    m_ExpandedIDs: ffffffff0000000062530000465f0000485f00004a5f00004c5f00004e5f0000505f0000525f0000545f0000965f0000168800001888000026880000
+    m_ExpandedIDs: ffffffff00000000d4540000d85400007a6000007c6000007e60000080600000826000008460000086600000886000008a6000008c6000008e780000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -954,10 +954,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 13684.844}
-    m_SelectedIDs: 6ea2feff
+    scrollPos: {x: 0, y: 11359.213}
+    m_SelectedIDs: 5c520000
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000062530000465f0000485f00004a5f00004c5f00004e5f0000505f0000525f0000545f0000965f0000168800001888000026880000
+    m_ExpandedIDs: ffffffff00000000d4540000d85400007a6000007c6000007e60000080600000826000008460000086600000886000008a6000008c6000008e780000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -982,8 +982,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 6ea2feff
-    m_LastClickedInstanceID: -89490
+    m_SelectedInstanceIDs: 5c520000
+    m_LastClickedInstanceID: 21084
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
