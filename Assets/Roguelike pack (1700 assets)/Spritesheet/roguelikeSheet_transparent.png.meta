@@ -1267,7 +1267,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1288,7 +1288,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1309,7 +1309,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1330,7 +1330,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1351,7 +1351,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1372,7 +1372,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1393,7 +1393,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1414,7 +1414,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1422,6 +1422,174 @@ TextureImporter:
       bones: []
       spriteID: 6844fd979934ef9458f23021c24ddd78
       internalID: -2050528326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: roguelikeSheet_transparent_63
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53d95dcc6938c2c4488d41722dfd385e
+      internalID: -1276227295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: roguelikeSheet_transparent_64
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 153
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fd494bfb93f30844b972f16c75024b9
+      internalID: -1649998581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: roguelikeSheet_transparent_65
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc98a84000b43434884f614194d599ee
+      internalID: 2030306973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: roguelikeSheet_transparent_66
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 136
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f483732a4d1f2a438d8f8a91f44817b
+      internalID: -1717445236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: roguelikeSheet_transparent_67
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 396f8dec8e9b4b345a32486322dd6be4
+      internalID: 1609430044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: roguelikeSheet_transparent_68
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 119
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 694a369851425064b878f40774dd2d9a
+      internalID: 440284019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: roguelikeSheet_transparent_69
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 187
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4355b478aac4e604dbaa2fe6b4eedd10
+      internalID: 408607556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: roguelikeSheet_transparent_70
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 170
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4927d24c4b277241a7d3b38146ef90f
+      internalID: -276558998
       vertices: []
       indices: 
       edges: []
@@ -1446,12 +1614,15 @@ TextureImporter:
       roguelikeSheet_transparent_43: -158938366
       roguelikeSheet_transparent_57: -1349802115
       roguelikeSheet_transparent_0: 198099531
+      roguelikeSheet_transparent_67: 1609430044
       roguelikeSheet_transparent_41: 1992514166
       roguelikeSheet_transparent_60: 612343105
       roguelikeSheet_transparent_46: -958805491
       roguelikeSheet_transparent_34: 110224173
       roguelikeSheet_transparent_27: -1886037398
+      roguelikeSheet_transparent_66: -1717445236
       roguelikeSheet_transparent_45: -161926404
+      roguelikeSheet_transparent_69: -1089550209
       roguelikeSheet_transparent_28: -596144033
       roguelikeSheet_transparent_30: 332338550
       roguelikeSheet_transparent_20: -1730779968
@@ -1464,11 +1635,13 @@ TextureImporter:
       roguelikeSheet_transparent_5: -88123976
       roguelikeSheet_transparent_53: -1986894508
       roguelikeSheet_transparent_39: 417308016
+      roguelikeSheet_transparent_64: -1649998581
       roguelikeSheet_transparent_14: -130921644
       roguelikeSheet_transparent_38: 102121013
       roguelikeSheet_transparent_36: 109890390
       roguelikeSheet_transparent_29: -919364843
       roguelikeSheet_transparent_11: -1984584996
+      roguelikeSheet_transparent_63: -1276227295
       roguelikeSheet_transparent_26: -2062591518
       roguelikeSheet_transparent_37: 693828109
       roguelikeSheet_transparent_48: 828383433
@@ -1477,12 +1650,13 @@ TextureImporter:
       roguelikeSheet_transparent_16: 1925261908
       roguelikeSheet_transparent_17: 1242391731
       roguelikeSheet_transparent_7: -859052610
-      roguelikeSheet_transparent_21: 1823945783
       roguelikeSheet_transparent_19: 1499383812
+      roguelikeSheet_transparent_21: 1823945783
       roguelikeSheet_transparent_32: 440859474
       roguelikeSheet_transparent_58: 358625994
       roguelikeSheet_transparent_42: 1464302100
       roguelikeSheet_transparent_25: 795773009
+      roguelikeSheet_transparent_68: 440284019
       roguelikeSheet_transparent_23: -1863059015
       roguelikeSheet_transparent_6: -1690330827
       roguelikeSheet_transparent_50: -501028563
@@ -1490,6 +1664,7 @@ TextureImporter:
       roguelikeSheet_transparent_51: -574222912
       roguelikeSheet_transparent_4: 908044173
       roguelikeSheet_transparent_12: 1726119128
+      roguelikeSheet_transparent_65: 2030306973
       roguelikeSheet_transparent_59: 1737789587
       roguelikeSheet_transparent_55: 473225315
       roguelikeSheet_transparent_56: -472897486
@@ -1500,6 +1675,7 @@ TextureImporter:
       roguelikeSheet_transparent_52: 1057107557
       roguelikeSheet_transparent_13: -812973473
       roguelikeSheet_transparent_54: 1023609012
+      roguelikeSheet_transparent_70: 408607556
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

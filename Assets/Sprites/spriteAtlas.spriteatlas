@@ -1098,9 +1098,14 @@ SpriteAtlas:
   - {fileID: -1690330827, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -209979723, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -245168641, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 358625994, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 1737789587, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1023609012, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 473225315, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 482134072, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -472897486, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 828383433, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -1349802115, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -1202172556, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -501028563, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -958805491, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
@@ -1128,10 +1133,13 @@ SpriteAtlas:
   - {fileID: 1499383812, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1260073693, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -919364843, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 1625136723, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 440859474, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -596144033, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 612343105, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 131195350, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 332338550, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -2050528326, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 2132464642, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1823945783, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -1730779968, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
@@ -2676,9 +2684,14 @@ SpriteAtlas:
   - roguelikeSheet_transparent_6
   - roguelikeSheet_transparent_9
   - roguelikeSheet_transparent_8
+  - roguelikeSheet_transparent_58
+  - roguelikeSheet_transparent_59
   - roguelikeSheet_transparent_54
+  - roguelikeSheet_transparent_55
   - roguelikeSheet_transparent_49
+  - roguelikeSheet_transparent_56
   - roguelikeSheet_transparent_48
+  - roguelikeSheet_transparent_57
   - roguelikeSheet_transparent_47
   - roguelikeSheet_transparent_50
   - roguelikeSheet_transparent_46
@@ -2706,10 +2719,13 @@ SpriteAtlas:
   - roguelikeSheet_transparent_19
   - roguelikeSheet_transparent_35
   - roguelikeSheet_transparent_29
+  - roguelikeSheet_transparent_61
   - roguelikeSheet_transparent_32
   - roguelikeSheet_transparent_28
+  - roguelikeSheet_transparent_60
   - roguelikeSheet_transparent_33
   - roguelikeSheet_transparent_30
+  - roguelikeSheet_transparent_62
   - roguelikeSheet_transparent_31
   - roguelikeSheet_transparent_21
   - roguelikeSheet_transparent_20
