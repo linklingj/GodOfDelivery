@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cac5ae1ca18df4db1cce72a659d0da, type: 3}
+  m_Name: GrassTileData
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: e9aa113480e429448bdfc600c7e6b0bb, type: 2}
+  - {fileID: 11400000, guid: 2442d31957526b644996e7b1f7ca0767, type: 2}
+  - {fileID: 11400000, guid: 47366a9f168d5334e874b7082f2976a0, type: 2}
+  - {fileID: 11400000, guid: 87935a14d6124cf448133d4977c0474b, type: 2}
+  - {fileID: 11400000, guid: 38cb0a32847b0044dbd6b1d18aafb18f, type: 2}
+  - {fileID: 11400000, guid: 586514d9cdc70e24386b04cfe9cd96cf, type: 2}
+  - {fileID: 11400000, guid: cac057c7d5146cb4bafe4bf53f6d43be, type: 2}
+  - {fileID: 11400000, guid: 732e9c6ac729406478edd0eaff8962af, type: 2}
+  - {fileID: 11400000, guid: e1852c684be48fe49b603948f5913c5d, type: 2}
+  - {fileID: 11400000, guid: 851b3dc31cb48554a84239709b5b2437, type: 2}
+  - {fileID: 11400000, guid: 0e30f25b34ef71e4dbc0ad08f81da235, type: 2}
+  - {fileID: 11400000, guid: ba109cd7cf8a52e4cb9c690d7250dd88, type: 2}
+  - {fileID: 11400000, guid: 01aba8b08a6162b4ca3a710173088f8b, type: 2}
+  - {fileID: 11400000, guid: e0583b94d2943a34a8b10568869e0f98, type: 2}
+  - {fileID: 11400000, guid: aedc616792176a4408c7a5560a0b4975, type: 2}
+  - {fileID: 11400000, guid: aa28920cf85591141939c73c906e7724, type: 2}
+  - {fileID: 11400000, guid: d0a9a954e8f8664499eabf3f314bf2be, type: 2}
+  - {fileID: 11400000, guid: f24e7c02367197e40bff04784906e33d, type: 2}
+  - {fileID: 11400000, guid: f455ae475cc0d294dbaf48a4c750302a, type: 2}
+  - {fileID: 11400000, guid: 3d8625305ec3dd44782aa6103596dcf9, type: 2}
+  - {fileID: 11400000, guid: da2133b1ec4077f4d94aaed827439922, type: 2}
+  - {fileID: 11400000, guid: a71cfc1974be52d4db38fe030bc41a7b, type: 2}
+  - {fileID: 11400000, guid: eaaed833accfe694ea6328cae9e26d8b, type: 2}
+  drag: 3

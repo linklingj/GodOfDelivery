@@ -1098,6 +1098,7 @@ SpriteAtlas:
   - {fileID: -1690330827, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -209979723, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -245168641, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -276558998, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 358625994, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1737789587, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1023609012, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
@@ -1124,12 +1125,16 @@ SpriteAtlas:
   - {fileID: -812973473, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -130921644, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -1057502169, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 2030306973, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1925261908, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 109890390, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -1649998581, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1242391731, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 693828109, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 1609430044, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 915557842, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 110224173, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -1717445236, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1499383812, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1260073693, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -919364843, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
@@ -1138,11 +1143,14 @@ SpriteAtlas:
   - {fileID: -596144033, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 612343105, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 131195350, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: -1276227295, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 332338550, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -2050528326, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 2132464642, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 1823945783, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 408607556, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -1730779968, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
+  - {fileID: 440284019, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: -1863059015, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 102121013, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
   - {fileID: 782833122, guid: 623d8ab9c59b54c4e8d2bd7971509426, type: 3}
@@ -2684,6 +2692,7 @@ SpriteAtlas:
   - roguelikeSheet_transparent_6
   - roguelikeSheet_transparent_9
   - roguelikeSheet_transparent_8
+  - roguelikeSheet_transparent_70
   - roguelikeSheet_transparent_58
   - roguelikeSheet_transparent_59
   - roguelikeSheet_transparent_54
@@ -2710,12 +2719,16 @@ SpriteAtlas:
   - roguelikeSheet_transparent_13
   - roguelikeSheet_transparent_14
   - roguelikeSheet_transparent_15
+  - roguelikeSheet_transparent_65
   - roguelikeSheet_transparent_16
   - roguelikeSheet_transparent_36
+  - roguelikeSheet_transparent_64
   - roguelikeSheet_transparent_17
   - roguelikeSheet_transparent_37
+  - roguelikeSheet_transparent_67
   - roguelikeSheet_transparent_18
   - roguelikeSheet_transparent_34
+  - roguelikeSheet_transparent_66
   - roguelikeSheet_transparent_19
   - roguelikeSheet_transparent_35
   - roguelikeSheet_transparent_29
@@ -2724,11 +2737,14 @@ SpriteAtlas:
   - roguelikeSheet_transparent_28
   - roguelikeSheet_transparent_60
   - roguelikeSheet_transparent_33
+  - roguelikeSheet_transparent_63
   - roguelikeSheet_transparent_30
   - roguelikeSheet_transparent_62
   - roguelikeSheet_transparent_31
   - roguelikeSheet_transparent_21
+  - roguelikeSheet_transparent_69
   - roguelikeSheet_transparent_20
+  - roguelikeSheet_transparent_68
   - roguelikeSheet_transparent_23
   - roguelikeSheet_transparent_38
   - roguelikeSheet_transparent_22
