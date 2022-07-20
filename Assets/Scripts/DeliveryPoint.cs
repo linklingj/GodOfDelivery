@@ -11,6 +11,9 @@ public class DeliveryPoint : MonoBehaviour
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+    private void Start() {
+        
+    }
     public void pointOn() {
         gameObject.SetActive(true);
     }

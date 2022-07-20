@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.Menu);
 
         //test
-        orderManager.MakeOrder();
-        //StartCoroutine("Test");
+        orderManager.AddOrderPool();
+        StartCoroutine("Test");
         
 
     }
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator Test() {
         yield return new WaitForSeconds(5f);
-        orderManager.FinishOrder(0);
+        orderManager.MakeOrder(0);
     }
 }
 
