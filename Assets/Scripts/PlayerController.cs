@@ -24,12 +24,15 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rb;
     displayObject disp;
+    MapManager mapManager;
     public Camera cam;
     public TrailRenderer[] tireMarks;
+    public GameObject hitEffect;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         disp = GetComponent<displayObject>();
+        mapManager = FindObjectOfType<MapManager>();
     }
 
     void Update() {
@@ -73,14 +76,15 @@ public class PlayerController : MonoBehaviour
     }
     //가속
     void ApplyForce() {
+        //환경 저항
+        float envDrag = mapManager.GetTileDrag(transform.position);
         //감속
-        if(accelerationInput == 0) {
-            rb.drag = Mathf.Lerp(rb.drag, roadDrag, Time.deltaTime * dragTime);
-        } else if(deccelerationInput == 1) {
-            rb.drag = Mathf.Lerp(rb.drag, breakForce, Time.deltaTime * dragTime);
-            return;
+        if(deccelerationInput == 1) {
+            rb.drag = envDrag + Mathf.Lerp(rb.drag, breakForce, Time.deltaTime * dragTime);
+        } else if(accelerationInput == 0) {
+            rb.drag = envDrag + Mathf.Lerp(rb.drag, roadDrag, Time.deltaTime * dragTime);
         } else {
-            rb.drag = 0;
+            rb.drag = envDrag;
         }
         Vector2 forceVector;
         if (deccelerationInput == 1) {
@@ -102,8 +106,12 @@ public class PlayerController : MonoBehaviour
         Vector2 rightVelocity = transform.right * Vector2.Dot(rb.velocity, transform.right);
         rb.velocity = forwardVelocity + rightVelocity * driftFactor;
     }
+    //충격 vfx 생성
     private void OnCollisionEnter2D(Collision2D col) {
-        Debug.Log("hit");
+        if (velMag > maxSpeed * 0.3f) {
+            GameObject effect = Instantiate(hitEffect, col.contacts[0].point, Quaternion.identity);
+            Destroy(effect, 0.3f);
+        }
     }
     //바퀴자국 생성
     void CheckTrail() {
