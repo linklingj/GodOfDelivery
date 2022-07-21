@@ -73,10 +73,19 @@ public class OrderManager : MonoBehaviour
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 30f, 5000));
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 20000));
+        pPNum = Random.Range(0, pickupPoints.Length);
+        dPNum = Random.Range(0, deliveryPoints.Length);
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 20f, 90000));
+        pPNum = Random.Range(0, pickupPoints.Length);
+        dPNum = Random.Range(0, deliveryPoints.Length);
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 110f, 300000));
+        pPNum = Random.Range(0, pickupPoints.Length);
+        dPNum = Random.Range(0, deliveryPoints.Length);
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 80f, 200000000));
     }
     public void MakeOrder(int index) {
         Debug.Log("order in");
@@ -116,5 +125,16 @@ public class OrderManager : MonoBehaviour
             point = 1;
         }
         return point;
+    }
+    public List<string[]> PassOrders() {
+        if (orderPool.Count == 0)
+            return null;
+        //string배열의 리스트를 리턴, string 배열은 {출발지,도착지,남은시간,보상}
+        List<string[]> res = new List<string[]>();
+        foreach(Order order in orders) {
+            int timeLeft = Mathf.FloorToInt(order.targetTime - timer + order.startTime);
+            res.Add(new string[] {order.pickupPoint.transform.name,order.deliveryPoint.transform.name,timeLeft.ToString(),order.maxReward.ToString()});
+        }
+        return res;
     }
 }
