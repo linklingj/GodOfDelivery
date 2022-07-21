@@ -70,6 +70,7 @@ public class OrderManager : MonoBehaviour
         int poolSize = orderPool.Count;
         int pPNum = Random.Range(0, pickupPoints.Length);
         int dPNum = Random.Range(0, deliveryPoints.Length);
+        //테스트 주문 생성
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
@@ -111,7 +112,8 @@ public class OrderManager : MonoBehaviour
     //안정성 평가 (0~5의 정수 리턴)
     int ReviewSaftey() {
         //수정 필요
-        return 5;
+        int point = Random.Range(0,6);
+        return point;
     }
     //속도 평가 (0~5의 정수 리턴)
     int ReviewSpeed(Order order) {
@@ -119,10 +121,10 @@ public class OrderManager : MonoBehaviour
         int clearTime = Mathf.FloorToInt(timer - order.startTime);
         //수정 필요
         Debug.Log("clear time: "+ clearTime.ToString());
-        if (clearTime <= order.targetTime) {
-            point = 5;
+        if (clearTime >= order.targetTime) {
+            point = 0;
         } else {
-            point = 1;
+            point = Random.Range(0,6);
         }
         return point;
     }

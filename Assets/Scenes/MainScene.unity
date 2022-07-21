@@ -184,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_Name
-      value: DPoint4
+      value: "\uD638\uB5A1\uB9C8\uC744201\uB3D9"
       objectReference: {fileID: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_IsActive
@@ -850,7 +850,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_Name
-      value: DPoint5
+      value: "\uD638\uB5A1\uB9C8\uC744202\uB3D9"
       objectReference: {fileID: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_IsActive
@@ -1875,7 +1875,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_Name
-      value: DPoint7
+      value: "\uAC15\uBC11\uB9C8\uC744401\uB3D9"
       objectReference: {fileID: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_IsActive
@@ -1954,7 +1954,7 @@ PrefabInstance:
       objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8526281019440833472, guid: 86bc38f420acbe4439f21ad2080b3a26, type: 3}
       propertyPath: m_Name
-      value: PPoint2
+      value: "\uC6E9\uB3C4\uB0A0\uB4DC"
       objectReference: {fileID: 0}
     - target: {fileID: 8526281019440833472, guid: 86bc38f420acbe4439f21ad2080b3a26, type: 3}
       propertyPath: m_IsActive
@@ -2165,7 +2165,7 @@ PrefabInstance:
       objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8526281019440833472, guid: 86bc38f420acbe4439f21ad2080b3a26, type: 3}
       propertyPath: m_Name
-      value: PPoint3
+      value: "\uD638\uD154\uC774\uC5C8\uB358\uAC83"
       objectReference: {fileID: 0}
     - target: {fileID: 8526281019440833472, guid: 86bc38f420acbe4439f21ad2080b3a26, type: 3}
       propertyPath: m_IsActive
@@ -2384,7 +2384,7 @@ PrefabInstance:
       objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8526281019440833472, guid: 86bc38f420acbe4439f21ad2080b3a26, type: 3}
       propertyPath: m_Name
-      value: PPoint4
+      value: "\uC57D\uAD6D\uC778\uAC00"
       objectReference: {fileID: 0}
     - target: {fileID: 8526281019440833472, guid: 86bc38f420acbe4439f21ad2080b3a26, type: 3}
       propertyPath: m_IsActive
@@ -67460,7 +67460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.41960785, b: 0.41960785, a: 1}
+  m_Color: {r: 0.27450982, g: 0.7294118, b: 0.16078432, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -121781,7 +121781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.41960785, b: 0.41960785, a: 1}
+  m_Color: {r: 0.27450982, g: 0.7294118, b: 0.16078432, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -121997,7 +121997,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_Name
-      value: DPoint3
+      value: "\uAE7B\uC78E\uB9C8\uC744103\uB3D9"
       objectReference: {fileID: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_IsActive
@@ -122521,7 +122521,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 4e7679e4a1116b54aa36274217790f78, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -122854,7 +122854,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 503567641d11f3343b97179439f7e6f4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -123500,7 +123500,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_Name
-      value: DPoint6
+      value: "\uBB34\uC9C0\uAC1C\uB9C8\uC744301\uB3D9"
       objectReference: {fileID: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_IsActive
@@ -131052,7 +131052,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_Name
-      value: DPoint2
+      value: "\uAE7B\uC78E\uB9C8\uC744102\uB3D9"
       objectReference: {fileID: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_IsActive
@@ -131146,8 +131146,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 153.8, y: -15.1}
-  m_SizeDelta: {x: 100, y: 50}
+  m_AnchoredPosition: {x: 148.95534, y: -15.1}
+  m_SizeDelta: {x: 140.2872, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1837790860
 MonoBehaviour:
@@ -131196,8 +131196,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -131232,7 +131232,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0.50994873, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -150207,7 +150207,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_Name
-      value: DPoint1
+      value: "\uAE7B\uC78E\uB9C8\uC744101\uB3D9"
       objectReference: {fileID: 0}
     - target: {fileID: 6052846835775981606, guid: a6f63dda3bd92f34fa3ef49b489473c8, type: 3}
       propertyPath: m_IsActive
@@ -150248,7 +150248,7 @@ PrefabInstance:
       objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8526281019440833472, guid: 86bc38f420acbe4439f21ad2080b3a26, type: 3}
       propertyPath: m_Name
-      value: PPoint1
+      value: "\uC138\uC885\uBC18\uC810"
       objectReference: {fileID: 0}
     - target: {fileID: 8526281019440833472, guid: 86bc38f420acbe4439f21ad2080b3a26, type: 3}
       propertyPath: m_IsActive
