@@ -8,7 +8,7 @@ public class OrderManager : MonoBehaviour
     public DeliveryPoint[] deliveryPoints;
     public List<Order> orders = new List<Order>();
     public List<AvailableOrder> orderPool = new List<AvailableOrder>();
-    private float timer;
+    public float timer;
     //오더 클래스
     //index: 리스트에서의 인덱스, state: 상태(0: 픽업 전, 1: 픽업후 배달전), 픽업.배달 포인트, 목표 시간, 최대 보상, 시작시간
     public class Order {
@@ -95,6 +95,7 @@ public class OrderManager : MonoBehaviour
         Debug.Log("order completed");
         Debug.Log("Saftey : " + ReviewSaftey().ToString() + " stars");
         Debug.Log("Speed : " + ReviewSpeed(order).ToString() + " stars");
+        GameManager.Instance.Cash += orders[index].maxReward;
         orders.RemoveAt(index);
         MakeOrder(test++);
     }
