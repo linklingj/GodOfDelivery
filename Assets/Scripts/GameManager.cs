@@ -42,11 +42,8 @@ public class GameManager : MonoBehaviour
         }
         OnGameStateChanged?.Invoke(newState);
     }
-    public int GetCash() {
-        return Cash;
-    }
     IEnumerator Test() {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
         orderManager.MakeOrder(0);
     }
 }

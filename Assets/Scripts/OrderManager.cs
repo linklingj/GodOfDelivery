@@ -8,7 +8,7 @@ public class OrderManager : MonoBehaviour
     public DeliveryPoint[] deliveryPoints;
     public List<Order> orders = new List<Order>();
     public List<AvailableOrder> orderPool = new List<AvailableOrder>();
-    private float timer;
+    public float timer;
     //오더 클래스
     //index: 리스트에서의 인덱스, state: 상태(0: 픽업 전, 1: 픽업후 배달전), 픽업.배달 포인트, 목표 시간, 최대 보상, 시작시간
     public class Order {
@@ -70,13 +70,23 @@ public class OrderManager : MonoBehaviour
         int poolSize = orderPool.Count;
         int pPNum = Random.Range(0, pickupPoints.Length);
         int dPNum = Random.Range(0, deliveryPoints.Length);
+        //테스트 주문 생성
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 30f, 5000));
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 20000));
+        pPNum = Random.Range(0, pickupPoints.Length);
+        dPNum = Random.Range(0, deliveryPoints.Length);
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 20f, 90000));
+        pPNum = Random.Range(0, pickupPoints.Length);
+        dPNum = Random.Range(0, deliveryPoints.Length);
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 110f, 300000));
+        pPNum = Random.Range(0, pickupPoints.Length);
+        dPNum = Random.Range(0, deliveryPoints.Length);
+        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 80f, 200000000));
     }
     public void MakeOrder(int index) {
         Debug.Log("order in");
@@ -95,13 +105,15 @@ public class OrderManager : MonoBehaviour
         Debug.Log("order completed");
         Debug.Log("Saftey : " + ReviewSaftey().ToString() + " stars");
         Debug.Log("Speed : " + ReviewSpeed(order).ToString() + " stars");
+        GameManager.Instance.Cash += orders[index].maxReward;
         orders.RemoveAt(index);
         MakeOrder(test++);
     }
     //안정성 평가 (0~5의 정수 리턴)
     int ReviewSaftey() {
         //수정 필요
-        return 5;
+        int point = Random.Range(0,6);
+        return point;
     }
     //속도 평가 (0~5의 정수 리턴)
     int ReviewSpeed(Order order) {
@@ -109,11 +121,22 @@ public class OrderManager : MonoBehaviour
         int clearTime = Mathf.FloorToInt(timer - order.startTime);
         //수정 필요
         Debug.Log("clear time: "+ clearTime.ToString());
-        if (clearTime <= order.targetTime) {
-            point = 5;
+        if (clearTime >= order.targetTime) {
+            point = 0;
         } else {
-            point = 1;
+            point = Random.Range(0,6);
         }
         return point;
+    }
+    public List<string[]> PassOrders() {
+        if (orderPool.Count == 0)
+            return null;
+        //string배열의 리스트를 리턴, string 배열은 {출발지,도착지,남은시간,보상}
+        List<string[]> res = new List<string[]>();
+        foreach(Order order in orders) {
+            int timeLeft = Mathf.FloorToInt(order.targetTime - timer + order.startTime);
+            res.Add(new string[] {order.pickupPoint.transform.name,order.deliveryPoint.transform.name,timeLeft.ToString(),order.maxReward.ToString()});
+        }
+        return res;
     }
 }

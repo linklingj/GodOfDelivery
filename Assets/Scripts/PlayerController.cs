@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     displayObject disp;
     MapManager mapManager;
+    UIController uIController;
     public Camera cam;
     public TrailRenderer[] tireMarks;
     public GameObject hitEffect;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         disp = GetComponent<displayObject>();
         mapManager = FindObjectOfType<MapManager>();
+        uIController = FindObjectOfType<UIController>();
     }
 
     void Update() {
