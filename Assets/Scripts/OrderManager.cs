@@ -108,6 +108,7 @@ public class OrderManager : MonoBehaviour
         orders[index].pickupPoint.pointOff();
 
         arrows[index].GetComponent<Arrow>().followPoint = orders[index].deliveryPoint.transform;
+        arrows[index].GetComponent<Arrow>().ChangeColor();
     }
     int test = 1;
     public void FinishOrder(int index) {
