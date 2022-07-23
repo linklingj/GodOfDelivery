@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class OrderManager : MonoBehaviour
 {
+    public UIController uIController;
     public PickupPoint[] pickupPoints;
     public DeliveryPoint[] deliveryPoints;
     public List<Order> orders = new List<Order>();
+    public List<GameObject> arrows = new List<GameObject>();
     public List<AvailableOrder> orderPool = new List<AvailableOrder>();
     public float timer;
+    public GameObject arrowPrefab;
+    public Transform canvas;
     //오더 클래스
     //index: 리스트에서의 인덱스, state: 상태(0: 픽업 전, 1: 픽업후 배달전), 픽업.배달 포인트, 목표 시간, 최대 보상, 시작시간
     public class Order {
@@ -91,22 +95,39 @@ public class OrderManager : MonoBehaviour
     public void MakeOrder(int index) {
         Debug.Log("order in");
         orders.Add(orderPool[index].AddToOrderList(timer));
+
+        GameObject arrow = Instantiate(arrowPrefab, new Vector3(-100f,-100f,0), Quaternion.identity);
+        arrow.GetComponent<Arrow>().followPoint = orderPool[index].pickupPoint.transform;
+        arrow.transform.SetParent(canvas);
+        arrows.Add(arrow);
+
         orderPool[index].state = 1;
     }
     public void Pickup(int index) {
-        Debug.Log("pickup");
         orders[index].state = 1;
         orders[index].pickupPoint.pointOff();
+
+        arrows[index].GetComponent<Arrow>().followPoint = orders[index].deliveryPoint.transform;
     }
     int test = 1;
     public void FinishOrder(int index) {
         Order order = orders[index];
         order.deliveryPoint.pointOff();
-        Debug.Log("order completed");
-        Debug.Log("Saftey : " + ReviewSaftey().ToString() + " stars");
-        Debug.Log("Speed : " + ReviewSpeed(order).ToString() + " stars");
-        GameManager.Instance.Cash += orders[index].maxReward;
+
+        int clearTime = Mathf.FloorToInt(timer - order.startTime);
+        int speedStar = ReviewSaftey();
+        int safteyStar = ReviewSpeed(clearTime, order.targetTime);
+        int reward = orders[index].maxReward;
+
+        GameManager.Instance.Cash += reward;
+        uIController.ReviewMessage(speedStar,safteyStar,clearTime,reward);
         orders.RemoveAt(index);
+        Destroy(arrows[index]);
+        arrows.RemoveAt(index);
+
+        Debug.Log("speed:"+speedStar);
+        Debug.Log("saftey" +safteyStar);
+
         MakeOrder(test++);
     }
     //안정성 평가 (0~5의 정수 리턴)
@@ -116,12 +137,10 @@ public class OrderManager : MonoBehaviour
         return point;
     }
     //속도 평가 (0~5의 정수 리턴)
-    int ReviewSpeed(Order order) {
+    int ReviewSpeed(int clearTime, float targetTime) {
         int point = 0;
-        int clearTime = Mathf.FloorToInt(timer - order.startTime);
         //수정 필요
-        Debug.Log("clear time: "+ clearTime.ToString());
-        if (clearTime >= order.targetTime) {
+        if (clearTime >= targetTime) {
             point = 0;
         } else {
             point = Random.Range(0,6);

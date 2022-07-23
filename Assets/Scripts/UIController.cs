@@ -7,7 +7,7 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject panel, phone, deliveringOrderParent, deliveringOrderPrefab;
+    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, reviewMessage;
     [SerializeField]
     GameObject[] apps, appIcons;
     [SerializeField]
@@ -16,10 +16,29 @@ public class UIController : MonoBehaviour
     [SerializeField]
     RectTransform panelRT;
     [SerializeField]
+    Sprite[] stars;
+    [SerializeField]
     OrderManager orderManager;
+    public AnimationCurve vibrateCurve;
     public bool phoneOpen = false;
     bool onTransition = false;
     int currentApp = 0, pastApp = 0;
+    public string[][] reviewComment = {
+        //속도도 빠르고 안정성도 높은 경우
+        new string[] {"완벽하네요!","최고에요:]",},
+        //속도가 빠른 경우
+        new string[] {"굉장히 빠르네요!"},
+        //안정성이 높은 경우
+        new string[] {"음식 상태가 좋아요"},
+        //보통인 경우
+        new string[] {"뭐 나쁘지 않네요"},
+        //속도가 느린 경우
+        new string[] {"배달중에 사고라도 났나요. 왜이렇게 오래걸리죠!"},
+        //안정성이 낮은 경우
+        new string[] {"포장이 다 뜯겼네요! 오다 태풍이라도 만났나봐요"},
+        //둘다 안좋은 경우
+        new string[] {"정말 속도와 상태가 최악입니다! 다시는 안시킬게요"}
+    };
     //핸드폰 열기
     public void OpenUI() {
         LeanTween.alpha(panelRT, 0.6f, 0.3f).setIgnoreTimeScale(true);
@@ -66,6 +85,9 @@ public class UIController : MonoBehaviour
         LeanTween.scaleY(app, 0.05f, 0.3f).setEase(LeanTweenType.easeOutQuad).setOnComplete(transitionFinish).setIgnoreTimeScale(true);
     }
     private void Update() {
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            //test
+        }
         if(Input.GetButtonDown("Menu") && !onTransition) {
             onTransition = true;
             if(phoneOpen) {
@@ -98,6 +120,48 @@ public class UIController : MonoBehaviour
     void Resume() {
         Time.timeScale = 1f;
     }
+    //리뷰 메세지 띠우기
+    public void ReviewMessage(int speedStar, int safteyStar, int time, int reward) {
+        GameObject message = Instantiate(reviewMessage, new Vector3(900f, -150f, 0f), Quaternion.identity);
+        message.transform.localScale = new Vector3(0.05f, 0.05f, 1f);
+        message.transform.SetParent(bg.transform);
+
+        string reviewText = "";
+        if (speedStar <= 1 && safteyStar <= 1)
+            reviewText = reviewComment[6][Random.Range(0,reviewComment[6].Length)];
+        else if (safteyStar <= 1)
+            reviewText = reviewComment[5][Random.Range(0,reviewComment[5].Length)];
+        else if (speedStar <= 1)
+            reviewText = reviewComment[4][Random.Range(0,reviewComment[4].Length)];
+        else if (speedStar == 5 && safteyStar == 5)
+            reviewText = reviewComment[0][Random.Range(0,reviewComment[0].Length)];
+        else if (speedStar == 5)
+            reviewText = reviewComment[1][Random.Range(0,reviewComment[1].Length)];
+        else if (safteyStar == 5)
+            reviewText = reviewComment[2][Random.Range(0,reviewComment[2].Length)];
+        else
+            reviewText = reviewComment[3][Random.Range(0,reviewComment[3].Length)];
+        
+        string r = CashToString(reward);
+        string t = $"배달 완료!\n시간: {time}초  보상: {r}원\n리뷰:\n{reviewText}";
+        message.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = t;
+
+        int starCount = Mathf.RoundToInt((speedStar + safteyStar) / 2);
+        message.transform.GetChild(1).GetComponent<Image>().sprite = stars[starCount];
+
+        ViberatePhone();
+        LeanTween.moveLocal(message, new Vector3(0f, -370f, 0f), 0.3f).setEase(LeanTweenType.easeOutBack).setIgnoreTimeScale(true);
+        LeanTween.scale(message, new Vector3(1f, 1f, 1f), 0.3f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
+        LeanTween.moveLocal(message, new Vector3(0f, -100f, 0f), 0.5f).setDelay(4f).setEase(LeanTweenType.easeOutCubic).setIgnoreTimeScale(true);
+        LeanTween.alpha(message.GetComponent<RectTransform>(), 0f, 0.5f).setDelay(4f).setIgnoreTimeScale(true);
+        LeanTween.alphaCanvas(message.transform.GetChild(0).GetComponent<CanvasGroup>(), 0f, 0.5f).setDelay(4f).setIgnoreTimeScale(true);
+        Destroy(message, 4.5f);
+    }
+    void ViberatePhone() {
+        LeanTween.moveX(phone, 403f, 0.3f).setEase(vibrateCurve);
+        LeanTween.moveX(phone, 400f, 0.1f).setDelay(0.3f);
+    }
+    //배달앱 열었을때 텍스트 처리
     void DeliveryApp() {
         foreach (Transform child in deliveringOrderParent.transform) {
             GameObject.Destroy(child.gameObject);
@@ -132,10 +196,16 @@ public class UIController : MonoBehaviour
     //한국식 표현으로 전환
     string CashToString(int cash) {
         string st = "0";
-        if(cash >= 100000000)
-            st = (cash/100000000).ToString() + "억" + ((cash%100000000)/10000).ToString() + "만";
-        else if(cash >= 10000)
-            st = (cash/10000).ToString() + "만" + (cash%10000).ToString();
+        if(cash >= 100000000) {
+            st = (cash/100000000).ToString() + "억";
+            if((cash%100000000)/10000 > 0)
+                st += (cash%100000000).ToString() + "만";
+        }
+        else if(cash >= 10000) {
+            st = (cash/10000).ToString() + "만";
+            if((cash%10000) > 0)
+                st +=(cash%10000).ToString();
+        }
         else
             st = cash.ToString();
         return st;
