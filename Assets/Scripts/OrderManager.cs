@@ -110,7 +110,6 @@ public class OrderManager : MonoBehaviour
         arrows[index].GetComponent<Arrow>().followPoint = orders[index].deliveryPoint.transform;
         arrows[index].GetComponent<Arrow>().ChangeColor();
     }
-    int test = 1;
     public void FinishOrder(int index) {
         Order order = orders[index];
         order.deliveryPoint.pointOff();
@@ -128,8 +127,6 @@ public class OrderManager : MonoBehaviour
 
         Debug.Log("speed:"+speedStar);
         Debug.Log("saftey" +safteyStar);
-
-        MakeOrder(test++);
     }
     //안정성 평가 (0~5의 정수 리턴)
     int ReviewSaftey() {
@@ -156,6 +153,18 @@ public class OrderManager : MonoBehaviour
         foreach(Order order in orders) {
             int timeLeft = Mathf.FloorToInt(order.targetTime - timer + order.startTime);
             res.Add(new string[] {order.pickupPoint.transform.name,order.deliveryPoint.transform.name,timeLeft.ToString(),order.maxReward.ToString()});
+        }
+        return res;
+    }
+    public List<string[]> PassOrders_A() {
+        if (orderPool.Count == 0)
+            return null;
+        //string배열의 리스트를 리턴, string 배열은 {출발지,도착지,총 시간,보상,인덱스}
+        List<string[]> res = new List<string[]>();
+        foreach(AvailableOrder order in orderPool) {
+            if(order.state == 1)
+                continue;
+            res.Add(new string[] {order.pickupPoint.transform.name,order.deliveryPoint.transform.name,order.targetTime.ToString(),order.maxReward.ToString(),order.index.ToString()});
         }
         return res;
     }

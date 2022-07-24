@@ -9,9 +9,11 @@ public class Arrow : MonoBehaviour
     public int offset;
     int minX,minY,maxX,maxY;
     Vector2 arrowPos;
+    UIController uIController;
     RectTransform rT;
     Animator anim;
     private void Start() {
+        uIController = FindObjectOfType<UIController>();
         rT = GetComponent<RectTransform>();
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectsWithTag("Player")[0];
@@ -22,14 +24,14 @@ public class Arrow : MonoBehaviour
     }
 
     void Update() {
-        if(followPoint == null) {
-            gameObject.SetActive(false);
+        if(followPoint == null || uIController.phoneOpen) {
+            rT.anchoredPosition = new Vector3(-1000f, -1000f, 0f);
         } else {
-            gameObject.SetActive(true);
             Vector3 targetPos = RectTransformUtility.WorldToScreenPoint(Camera.main, followPoint.position);
             arrowPos = targetPos;
             if (minX < targetPos.x && targetPos.x < maxX && targetPos.y > minY && targetPos.y < maxY) {
-                arrowPos += Vector2.up * 30f;
+                arrowPos += Vector2.up * 100f;
+                transform.eulerAngles = Vector3.zero;
             } else {
                 if (targetPos.x > maxX)
                     arrowPos.x = maxX;

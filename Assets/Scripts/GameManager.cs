@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
         //test
         orderManager.AddOrderPool();
-        StartCoroutine("Test");
+        //StartCoroutine("Test");
         
 
     }
@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour
         }
         OnGameStateChanged?.Invoke(newState);
     }
-    IEnumerator Test() {
-        yield return new WaitForSeconds(1f);
-        orderManager.MakeOrder(0);
-    }
+    // IEnumerator Test() {
+    //     yield return new WaitForSeconds(1f);
+    //     orderManager.MakeOrder(0);
+    // }
 }
 

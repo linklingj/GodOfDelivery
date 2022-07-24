@@ -7,7 +7,7 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, reviewMessage;
+    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage;
     [SerializeField]
     GameObject[] apps, appIcons;
     [SerializeField]
@@ -120,7 +120,7 @@ public class UIController : MonoBehaviour
     void Resume() {
         Time.timeScale = 1f;
     }
-    //리뷰 메세지 띠우기
+    //리뷰 메세지 띄우기
     public void ReviewMessage(int speedStar, int safteyStar, int time, int reward) {
         GameObject message = Instantiate(reviewMessage, new Vector3(900f, -150f, 0f), Quaternion.identity);
         message.transform.localScale = new Vector3(0.05f, 0.05f, 1f);
@@ -166,9 +166,10 @@ public class UIController : MonoBehaviour
         foreach (Transform child in deliveringOrderParent.transform) {
             GameObject.Destroy(child.gameObject);
         }
+        foreach (Transform child in availableOrderParent.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
         List<string[]> orders = orderManager.PassOrders();
-        if(orders.Count == 0)
-            return;
         foreach (string[] order in orders) {
             GameObject item = Instantiate(deliveringOrderPrefab, Vector3.zero, Quaternion.identity);
             item.transform.SetParent(deliveringOrderParent.transform);
@@ -179,6 +180,24 @@ public class UIController : MonoBehaviour
                 text.text = order[i];
             }
         }
+        List<string[]> aOrders = orderManager.PassOrders_A();
+        foreach (string[] order in aOrders) {
+            GameObject item = Instantiate(availableOrderPrefab, Vector3.zero, Quaternion.identity);
+            item.transform.SetParent(availableOrderParent.transform);
+            order[2] += "초";
+            order[3] = CashToString(int.Parse(order[3])) + "원";
+            for (int i=0; i<4; i++) {
+                TextMeshProUGUI text = item.transform.GetChild(i).GetComponent<TextMeshProUGUI>();
+                text.text = order[i];
+            }
+            item.transform.GetChild(4).name = order[4];
+        }
+    }
+    public void AcceptOrder(GameObject obj) {
+        int index = int.Parse(obj.transform.GetChild(4).name);
+        orderManager.MakeOrder(index);
+        //LeanTween.scaleY(obj, 0.05f, 0.3f).setEase(LeanTweenType.easeInOutCubic).setIgnoreTimeScale(true);
+        Destroy(obj);
     }
     //시간 업데이트
     void UpdateTimerDisplay() {
