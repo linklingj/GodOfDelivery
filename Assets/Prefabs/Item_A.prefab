@@ -404,7 +404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42d11e9cd3be4e4eb7ef06ee57a640c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uIController: {fileID: 0}
   button: {fileID: 8257405286181300934}
 --- !u!1 &4772900353680865286
 GameObject:
@@ -629,6 +628,7 @@ GameObject:
   - component: {fileID: 389814881232053645}
   - component: {fileID: 8881816504610271855}
   - component: {fileID: 6332362613380007491}
+  - component: {fileID: -1713321215358855590}
   m_Layer: 5
   m_Name: Item_A
   m_TagString: Untagged
@@ -720,6 +720,18 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!225 &-1713321215358855590
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8448728899058477699}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &9061458054787364014
 GameObject:
   m_ObjectHideFlags: 0

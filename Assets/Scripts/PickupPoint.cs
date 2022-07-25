@@ -6,8 +6,10 @@ public class PickupPoint : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     public OrderManager orderManager;
-    public bool belowPlayer = false;
+    public ProgressBar progressBar;
     public int orderIndex = -1;
+    bool belowPlayer = false;
+    float enterTime;
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -18,15 +20,27 @@ public class PickupPoint : MonoBehaviour
         gameObject.SetActive(false);
     }
     private void OnTriggerEnter2D(Collider2D col) {
-        if (col.CompareTag("Player")) {
+        if (col.CompareTag("Player") && orderManager.orders[orderIndex].state == 0) {
+            enterTime = orderManager.timer;
             belowPlayer = true;
-            if (orderManager.orders[orderIndex].state == 0)
-            orderManager.Pickup(orderIndex);
+            progressBar.ShowBar();
         }
     }
     private void OnTriggerExit2D(Collider2D col) {
-        if (col.CompareTag("Player")) {
+        if (col.CompareTag("Player") && belowPlayer) {
             belowPlayer = false;
+            progressBar.HideBar();
         }
+    }
+    private void Update() {
+        if (!belowPlayer)
+            return;
+        float time = orderManager.timer - enterTime;
+        if(time >= 2f) {
+            belowPlayer = false;
+            orderManager.Pickup(orderIndex);
+            progressBar.FullBar();
+        }
+        progressBar.SetValue(time/2);
     }
 }

@@ -76,25 +76,32 @@ public class OrderManager : MonoBehaviour
         int dPNum = Random.Range(0, deliveryPoints.Length);
         //테스트 주문 생성
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
+        poolSize = orderPool.Count;
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 30f, 5000));
+        poolSize = orderPool.Count;
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 20000));
+        poolSize = orderPool.Count;
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 20f, 90000));
+        poolSize = orderPool.Count;
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 110f, 300000));
+        poolSize = orderPool.Count;
         pPNum = Random.Range(0, pickupPoints.Length);
         dPNum = Random.Range(0, deliveryPoints.Length);
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 80f, 200000000));
     }
     public void MakeOrder(int index) {
         Debug.Log("order in");
-        orders.Add(orderPool[index].AddToOrderList(timer));
+        Order order = orderPool[index].AddToOrderList(timer);
+        orders.Add(order);
+        uIController.AddOrderToUI(new string[] {order.pickupPoint.transform.name,order.deliveryPoint.transform.name,order.targetTime.ToString(),order.maxReward.ToString()});
 
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(-100f,-100f,0), Quaternion.identity);
         arrow.GetComponent<Arrow>().followPoint = orderPool[index].pickupPoint.transform;
@@ -120,6 +127,7 @@ public class OrderManager : MonoBehaviour
         int reward = orders[index].maxReward;
 
         GameManager.Instance.Cash += reward;
+        uIController.CashAnim();
         uIController.ReviewMessage(speedStar,safteyStar,clearTime,reward);
         orders.RemoveAt(index);
         Destroy(arrows[index]);

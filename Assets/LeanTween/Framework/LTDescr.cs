@@ -599,6 +599,7 @@ public class LTDescr
 		};
 		return this;
 	}
+	
 
 	public LTDescr setCanvasAlpha(){
 		this.type = TweenAction.CANVAS_ALPHA;
