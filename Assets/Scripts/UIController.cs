@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
     [SerializeField]
     OrderManager orderManager;
     public AnimationCurve vibrateCurve;
+    public ProgressBar progressBar;
     public bool phoneOpen = false;
     bool onTransition = false;
     int currentApp = 0, pastApp = 0;
@@ -86,7 +87,13 @@ public class UIController : MonoBehaviour
     }
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
-            //test
+            progressBar.ShowBar();
+        }
+        if(Input.GetKeyDown(KeyCode.A)) {
+            progressBar.HideBar();
+        }
+        if(Input.GetKeyDown(KeyCode.S)) {
+            progressBar.FullBar();
         }
         if(Input.GetButtonDown("Menu") && !onTransition) {
             onTransition = true;
@@ -94,10 +101,12 @@ public class UIController : MonoBehaviour
                 Resume();
                 CloseUI();
                 CloseApp(currentApp);
+                progressBar.Show();
             }
             else {
                 Pause();
                 OpenUI();
+                progressBar.Hide();
             }
             phoneOpen = !phoneOpen;
         }
@@ -196,8 +205,10 @@ public class UIController : MonoBehaviour
     public void AcceptOrder(GameObject obj) {
         int index = int.Parse(obj.transform.GetChild(4).name);
         orderManager.MakeOrder(index);
+        LeanTween.scale(obj.GetComponent<RectTransform>(),new Vector2(1f,0.05f),0.3f).setIgnoreTimeScale(true);
+        //LeanTween.value(obj.GetComponent<RectTransform>().sizeDelta,100,0.05f,0.3f).setIgnoreTimeScale(true);
         //LeanTween.scaleY(obj, 0.05f, 0.3f).setEase(LeanTweenType.easeInOutCubic).setIgnoreTimeScale(true);
-        Destroy(obj);
+        //Destroy(obj);
     }
     //시간 업데이트
     void UpdateTimerDisplay() {
