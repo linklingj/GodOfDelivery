@@ -99,7 +99,9 @@ public class OrderManager : MonoBehaviour
     }
     public void MakeOrder(int index) {
         Debug.Log("order in");
-        orders.Add(orderPool[index].AddToOrderList(timer));
+        Order order = orderPool[index].AddToOrderList(timer);
+        orders.Add(order);
+        uIController.AddOrderToUI(new string[] {order.pickupPoint.transform.name,order.deliveryPoint.transform.name,order.targetTime.ToString(),order.maxReward.ToString()});
 
         GameObject arrow = Instantiate(arrowPrefab, new Vector3(-100f,-100f,0), Quaternion.identity);
         arrow.GetComponent<Arrow>().followPoint = orderPool[index].pickupPoint.transform;
@@ -125,6 +127,7 @@ public class OrderManager : MonoBehaviour
         int reward = orders[index].maxReward;
 
         GameManager.Instance.Cash += reward;
+        uIController.CashAnim();
         uIController.ReviewMessage(speedStar,safteyStar,clearTime,reward);
         orders.RemoveAt(index);
         Destroy(arrows[index]);

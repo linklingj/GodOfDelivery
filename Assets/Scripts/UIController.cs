@@ -202,13 +202,32 @@ public class UIController : MonoBehaviour
             item.transform.GetChild(4).name = order[4];
         }
     }
+    GameObject tmpObj;
+    //오더 확인했을 때 풀에서 제거
     public void AcceptOrder(GameObject obj) {
         int index = int.Parse(obj.transform.GetChild(4).name);
         orderManager.MakeOrder(index);
-        LeanTween.scale(obj.GetComponent<RectTransform>(),new Vector2(1f,0.05f),0.3f).setIgnoreTimeScale(true);
-        //LeanTween.value(obj.GetComponent<RectTransform>().sizeDelta,100,0.05f,0.3f).setIgnoreTimeScale(true);
-        //LeanTween.scaleY(obj, 0.05f, 0.3f).setEase(LeanTweenType.easeInOutCubic).setIgnoreTimeScale(true);
-        //Destroy(obj);
+        LeanTween.scale(obj,new Vector2(1f,0.05f),0.3f).setIgnoreTimeScale(true);
+        tmpObj = obj;
+        LeanTween.alphaCanvas(obj.GetComponent<CanvasGroup>(),0,0.3f).setIgnoreTimeScale(true).setOnComplete(DestroyObj);
+    }
+    void DestroyObj() {
+        Destroy(tmpObj);
+        tmpObj = null;
+    }
+    public void AddOrderToUI(string[] order) {
+        GameObject item = Instantiate(deliveringOrderPrefab, Vector3.zero, Quaternion.identity);
+        item.transform.SetParent(deliveringOrderParent.transform);
+        order[2] += "초 남음";
+        order[3] = CashToString(int.Parse(order[3])) + "원";
+        for (int i=0; i<4; i++) {
+            TextMeshProUGUI text = item.transform.GetChild(i).GetComponent<TextMeshProUGUI>();
+            text.text = order[i];
+        }
+        item.transform.localScale = new Vector2(1f,0);
+        item.GetComponent<CanvasGroup>().alpha = 0;
+        LeanTween.scale(item,new Vector2(1f,1f),0.3f).setIgnoreTimeScale(true);
+        LeanTween.alphaCanvas(item.GetComponent<CanvasGroup>(),1f,0.3f).setIgnoreTimeScale(true);
     }
     //시간 업데이트
     void UpdateTimerDisplay() {
@@ -223,13 +242,21 @@ public class UIController : MonoBehaviour
         int cash = GameManager.Instance.Cash;
         cashText.text = CashToString(cash) + "원";
     }
+    public void CashAnim() {
+        cashText.color = Color.green;
+        LeanTween.scale(cashText.rectTransform,new Vector2(2f,2f), 1f).setEase(LeanTweenType.easeOutCirc).setIgnoreTimeScale(true);
+        LeanTween.scale(cashText.rectTransform,new Vector2(1f,1f), 1f).setEase(LeanTweenType.easeInBack).setDelay(1f).setOnComplete(FinishCashAnim).setIgnoreTimeScale(true);
+    }
+    void FinishCashAnim() {
+        cashText.color = Color.white;
+    }
     //한국식 표현으로 전환
     string CashToString(int cash) {
         string st = "0";
         if(cash >= 100000000) {
             st = (cash/100000000).ToString() + "억";
             if((cash%100000000)/10000 > 0)
-                st += (cash%100000000).ToString() + "만";
+                st += ((cash%100000000)/10000).ToString() + "만";
         }
         else if(cash >= 10000) {
             st = (cash/10000).ToString() + "만";
