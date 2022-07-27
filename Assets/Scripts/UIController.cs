@@ -7,9 +7,9 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage;
+    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage, resultScreen, resultText, resultBox, clearText;
     [SerializeField]
-    GameObject[] apps, appIcons;
+    GameObject[] apps, appIcons, resultRow;
     [SerializeField]
     TextMeshProUGUI timeText, cashText;
     
@@ -19,11 +19,13 @@ public class UIController : MonoBehaviour
     Sprite[] stars;
     [SerializeField]
     OrderManager orderManager;
+    [SerializeField]
+    CameraController mainCam;
     public AnimationCurve vibrateCurve;
     public ProgressBar progressBar;
     public bool phoneOpen = false;
     bool onTransition = false;
-    int currentApp = 0, pastApp = 0;
+    int currentApp = 0, pastApp = 0, moneyBefore = 0;
     public string[][] reviewComment = {
         //속도도 빠르고 안정성도 높은 경우
         new string[] {"완벽하네요!","최고에요:]",},
@@ -41,6 +43,17 @@ public class UIController : MonoBehaviour
         new string[] {"정말 속도와 상태가 최악입니다! 다시는 안시킬게요"}
     };
     //핸드폰 열기
+    private void Awake() {
+        GameManager.OnGameStateChanged += GameStateChange;
+    }
+    private void GameStateChange(GameState gameState) {
+        if (gameState == GameState.Clear) {
+            DayClear();
+        }
+        if (gameState == GameState.GameOver) {
+            Debug.Log("gameeee overrr!!!");
+        }
+    }
     public void OpenUI() {
         LeanTween.alpha(panelRT, 0.6f, 0.3f).setIgnoreTimeScale(true);
         LeanTween.moveLocal(phone, new Vector3(-490f, -54.275f, 0), 0.4f).setEase(LeanTweenType.easeOutBack).setOnComplete(transitionFinish).setIgnoreTimeScale(true);
@@ -87,15 +100,10 @@ public class UIController : MonoBehaviour
     }
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
-            progressBar.ShowBar();
+            orderManager.timer += 300;
+            GameManager.Instance.Cash += 43236572;
         }
-        if(Input.GetKeyDown(KeyCode.A)) {
-            progressBar.HideBar();
-        }
-        if(Input.GetKeyDown(KeyCode.S)) {
-            progressBar.FullBar();
-        }
-        if(Input.GetButtonDown("Menu") && !onTransition) {
+        if(Input.GetButtonDown("Menu") && !onTransition && GameManager.Instance.State == GameState.Play) {
             onTransition = true;
             if(phoneOpen) {
                 Resume();
@@ -205,11 +213,16 @@ public class UIController : MonoBehaviour
     GameObject tmpObj;
     //오더 확인했을 때 풀에서 제거
     public void AcceptOrder(GameObject obj) {
-        int index = int.Parse(obj.transform.GetChild(4).name);
-        orderManager.MakeOrder(index);
-        LeanTween.scale(obj,new Vector2(1f,0.05f),0.3f).setIgnoreTimeScale(true);
-        tmpObj = obj;
-        LeanTween.alphaCanvas(obj.GetComponent<CanvasGroup>(),0,0.3f).setIgnoreTimeScale(true).setOnComplete(DestroyObj);
+        if (orderManager.CheckIfNotFull()) {
+            int index = int.Parse(obj.transform.GetChild(4).name);
+            orderManager.MakeOrder(index);
+            LeanTween.scale(obj,new Vector2(1f,0.05f),0.3f).setIgnoreTimeScale(true);
+            tmpObj = obj;
+            LeanTween.alphaCanvas(obj.GetComponent<CanvasGroup>(),0,0.3f).setIgnoreTimeScale(true).setOnComplete(DestroyObj);
+        } else {
+            LeanTween.moveLocalX(obj, obj.GetComponent<RectTransform>().localPosition.x + 0.3f, 0.2f).setEase(vibrateCurve).setIgnoreTimeScale(true);
+            LeanTween.moveLocalX(obj, obj.GetComponent<RectTransform>().localPosition.x , 0.1f).setDelay(0.2f).setIgnoreTimeScale(true);
+        }
     }
     void DestroyObj() {
         Destroy(tmpObj);
@@ -266,5 +279,71 @@ public class UIController : MonoBehaviour
         else
             st = cash.ToString();
         return st;
+    }
+    //결과 창
+    void DayClear() {
+        CloseApp(currentApp);
+        resultScreen.SetActive(true);
+        //패널
+        LeanTween.alpha(panelRT, 0.6f, 3f).setIgnoreTimeScale(true).setDelay(3f).setOnComplete(Pause);
+        //카메라
+        mainCam.ResultScreen();
+        //폰 숨기기
+        LeanTween.moveY(phone, -1200f, 1f).setEase(LeanTweenType.easeInQuad).setDelay(3f).setIgnoreTimeScale(true);
+        //헤더
+        resultText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Day " + GameManager.Instance.Day.ToString();
+        resultText.GetComponent<CanvasGroup>().alpha = 0;
+        LeanTween.alphaCanvas(resultText.GetComponent<CanvasGroup>(), 1f, 0.3f).setDelay(6f).setIgnoreTimeScale(true);
+        //시간, 돈
+        foreach(GameObject row in resultRow) {
+            row.GetComponent<CanvasGroup>().alpha = 0;
+        }
+        //첫번째 줄
+        resultRow[0].GetComponent<RectTransform>().localPosition = new Vector2(0, 125f);
+        LeanTween.moveLocalY(resultRow[0],220f, 0.3f).setDelay(7f).setIgnoreTimeScale(true);
+        LeanTween.alphaCanvas(resultRow[0].GetComponent<CanvasGroup>(), 1f, 0.3f).setDelay(7f).setIgnoreTimeScale(true);
+        int min = Mathf.RoundToInt(orderManager.timer) / 60;
+        int sec = Mathf.RoundToInt(orderManager.timer) % 60;
+        TextMeshProUGUI timeText = resultRow[0].transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        LeanTween.value(0, min, 0.5f).setDelay(7f).setIgnoreTimeScale(true).setOnUpdate((float minVal) => {
+            timeText.text = Mathf.RoundToInt(minVal).ToString() + "분 0초";
+        });
+        LeanTween.value(0, sec, 0.5f).setDelay(7.5f).setIgnoreTimeScale(true).setOnUpdate((float secVal) => {
+            timeText.text = min.ToString() + "분 " + Mathf.RoundToInt(secVal).ToString() + "초";
+        });
+        //두번째 줄
+        resultRow[1].GetComponent<RectTransform>().localPosition = new Vector2(0, 30f);
+        LeanTween.moveLocalY(resultRow[1],125f, 0.3f).setDelay(8f).setIgnoreTimeScale(true);
+        LeanTween.alphaCanvas(resultRow[1].GetComponent<CanvasGroup>(), 1f, 0.3f).setDelay(8f).setIgnoreTimeScale(true);
+        TextMeshProUGUI moneyText = resultRow[1].transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        LeanTween.value(0, GameManager.Instance.Cash, 1f).setDelay(8f).setEase(LeanTweenType.easeOutQuart).setIgnoreTimeScale(true).setOnUpdate((float cash) => {
+            moneyText.text = CashToString(Mathf.RoundToInt(cash)) + "원";
+        });
+        //세번째 줄
+        resultRow[2].GetComponent<RectTransform>().localPosition = new Vector2(0, -65f);
+        LeanTween.moveLocalY(resultRow[2], 30f, 0.3f).setDelay(9f).setIgnoreTimeScale(true);
+        LeanTween.alphaCanvas(resultRow[2].GetComponent<CanvasGroup>(), 1f, 0.3f).setDelay(9f).setIgnoreTimeScale(true);
+        TextMeshProUGUI dCountText = resultRow[2].transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        LeanTween.value(0, GameManager.Instance.DeliveryCount, 1f).setDelay(9f).setEase(LeanTweenType.easeOutCubic).setIgnoreTimeScale(true).setOnUpdate((float d) => {
+            dCountText.text = Mathf.RoundToInt(d) + "건";
+        });
+        //결과
+        resultBox.GetComponent<CanvasGroup>().alpha = 0;
+        resultBox.GetComponent<RectTransform>().localScale = new Vector3(0.01f, 1f, 1f);
+        LeanTween.alphaCanvas(resultBox.GetComponent<CanvasGroup>(), 1f, 0.3f).setDelay(10f).setIgnoreTimeScale(true);
+        LeanTween.scaleX(resultBox, 1f, 0.3f).setEase(LeanTweenType.easeOutSine).setDelay(10f).setIgnoreTimeScale(true);
+        TextMeshProUGUI totalMoneyText = resultBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        LeanTween.value(moneyBefore, GameManager.Instance.TotalCash, 1f).setDelay(10f).setEase(LeanTweenType.easeOutQuart).setIgnoreTimeScale(true).setOnUpdate((float cash) => {
+            totalMoneyText.text = CashToString(Mathf.RoundToInt(cash)) + "원";
+        });
+        clearText.GetComponent<CanvasGroup>().alpha = 0;
+        clearText.GetComponent<RectTransform>().localScale = new Vector3(3f, 3f, 1f);
+        LeanTween.rotateLocal(clearText, new Vector3(0, 0, 60f), 0).setIgnoreTimeScale(true);
+        LeanTween.rotateLocal(clearText, new Vector3(0, 0, 0), 0.3f).setEase(LeanTweenType.easeOutBack).setDelay(12f).setIgnoreTimeScale(true);
+        LeanTween.scale(clearText, new Vector3(1f,1f,1f), 0.3f).setEase(LeanTweenType.easeOutCubic).setDelay(12f).setIgnoreTimeScale(true);
+        LeanTween.alphaCanvas(clearText.GetComponent<CanvasGroup>(), 1f, 0.1f).setDelay(12f).setIgnoreTimeScale(true).setOnComplete(ShowContinueButton);
+    }
+    void ShowContinueButton() {
+        moneyBefore = GameManager.Instance.TotalCash;
     }
 }
