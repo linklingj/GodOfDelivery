@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     displayObject disp;
     MapManager mapManager;
     UIController uIController;
+    OrderManager orderManager;
     public Camera cam;
     public TrailRenderer[] tireMarks;
     public GameObject hitEffect;
@@ -35,15 +36,19 @@ public class PlayerController : MonoBehaviour
         disp = GetComponent<displayObject>();
         mapManager = FindObjectOfType<MapManager>();
         uIController = FindObjectOfType<UIController>();
+        orderManager = FindObjectOfType<OrderManager>();
     }
 
     void Update() {
-        if (GameManager.Instance.State != GameState.Play)
-            return;
         //입력 제어
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        accelerationInput = Input.GetAxisRaw("accelerate");
-        deccelerationInput = Input.GetAxisRaw("deccelerate");
+        if (GameManager.Instance.State == GameState.Play) {
+            mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+            accelerationInput = Input.GetAxisRaw("accelerate");
+            deccelerationInput = Input.GetAxisRaw("deccelerate");
+        } else {
+            accelerationInput = 0;
+            deccelerationInput = 0;
+        }
         //회전 애니메이션 설정
         disp.rotation = new Vector3(0, 0, (transform.localEulerAngles.z + 90) % 360);
         //바퀴자국
@@ -111,11 +116,27 @@ public class PlayerController : MonoBehaviour
         rb.velocity = forwardVelocity + rightVelocity * driftFactor;
     }
     //충격 vfx 생성
+    bool collideable = true;
     private void OnCollisionEnter2D(Collision2D col) {
-        if (velMag > maxSpeed * 0.3f) {
-            GameObject effect = Instantiate(hitEffect, col.contacts[0].point, Quaternion.identity);
+        ContactPoint2D c = col.contacts[0];
+        if (c.normalImpulse > 2f && collideable) {
+            GameObject effect = Instantiate(hitEffect, c.point, Quaternion.identity);
             Destroy(effect, 0.3f);
+            int damage;
+            if (c.normalImpulse > 10)
+                damage = 3;
+            else if (c.normalImpulse > 5)
+                damage = 2;
+            else
+                damage = 1;
+            orderManager.AddDamage(damage);
+            collideable = false;
+            StartCoroutine(ColWait());
         }
+    }
+    IEnumerator ColWait() {
+        yield return new WaitForSeconds(0.5f);
+        collideable = true;
     }
     //바퀴자국 생성
     void CheckTrail() {
