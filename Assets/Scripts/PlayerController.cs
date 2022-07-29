@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update() {
+        if (GameManager.Instance.State != GameState.Play)
+            return;
         //입력 제어
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         accelerationInput = Input.GetAxisRaw("accelerate");

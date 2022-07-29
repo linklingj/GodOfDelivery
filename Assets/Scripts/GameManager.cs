@@ -5,7 +5,9 @@ using UnityEngine;
 
 public enum GameState {
     Menu,
-    Play
+    Play,
+    Clear,
+    GameOver
 }
 
 public class GameManager : MonoBehaviour
@@ -14,6 +16,11 @@ public class GameManager : MonoBehaviour
     public OrderManager orderManager;
     public GameState State;
     public int Cash;
+    public int TotalCash;
+    public int Day;
+    public int DeliveryCount;
+    public int[] targetCashPerDay;
+    public int[] targetTimePerDay;
     public static event Action<GameState> OnGameStateChanged;
 
     
@@ -22,7 +29,10 @@ public class GameManager : MonoBehaviour
     }
     private void Start() {
         Cash = 0;
-        UpdateGameState(GameState.Menu);
+        TotalCash = 0;
+        Day = 1;
+        DeliveryCount = 0;
+        UpdateGameState(GameState.Play);
 
         //test
         orderManager.AddOrderPool();
@@ -37,10 +47,31 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Play:
                 break;
+            case GameState.Clear:
+                TotalCash += Cash;
+                break;
+            case GameState.GameOver:
+                break;
             default:
                 break;
         }
         OnGameStateChanged?.Invoke(newState);
+    }
+    private void Update() {
+        if (Cash >= targetCashPerDay[Day-1] && State == GameState.Play) {
+            ClearDay();
+            Debug.Log("Success");
+        }
+        if (orderManager.timer >= targetTimePerDay[Day-1] * 60 && State == GameState.Play) {
+            GameOver();
+            Debug.Log("game over!");
+        }
+    }
+    void ClearDay() {
+        UpdateGameState(GameState.Clear);
+    }
+    void GameOver() {
+        UpdateGameState(GameState.GameOver);
     }
     // IEnumerator Test() {
     //     yield return new WaitForSeconds(1f);

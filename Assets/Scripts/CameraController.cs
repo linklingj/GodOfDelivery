@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public float speed;
     public Transform player;
+    Camera cam;
     PlayerController playerController;
     Vector2 camPos;
     Vector3 targetPos;
@@ -14,9 +15,12 @@ public class CameraController : MonoBehaviour
 
     void Start() {
         playerController = player.GetComponent<PlayerController>();
+        cam = GetComponent<Camera>();
         transform.position = new Vector3(player.transform.position.x,player.transform.position.y,-10f);
     }
     void Update() {
+        if(GameManager.Instance.State != GameState.Play)
+            return;
         //카메라가 미리 앞으로 나가는 정도 -> 플레이어 속도에 비례
         float lookAhead = (playerController.velMag / playerController.maxSpeed) * maxLookAhead;
         //플레이어의 방향을 위치벡터로 전환
@@ -35,5 +39,11 @@ public class CameraController : MonoBehaviour
             camPos.y = minY;
         //카메라 위치 설정
         transform.position = new Vector3(camPos.x,camPos.y,transform.position.z);
+    }
+    public void ResultScreen() {
+        LeanTween.value(gameObject, cam.orthographicSize, 3f, 3f).setDelay(3f).setEase(LeanTweenType.easeInOutSine).setOnUpdate((float flt) =>  {
+            cam.orthographicSize = flt;
+        });
+        LeanTween.moveLocal(gameObject, transform.position + Vector3.right * 3f, 3f).setDelay(3f).setEase(LeanTweenType.easeInOutSine);
     }
 }

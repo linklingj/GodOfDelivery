@@ -10,6 +10,8 @@ public class OrderManager : MonoBehaviour
     public List<Order> orders = new List<Order>();
     public List<GameObject> arrows = new List<GameObject>();
     public List<AvailableOrder> orderPool = new List<AvailableOrder>();
+    public int maxOrderCount = 1;
+
     public float timer;
     public GameObject arrowPrefab;
     public Transform canvas;
@@ -64,7 +66,8 @@ public class OrderManager : MonoBehaviour
         ResetTimer();
     }
     private void Update() {
-        timer += Time.deltaTime;
+        if (GameManager.Instance.State == GameState.Play)
+            timer += Time.deltaTime;
     }
     void ResetTimer() {
         timer = 0;
@@ -97,6 +100,9 @@ public class OrderManager : MonoBehaviour
         dPNum = Random.Range(0, deliveryPoints.Length);
         orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 80f, 200000000));
     }
+    public bool CheckIfNotFull() {
+        return (orders.Count < maxOrderCount);
+    }
     public void MakeOrder(int index) {
         Debug.Log("order in");
         Order order = orderPool[index].AddToOrderList(timer);
@@ -120,6 +126,7 @@ public class OrderManager : MonoBehaviour
     public void FinishOrder(int index) {
         Order order = orders[index];
         order.deliveryPoint.pointOff();
+        GameManager.Instance.DeliveryCount += 1;
 
         int clearTime = Mathf.FloorToInt(timer - order.startTime);
         int speedStar = ReviewSaftey();
