@@ -48,10 +48,10 @@ public class UIController : MonoBehaviour
     }
     private void GameStateChange(GameState gameState) {
         if (gameState == GameState.Clear) {
-            DayClear(true);
+            DayClear();
         }
         if (gameState == GameState.GameOver) {
-            DayClear(false);
+            Debug.Log("gameeee overrr!!!");
         }
     }
     public void OpenUI() {
@@ -100,7 +100,8 @@ public class UIController : MonoBehaviour
     }
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
-            orderManager.timer += 3000;
+            orderManager.timer += 300;
+            GameManager.Instance.Cash += 43236572;
         }
         if(Input.GetButtonDown("Menu") && !onTransition && GameManager.Instance.State == GameState.Play) {
             onTransition = true;
@@ -189,10 +190,7 @@ public class UIController : MonoBehaviour
         foreach (string[] order in orders) {
             GameObject item = Instantiate(deliveringOrderPrefab, Vector3.zero, Quaternion.identity);
             item.transform.SetParent(deliveringOrderParent.transform);
-            if (int.Parse(order[2]) > 0)
-                order[2] += "초 남음";
-            else
-                order[2] = "시간 초과";
+            order[2] += "초 남음";
             order[3] = CashToString(int.Parse(order[3])) + "원";
             for (int i=0; i<4; i++) {
                 TextMeshProUGUI text = item.transform.GetChild(i).GetComponent<TextMeshProUGUI>();
@@ -283,11 +281,11 @@ public class UIController : MonoBehaviour
         return st;
     }
     //결과 창
-    void DayClear(bool pass) {
+    void DayClear() {
         CloseApp(currentApp);
         resultScreen.SetActive(true);
         //패널
-        LeanTween.alpha(panelRT, 0.6f, 3f).setOnComplete(Pause).setIgnoreTimeScale(true).setDelay(3f);
+        LeanTween.alpha(panelRT, 0.6f, 3f).setIgnoreTimeScale(true).setDelay(3f).setOnComplete(Pause);
         //카메라
         mainCam.ResultScreen();
         //폰 숨기기
@@ -338,14 +336,6 @@ public class UIController : MonoBehaviour
         LeanTween.value(moneyBefore, GameManager.Instance.TotalCash, 1f).setDelay(10f).setEase(LeanTweenType.easeOutQuart).setIgnoreTimeScale(true).setOnUpdate((float cash) => {
             totalMoneyText.text = CashToString(Mathf.RoundToInt(cash)) + "원";
         });
-        TextMeshProUGUI clearT = clearText.GetComponent<TextMeshProUGUI>();
-        if(pass) {
-            clearT.color = Color.white;
-            clearT.text = "클리어";
-        } else {
-            clearT.color = new Color32(214, 48, 49, 255);
-            clearT.text = "게임 오버";
-        }
         clearText.GetComponent<CanvasGroup>().alpha = 0;
         clearText.GetComponent<RectTransform>().localScale = new Vector3(3f, 3f, 1f);
         LeanTween.rotateLocal(clearText, new Vector3(0, 0, 60f), 0).setIgnoreTimeScale(true);

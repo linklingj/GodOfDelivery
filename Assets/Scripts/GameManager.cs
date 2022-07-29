@@ -23,22 +23,22 @@ public class GameManager : MonoBehaviour
     public int[] targetTimePerDay;
     public static event Action<GameState> OnGameStateChanged;
 
-    private int maxOrderPool = 3;
-    float timer;
-    int nextOrderTime;
-    int orderAddingInterval;
-
     
     private void Awake() {
         Instance = this;
     }
     private void Start() {
+        Cash = 0;
         TotalCash = 0;
         Day = 1;
+        DeliveryCount = 0;
         UpdateGameState(GameState.Play);
-        for (int i = 0; i < maxOrderPool; i++) {
-            orderManager.AddOrderPool();
-        }
+
+        //test
+        orderManager.AddOrderPool();
+        //StartCoroutine("Test");
+        
+
     }
     public void UpdateGameState(GameState newState) {
         State = newState;
@@ -46,25 +46,6 @@ public class GameManager : MonoBehaviour
             case GameState.Menu:
                 break;
             case GameState.Play:
-                Cash = 0;
-                DeliveryCount = 0;
-                if (Day == 1) {
-                    maxOrderPool = 3;
-                    orderAddingInterval = 20; 
-                } else if (Day == 2) {
-                    maxOrderPool = 4;
-                    orderAddingInterval = 18; 
-                } else if (Day == 3) {
-                    maxOrderPool = 4;
-                    orderAddingInterval = 16; 
-                } else if (Day == 4) {
-                    maxOrderPool = 5;
-                    orderAddingInterval = 15; 
-                } else if (Day == 5) {
-                    maxOrderPool = 5;
-                    orderAddingInterval = 12; 
-                }
-                nextOrderTime = orderAddingInterval;
                 break;
             case GameState.Clear:
                 TotalCash += Cash;
@@ -77,19 +58,13 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(newState);
     }
     private void Update() {
-        if (State == GameState.Play) {
-            timer = orderManager.timer;
-            if (timer > nextOrderTime) {
-                if (orderManager.orderPool.FindAll(x => x.state == 0).Count < maxOrderPool)
-                    orderManager.AddOrderPool();
-                nextOrderTime += orderAddingInterval;
-            }
-            if (Cash >= targetCashPerDay[Day-1]) {
-                ClearDay();
-            }
-            if (orderManager.timer >= targetTimePerDay[Day-1] * 60) {
-                GameOver();
-            }
+        if (Cash >= targetCashPerDay[Day-1] && State == GameState.Play) {
+            ClearDay();
+            Debug.Log("Success");
+        }
+        if (orderManager.timer >= targetTimePerDay[Day-1] * 60 && State == GameState.Play) {
+            GameOver();
+            Debug.Log("game over!");
         }
     }
     void ClearDay() {
@@ -98,5 +73,9 @@ public class GameManager : MonoBehaviour
     void GameOver() {
         UpdateGameState(GameState.GameOver);
     }
+    // IEnumerator Test() {
+    //     yield return new WaitForSeconds(1f);
+    //     orderManager.MakeOrder(0);
+    // }
 }
 
