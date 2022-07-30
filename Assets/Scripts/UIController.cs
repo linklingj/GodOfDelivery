@@ -48,10 +48,10 @@ public class UIController : MonoBehaviour
     }
     private void GameStateChange(GameState gameState) {
         if (gameState == GameState.Clear) {
-            DayClear();
+            DayClear(true);
         }
         if (gameState == GameState.GameOver) {
-            Debug.Log("gameeee overrr!!!");
+            DayClear(false);
         }
     }
     public void OpenUI() {
@@ -100,8 +100,8 @@ public class UIController : MonoBehaviour
     }
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
-            orderManager.timer += 300;
-            GameManager.Instance.Cash += 43236572;
+            GameManager.Instance.Cash += 80000;
+            orderManager.timer += 600;
         }
         if(Input.GetButtonDown("Menu") && !onTransition && GameManager.Instance.State == GameState.Play) {
             onTransition = true;
@@ -190,7 +190,10 @@ public class UIController : MonoBehaviour
         foreach (string[] order in orders) {
             GameObject item = Instantiate(deliveringOrderPrefab, Vector3.zero, Quaternion.identity);
             item.transform.SetParent(deliveringOrderParent.transform);
-            order[2] += "초 남음";
+            if (int.Parse(order[2]) > 0)
+                order[2] += "초 남음";
+            else
+                order[2] = "시간 초과";
             order[3] = CashToString(int.Parse(order[3])) + "원";
             for (int i=0; i<4; i++) {
                 TextMeshProUGUI text = item.transform.GetChild(i).GetComponent<TextMeshProUGUI>();
@@ -281,7 +284,7 @@ public class UIController : MonoBehaviour
         return st;
     }
     //결과 창
-    void DayClear() {
+    void DayClear(bool pass) {
         CloseApp(currentApp);
         resultScreen.SetActive(true);
         //패널
@@ -336,6 +339,14 @@ public class UIController : MonoBehaviour
         LeanTween.value(moneyBefore, GameManager.Instance.TotalCash, 1f).setDelay(10f).setEase(LeanTweenType.easeOutQuart).setIgnoreTimeScale(true).setOnUpdate((float cash) => {
             totalMoneyText.text = CashToString(Mathf.RoundToInt(cash)) + "원";
         });
+        TextMeshProUGUI cT = clearText.GetComponent<TextMeshProUGUI>();
+        if (pass) {
+            cT.text = "클리어";
+            cT.color = Color.white;
+        } else {
+            cT.text = "게임 오버";
+            cT.color = new Color32(214, 48, 49, 255);
+        }
         clearText.GetComponent<CanvasGroup>().alpha = 0;
         clearText.GetComponent<RectTransform>().localScale = new Vector3(3f, 3f, 1f);
         LeanTween.rotateLocal(clearText, new Vector3(0, 0, 60f), 0).setIgnoreTimeScale(true);

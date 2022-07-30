@@ -15,6 +15,8 @@ public class OrderManager : MonoBehaviour
     public float timer;
     public GameObject arrowPrefab;
     public Transform canvas;
+    int spawnIdx = 1;
+    int orderPoolIdx = 0;
     //오더 클래스
     //index: 리스트에서의 인덱스, state: 상태(0: 픽업 전, 1: 픽업후 배달전), 픽업.배달 포인트, 목표 시간, 최대 보상, 시작시간
     public class Order {
@@ -25,6 +27,7 @@ public class OrderManager : MonoBehaviour
         public float targetTime;
         public int maxReward;
         public float startTime;
+        public int damage;
         //생성자
         public Order(int i, PickupPoint pp, DeliveryPoint dp, float tT, int mR, float sT) {
             index = i;
@@ -61,6 +64,17 @@ public class OrderManager : MonoBehaviour
             return new Order(0, pickupPoint, deliveryPoint, targetTime, maxReward, startTime);
         }
     }
+     private void Awake() {
+        GameManager.OnGameStateChanged += GameStateChange;
+    }
+    void GameStateChange(GameState gameState) {
+        if (gameState == GameState.Play) {
+            ResetTimer();
+            spawnIdx = 1;
+            orders.RemoveAll(x => true);
+            orderPool.RemoveAll(x => true);
+        }
+    }
     private void Start() {
         //스타트가 아니라 게임스테이트 바뀔때 타이머 리셋되도록 수정 필요
         ResetTimer();
@@ -78,33 +92,31 @@ public class OrderManager : MonoBehaviour
         int pPNum = Random.Range(0, pickupPoints.Length);
         int dPNum = Random.Range(0, deliveryPoints.Length);
         //테스트 주문 생성
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 1000));
-        poolSize = orderPool.Count;
-        pPNum = Random.Range(0, pickupPoints.Length);
-        dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 30f, 5000));
-        poolSize = orderPool.Count;
-        pPNum = Random.Range(0, pickupPoints.Length);
-        dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 60f, 20000));
-        poolSize = orderPool.Count;
-        pPNum = Random.Range(0, pickupPoints.Length);
-        dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 20f, 90000));
-        poolSize = orderPool.Count;
-        pPNum = Random.Range(0, pickupPoints.Length);
-        dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 110f, 300000));
-        poolSize = orderPool.Count;
-        pPNum = Random.Range(0, pickupPoints.Length);
-        dPNum = Random.Range(0, deliveryPoints.Length);
-        orderPool.Add(new AvailableOrder(poolSize, pickupPoints[pPNum], deliveryPoints[dPNum], 80f, 200000000));
+        PickupPoint pPoint = pickupPoints[Random.Range(0, pickupPoints.Length)];
+        DeliveryPoint dPoint = deliveryPoints[Random.Range(0, deliveryPoints.Length)];
+        float dist = Vector2.Distance(pPoint.transform.position, dPoint.transform.position);
+        float t = Mathf.RoundToInt(dist/8) + 17f;
+        int r = Mathf.FloorToInt(Mathf.Round(dist*80)/100)*100 + 3000;
+        float luck = Random.Range(-1f, 1f);
+        if (luck > 0.9f) {
+            t *= 2;
+            r *= 2;
+        } else if (luck > 0.7f) {
+            t = Mathf.RoundToInt(t * 1.5f);
+            r = Mathf.FloorToInt(Mathf.Round(r * 1.5f)/100)*100;
+        } else if (luck < -0.9f) {
+            t = Mathf.RoundToInt(t * 0.8f);
+            r = Mathf.FloorToInt(Mathf.Round(r * 0.3f)/100)*100;
+        } else if (luck < -0.7f) {
+            t = Mathf.RoundToInt(t * 0.9f);
+            r = Mathf.FloorToInt(Mathf.Round(r * 0.7f)/100)*100;
+        }
+        orderPool.Add(new AvailableOrder(orderPoolIdx++, pPoint, dPoint, t, r));
     }
     public bool CheckIfNotFull() {
         return (orders.Count < maxOrderCount);
     }
     public void MakeOrder(int index) {
-        Debug.Log("order in");
         Order order = orderPool[index].AddToOrderList(timer);
         orders.Add(order);
         uIController.AddOrderToUI(new string[] {order.pickupPoint.transform.name,order.deliveryPoint.transform.name,order.targetTime.ToString(),order.maxReward.ToString()});
@@ -129,8 +141,8 @@ public class OrderManager : MonoBehaviour
         GameManager.Instance.DeliveryCount += 1;
 
         int clearTime = Mathf.FloorToInt(timer - order.startTime);
-        int speedStar = ReviewSaftey();
-        int safteyStar = ReviewSpeed(clearTime, order.targetTime);
+        int safteyStar = ReviewSaftey(order.damage);
+        int speedStar = ReviewSpeed(clearTime, order.targetTime);
         int reward = orders[index].maxReward;
 
         GameManager.Instance.Cash += reward;
@@ -139,14 +151,23 @@ public class OrderManager : MonoBehaviour
         orders.RemoveAt(index);
         Destroy(arrows[index]);
         arrows.RemoveAt(index);
-
-        Debug.Log("speed:"+speedStar);
-        Debug.Log("saftey" +safteyStar);
     }
     //안정성 평가 (0~5의 정수 리턴)
-    int ReviewSaftey() {
-        //수정 필요
-        int point = Random.Range(0,6);
+    int ReviewSaftey(int damage) {
+        int point = 0;
+        if (damage <= 0) {
+            point = 5;
+        } else if (damage <= 1) {
+            point = 4;
+        } else if (damage <= 2) {
+            point = 3;
+        } else if (damage <= 4) {
+            point = 2;
+        } else if (damage <= 6) {
+            point = 1;
+        } else {
+            point = 0;
+        }
         return point;
     }
     //속도 평가 (0~5의 정수 리턴)
@@ -155,10 +176,23 @@ public class OrderManager : MonoBehaviour
         //수정 필요
         if (clearTime >= targetTime) {
             point = 0;
+        } else if (clearTime <= targetTime * 0.5f) {
+            point = 5;
+        } else if (clearTime <= targetTime * 0.6f) {
+            point = 4;
+        } else if (clearTime <= targetTime * 0.8f) {
+            point = 3;
+        } else if (clearTime <= targetTime * 0.9f) {
+            point = 2;
         } else {
-            point = Random.Range(0,6);
+            point = 1;
         }
         return point;
+    }
+    public void AddDamage(int d) {
+        foreach (Order order in orders) {
+            order.damage += d;
+        }
     }
     public List<string[]> PassOrders() {
         if (orderPool.Count == 0)

@@ -1188,7 +1188,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB9E8\uBC1C \uC124\uBA85"
+  m_text: "\uB9E8\uBC1C\uC124\uBA85"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 56da175a6a379b844b1bbf6241af0de1, type: 2}
   m_sharedMaterial: {fileID: -8236594537690890483, guid: 56da175a6a379b844b1bbf6241af0de1, type: 2}
@@ -1801,7 +1801,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8943247939844730427}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
