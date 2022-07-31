@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState {
+    Title,
+    Story,
     Menu,
     Play,
     Clear,
@@ -22,30 +25,48 @@ public class GameManager : MonoBehaviour
     public int[] targetCashPerDay;
     public int[] targetTimePerDay;
     public static event Action<GameState> OnGameStateChanged;
-    private int maxOrderPool = 3;
+    public int maxOrderPool = 3;
     float timer;
     int nextOrderTime;
     int orderAddingInterval;
     
     private void Awake() {
-        Instance = this;
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(gameObject);
+        }
     }
     private void Start() {
         TotalCash = 0;
         Day = 1;
+        UpdateGameState(GameState.Title);
+    }
+    public void Title_GameStart() {
+        UpdateGameState(GameState.Story);
+    }
+    public void EndStory() {
+        UpdateGameState(GameState.Menu);
+    }
+    public void ToTitle() {
+        UpdateGameState(GameState.Title);
+    }
+    public void StartGamePlay() {
         UpdateGameState(GameState.Play);
-
-        //test
-        for (int i = 0; i < maxOrderPool; i++) {
-            orderManager.AddOrderPool();
-        }
-        
-
     }
     public void UpdateGameState(GameState newState) {
         State = newState;
+        Debug.Log(State);
         switch (newState) {
+            case GameState.Title:
+                SceneManager.LoadScene("First");
+                break;
+            case GameState.Story:
+                SceneManager.LoadScene("Story");
+                break;
             case GameState.Menu:
+                SceneManager.LoadScene("PreStart");
                 break;
             case GameState.Play:
                 Cash = 0;
@@ -67,6 +88,7 @@ public class GameManager : MonoBehaviour
                     orderAddingInterval = 12; 
                 }
                 nextOrderTime = orderAddingInterval;
+                SceneManager.LoadSceneAsync("MainScene");
                 break;
             case GameState.Clear:
                 TotalCash += Cash;
@@ -79,6 +101,7 @@ public class GameManager : MonoBehaviour
         OnGameStateChanged?.Invoke(newState);
     }
     private void Update() {
+        Debug.Log(State);
         if (State == GameState.Play) {
             timer = orderManager.timer;
             if (timer > nextOrderTime) {
