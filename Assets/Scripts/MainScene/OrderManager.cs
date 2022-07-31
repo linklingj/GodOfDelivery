@@ -64,10 +64,14 @@ public class OrderManager : MonoBehaviour
             return new Order(0, pickupPoint, deliveryPoint, targetTime, maxReward, startTime);
         }
     }
-     private void Awake() {
+    private void Awake() {
+        StartCoroutine("AddEvent");
+    }
+    IEnumerator AddEvent() {
+        yield return new WaitForSeconds(0.2f);
         GameManager.OnGameStateChanged += GameStateChange;
     }
-    void GameStateChange(GameState gameState) {
+    public void GameStateChange(GameState gameState) {
         if (gameState == GameState.Play) {
             ResetTimer();
             spawnIdx = 1;

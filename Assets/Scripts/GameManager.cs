@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     float timer;
     int nextOrderTime;
     int orderAddingInterval;
+    bool loading;
     
     private void Awake() {
         if (Instance == null) {
@@ -57,7 +58,6 @@ public class GameManager : MonoBehaviour
     }
     public void UpdateGameState(GameState newState) {
         State = newState;
-        Debug.Log(State);
         switch (newState) {
             case GameState.Title:
                 SceneManager.LoadScene("First");
@@ -88,7 +88,8 @@ public class GameManager : MonoBehaviour
                     orderAddingInterval = 12; 
                 }
                 nextOrderTime = orderAddingInterval;
-                SceneManager.LoadSceneAsync("MainScene");
+                OnGameStateChanged = null;
+                StartCoroutine(Loading());
                 break;
             case GameState.Clear:
                 TotalCash += Cash;
@@ -100,9 +101,17 @@ public class GameManager : MonoBehaviour
         }
         OnGameStateChanged?.Invoke(newState);
     }
+    IEnumerator Loading() {
+        loading = true;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainScene");
+        while(!asyncLoad.isDone) {
+            yield return null;
+        }
+        orderManager = FindObjectOfType<OrderManager>();
+        loading = false;
+    }
     private void Update() {
-        Debug.Log(State);
-        if (State == GameState.Play) {
+        if (State == GameState.Play && !loading) {
             timer = orderManager.timer;
             if (timer > nextOrderTime) {
                 if (orderManager.orderPool.FindAll(x => x.state == 0).Count < maxOrderPool)
@@ -122,6 +131,14 @@ public class GameManager : MonoBehaviour
     }
     void GameOver() {
         UpdateGameState(GameState.GameOver);
+    }
+    public void NewDay() {
+        Day += 1;
+        UpdateGameState(GameState.Menu);
+    }
+    public void ResetDay() {
+        //저장해둔거 로딩
+        UpdateGameState(GameState.Menu);
     }
 }
 

@@ -7,7 +7,7 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage, resultScreen, resultText, resultBox, clearText;
+    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage, resultScreen, resultText, resultBox, clearText, contBtn, reBtn;
     [SerializeField]
     GameObject[] apps, appIcons, resultRow;
     [SerializeField]
@@ -42,8 +42,11 @@ public class UIController : MonoBehaviour
         //둘다 안좋은 경우
         new string[] {"정말 속도와 상태가 최악입니다! 다시는 안시킬게요","돈 아까울 정도로 별로에요","배달 기사가 최악입니다"}
     };
-    //핸드폰 열기
     private void Awake() {
+        StartCoroutine("AddEvent");
+    }
+    IEnumerator AddEvent() {
+        yield return new WaitForSeconds(0.2f);
         GameManager.OnGameStateChanged += GameStateChange;
     }
     private void GameStateChange(GameState gameState) {
@@ -53,6 +56,29 @@ public class UIController : MonoBehaviour
         if (gameState == GameState.GameOver) {
             DayClear(false);
         }
+    }
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            GameManager.Instance.Cash += 100000;
+            orderManager.timer += 10;
+        }
+        if(Input.GetButtonDown("Menu") && !onTransition && GameManager.Instance.State == GameState.Play) {
+            onTransition = true;
+            if(phoneOpen) {
+                Resume();
+                CloseUI();
+                CloseApp(currentApp);
+                progressBar.Show();
+            }
+            else {
+                Pause();
+                OpenUI();
+                progressBar.Hide();
+            }
+            phoneOpen = !phoneOpen;
+        }
+        UpdateTimerDisplay();
+        UpdateMoneyDisplay();
     }
     public void OpenUI() {
         LeanTween.alpha(panelRT, 0.6f, 0.3f).setIgnoreTimeScale(true);
@@ -97,29 +123,6 @@ public class UIController : MonoBehaviour
         GameObject app = apps[id];
         LeanTween.moveLocal(app, new Vector3(400f, -1000f, 0f), 0.3f).setEase(LeanTweenType.easeOutQuad).setOnComplete(deactivateApp).setIgnoreTimeScale(true);
         LeanTween.scaleY(app, 0.05f, 0.3f).setEase(LeanTweenType.easeOutQuad).setOnComplete(transitionFinish).setIgnoreTimeScale(true);
-    }
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            GameManager.Instance.Cash += 80000;
-            orderManager.timer += 600;
-        }
-        if(Input.GetButtonDown("Menu") && !onTransition && GameManager.Instance.State == GameState.Play) {
-            onTransition = true;
-            if(phoneOpen) {
-                Resume();
-                CloseUI();
-                CloseApp(currentApp);
-                progressBar.Show();
-            }
-            else {
-                Pause();
-                OpenUI();
-                progressBar.Hide();
-            }
-            phoneOpen = !phoneOpen;
-        }
-        UpdateTimerDisplay();
-        UpdateMoneyDisplay();
     }
     void transitionFinish() {
         onTransition = false;
@@ -284,7 +287,16 @@ public class UIController : MonoBehaviour
         return st;
     }
     //결과 창
-    void DayClear(bool pass) {
+    public void DayClear(bool pass) {
+        if (pass) {
+            contBtn.SetActive(true);
+            reBtn.SetActive(false);
+            contBtn.GetComponent<CanvasGroup>().alpha = 0;
+        } else {
+            contBtn.SetActive(false);
+            reBtn.SetActive(true);
+            reBtn.GetComponent<CanvasGroup>().alpha = 0;
+        }
         CloseApp(currentApp);
         resultScreen.SetActive(true);
         //패널
@@ -352,9 +364,25 @@ public class UIController : MonoBehaviour
         LeanTween.rotateLocal(clearText, new Vector3(0, 0, 60f), 0).setIgnoreTimeScale(true);
         LeanTween.rotateLocal(clearText, new Vector3(0, 0, 0), 0.3f).setEase(LeanTweenType.easeOutBack).setDelay(12f).setIgnoreTimeScale(true);
         LeanTween.scale(clearText, new Vector3(1f,1f,1f), 0.3f).setEase(LeanTweenType.easeOutCubic).setDelay(12f).setIgnoreTimeScale(true);
-        LeanTween.alphaCanvas(clearText.GetComponent<CanvasGroup>(), 1f, 0.1f).setDelay(12f).setIgnoreTimeScale(true).setOnComplete(ShowContinueButton);
+        if (pass) {
+            LeanTween.alphaCanvas(clearText.GetComponent<CanvasGroup>(), 1f, 0.1f).setDelay(12f).setOnComplete(ShowContinueButton).setIgnoreTimeScale(true);
+        } else {
+            LeanTween.alphaCanvas(clearText.GetComponent<CanvasGroup>(), 1f, 0.1f).setDelay(12f).setOnComplete(ShowRestartButton).setIgnoreTimeScale(true);
+        }
     }
     void ShowContinueButton() {
         moneyBefore = GameManager.Instance.TotalCash;
+        LeanTween.alphaCanvas(contBtn.GetComponent<CanvasGroup>(), 1f, 0.3f).setIgnoreTimeScale(true);
+    }
+    void ShowRestartButton() {
+        LeanTween.alphaCanvas(reBtn.GetComponent<CanvasGroup>(), 1f, 0.3f).setIgnoreTimeScale(true);
+    }
+    public void PressContinue() {
+        GameManager.Instance.NewDay();
+        Time.timeScale = 1f;
+    }
+    public void PressRestart() {
+        GameManager.Instance.ResetDay();
+        Time.timeScale = 1f;
     }
 }
