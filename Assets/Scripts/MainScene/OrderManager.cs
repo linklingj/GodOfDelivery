@@ -11,6 +11,14 @@ public class OrderManager : MonoBehaviour
     public List<GameObject> arrows = new List<GameObject>();
     public List<AvailableOrder> orderPool = new List<AvailableOrder>();
     public int maxOrderCount = 1;
+    public int[][] bonus = {
+        new int[] {0,0,0,0,0,0},
+        new int[] {0,0,0,1000,2000,3000},
+        new int[] {0,0,0,5000,10000,20000},
+        new int[] {0,0,0,20000,30000,60000},
+        new int[] {0,0,0,100000,150000,300000},
+        new int[] {0,0,0,500000,1000000,5000000}
+    };
 
     public float timer;
     public GameObject arrowPrefab;
@@ -98,6 +106,7 @@ public class OrderManager : MonoBehaviour
         timer = 0;
     }
     public void AddOrderPool() {
+        int d = GameManager.Instance.Day;
         int poolSize = orderPool.Count;
         int pPNum = Random.Range(0, pickupPoints.Length);
         int dPNum = Random.Range(0, deliveryPoints.Length);
@@ -105,20 +114,51 @@ public class OrderManager : MonoBehaviour
         DeliveryPoint dPoint = deliveryPoints[Random.Range(0, deliveryPoints.Length)];
         float dist = Vector2.Distance(pPoint.transform.position, dPoint.transform.position);
         float t = Mathf.RoundToInt(dist/8) + 17f;
-        int r = Mathf.FloorToInt(Mathf.Round(dist*80)/100)*100 + 3000;
+        //mul: 나눠떨어지는 자리 baseC: 거리와 상관없이 기본보상 dM: 미터당 곱해지는 보상
+        int mul = 0, baseC = 0, dM = 0;
+        switch (d) {
+            case 1:
+                mul = 100;
+                baseC = 3000;
+                dM = 80;
+                return;
+            case 2:
+                mul = 100;
+                baseC = 15000;
+                dM = 400;
+                return;
+            case 3:
+                mul = 1000;
+                baseC = 40000;
+                dM = 1000;
+                return;
+            case 4:
+                mul = 10000;
+                baseC = 120000;
+                dM = 4000;
+                return;
+            case 5:
+                mul = 100000;
+                baseC = 1000000;
+                dM = 30000;
+                return;
+            default:
+                return;
+        }
+        int r = Mathf.FloorToInt(Mathf.Round(dist*dM)/mul)*mul + baseC;
         float luck = Random.Range(-1f, 1f);
         if (luck > 0.9f) {
             t *= 2;
             r *= 2;
         } else if (luck > 0.7f) {
             t = Mathf.RoundToInt(t * 1.5f);
-            r = Mathf.FloorToInt(Mathf.Round(r * 1.5f)/100)*100;
+            r = Mathf.FloorToInt(Mathf.Round(r * 1.5f)/mul)*mul;
         } else if (luck < -0.9f) {
             t = Mathf.RoundToInt(t * 0.8f);
-            r = Mathf.FloorToInt(Mathf.Round(r * 0.3f)/100)*100;
+            r = Mathf.FloorToInt(Mathf.Round(r * 0.3f)/mul)*mul;
         } else if (luck < -0.7f) {
             t = Mathf.RoundToInt(t * 0.9f);
-            r = Mathf.FloorToInt(Mathf.Round(r * 0.7f)/100)*100;
+            r = Mathf.FloorToInt(Mathf.Round(r * 0.7f)/mul)*mul;
         }
         orderPool.Add(new AvailableOrder(orderPoolIdx++, pPoint, dPoint, t, r));
     }
@@ -153,10 +193,11 @@ public class OrderManager : MonoBehaviour
         int safteyStar = ReviewSaftey(order.damage);
         int speedStar = ReviewSpeed(clearTime, order.targetTime);
         int reward = orders[index].maxReward;
+        int b = bonus[GameManager.Instance.Day][Mathf.RoundToInt((speedStar + safteyStar) / 2)];
 
-        GameManager.Instance.Cash += reward;
+        GameManager.Instance.Cash += reward + b;
         uIController.CashAnim();
-        uIController.ReviewMessage(speedStar,safteyStar,clearTime,reward);
+        uIController.ReviewMessage(speedStar,safteyStar,clearTime,reward,b);
         orders.RemoveAt(index);
         Destroy(arrows[index]);
         arrows.RemoveAt(index);

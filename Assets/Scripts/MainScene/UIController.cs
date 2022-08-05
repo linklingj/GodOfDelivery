@@ -141,7 +141,7 @@ public class UIController : MonoBehaviour
         Time.timeScale = 1f;
     }
     //리뷰 메세지 띄우기
-    public void ReviewMessage(int speedStar, int safteyStar, int time, int reward) {
+    public void ReviewMessage(int speedStar, int safteyStar, int time, int reward, int bonus) {
         GameObject message = Instantiate(reviewMessage, new Vector3(900f, -150f, 0f), Quaternion.identity);
         message.transform.localScale = new Vector3(0.05f, 0.05f, 1f);
         message.transform.SetParent(bg.transform);
@@ -163,7 +163,13 @@ public class UIController : MonoBehaviour
             reviewText = reviewComment[3][Random.Range(0,reviewComment[3].Length)];
         
         string r = CashToString(reward);
-        string t = $"배달 완료!\n시간: {time}초  보상: {r}원\n리뷰:\n{reviewText}";
+        string t;
+        if (bonus == 0) {
+            t = $"배달 완료!\n시간: {time}초\n보상: {r}원\n리뷰:\n{reviewText}";
+        } else {
+            string b = CashToString(bonus);
+            t = $"배달 완료!\n시간: {time}초\n보상: {r}원  팁: {b}원\n리뷰:\n{reviewText}";
+        }
         message.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = t;
 
         int starCount = Mathf.RoundToInt((speedStar + safteyStar) / 2);
