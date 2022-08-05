@@ -54,6 +54,6 @@ public class Sotry : MonoBehaviour
         num_before = num_now;
     }
     public void Continue() {
-        gameManager.UpdateGameState(GameState.Menu);
+        gameManager.StartTutorial();
     }
 }

@@ -8,6 +8,7 @@ public enum GameState {
     Title,
     Story,
     Menu,
+    Tutorial,
     Play,
     Clear,
     GameOver
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     int nextOrderTime;
     int orderAddingInterval;
     bool loading;
+    public bool playDataExist;
     
     private void Awake() {
         if (Instance == null) {
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
+        playDataExist = false;
     }
     private void Start() {
         TotalCash = 0;
@@ -54,6 +57,11 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.Title);
     }
     public void StartGamePlay() {
+        playDataExist = true;
+        UpdateGameState(GameState.Play);
+    }
+    public void StartTutorial() {
+        Day = 0;
         UpdateGameState(GameState.Play);
     }
     public void UpdateGameState(GameState newState) {
@@ -71,7 +79,10 @@ public class GameManager : MonoBehaviour
             case GameState.Play:
                 Cash = 0;
                 DeliveryCount = 0;
-                if (Day == 1) {
+                if (Day == 0) {
+                    maxOrderPool = 1;
+                    orderAddingInterval = 100000; 
+                } else if (Day == 1) {
                     maxOrderPool = 3;
                     orderAddingInterval = 20; 
                 } else if (Day == 2) {
@@ -118,6 +129,8 @@ public class GameManager : MonoBehaviour
                     orderManager.AddOrderPool();
                 nextOrderTime += orderAddingInterval;
             }
+            if (Day == 0)
+                return;
             if (Cash >= targetCashPerDay[Day-1]) {
                 ClearDay();
             }
@@ -138,6 +151,10 @@ public class GameManager : MonoBehaviour
     }
     public void ResetDay() {
         //저장해둔거 로딩
+        UpdateGameState(GameState.Menu);
+    }
+    public void EndTutorial() {
+        Day = 1;
         UpdateGameState(GameState.Menu);
     }
 }

@@ -80,11 +80,14 @@ public class OrderManager : MonoBehaviour
         }
     }
     private void Start() {
-        //스타트가 아니라 게임스테이트 바뀔때 타이머 리셋되도록 수정 필요
         ResetTimer();
         //test
-        for (int i = 0; i < GameManager.Instance.maxOrderPool; i++) {
-            AddOrderPool();
+        if (GameManager.Instance.Day == 0) {
+            orderPool.Add(new AvailableOrder(0, pickupPoints[0], deliveryPoints[0], 120, 1000));
+        } else {
+            for (int i = 0; i < GameManager.Instance.maxOrderPool; i++) {
+                AddOrderPool();
+            }
         }
     }
     private void Update() {
@@ -95,11 +98,9 @@ public class OrderManager : MonoBehaviour
         timer = 0;
     }
     public void AddOrderPool() {
-        //수정 필요
         int poolSize = orderPool.Count;
         int pPNum = Random.Range(0, pickupPoints.Length);
         int dPNum = Random.Range(0, deliveryPoints.Length);
-        //테스트 주문 생성
         PickupPoint pPoint = pickupPoints[Random.Range(0, pickupPoints.Length)];
         DeliveryPoint dPoint = deliveryPoints[Random.Range(0, deliveryPoints.Length)];
         float dist = Vector2.Distance(pPoint.transform.position, dPoint.transform.position);

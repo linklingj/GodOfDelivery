@@ -12,7 +12,7 @@ public class PreStart : MonoBehaviour
         dayText.text = "Day " + gameManager.Day.ToString();
     }
     public void Play() {
-        gameManager.UpdateGameState(GameState.Play);
+        gameManager.StartGamePlay();
     }
     public void ToTitle() {
         gameManager.UpdateGameState(GameState.Title);

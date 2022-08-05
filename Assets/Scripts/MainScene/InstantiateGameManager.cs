@@ -10,7 +10,6 @@ public class InstantiateGameManager : MonoBehaviour
     Transform p;
     private void Awake() {
         if (FindObjectOfType<GameManager>() == null) {
-            Debug.Log("a");
             GameObject obj = Instantiate(gameManager, Vector3.zero, Quaternion.identity);
             obj.transform.SetParent(p);
         }

@@ -58,7 +58,7 @@ public class UIController : MonoBehaviour
         }
     }
     private void Update() {
-        if(Input.GetKeyDown(KeyCode.Space)) {
+        if(Input.GetKeyDown(KeyCode.Q)) {
             GameManager.Instance.Cash += 100000;
             orderManager.timer += 10;
         }
