@@ -121,29 +121,29 @@ public class OrderManager : MonoBehaviour
                 mul = 100;
                 baseC = 3000;
                 dM = 80;
-                return;
+                break;
             case 2:
                 mul = 100;
                 baseC = 15000;
                 dM = 400;
-                return;
+                break;
             case 3:
                 mul = 1000;
                 baseC = 40000;
                 dM = 1000;
-                return;
+                break;
             case 4:
                 mul = 10000;
                 baseC = 120000;
                 dM = 4000;
-                return;
+                break;
             case 5:
                 mul = 100000;
                 baseC = 1000000;
                 dM = 30000;
-                return;
+                break;
             default:
-                return;
+                break;
         }
         int r = Mathf.FloorToInt(Mathf.Round(dist*dM)/mul)*mul + baseC;
         float luck = Random.Range(-1f, 1f);
