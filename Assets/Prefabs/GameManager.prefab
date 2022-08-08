@@ -52,3 +52,5 @@ MonoBehaviour:
   DeliveryCount: 0
   targetCashPerDay: a0860100c027090080841e008096980000e1f505
   targetTimePerDay: 0a0000000a0000000f0000000f00000014000000
+  maxOrderPool: 3
+  playDataExist: 0

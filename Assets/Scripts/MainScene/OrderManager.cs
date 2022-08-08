@@ -10,7 +10,7 @@ public class OrderManager : MonoBehaviour
     public List<Order> orders = new List<Order>();
     public List<GameObject> arrows = new List<GameObject>();
     public List<AvailableOrder> orderPool = new List<AvailableOrder>();
-    public int maxOrderCount = 1;
+    public int[] maxOrderCount;
     public int[][] bonus = {
         new int[] {0,0,0,0,0,0},
         new int[] {0,0,0,1000,2000,3000},
@@ -46,8 +46,8 @@ public class OrderManager : MonoBehaviour
             maxReward = mR;
             startTime = sT;
 
-            pickupPoint.orderIndex = i;
-            deliveryPoint.orderIndex = i;
+            pickupPoint.orderIndex.Add(i);
+            deliveryPoint.orderIndex.Add(i);
             pickupPoint.pointOn();
             deliveryPoint.pointOn();
         }
@@ -68,8 +68,8 @@ public class OrderManager : MonoBehaviour
             targetTime = tT;
             maxReward = mR;
         }
-        public Order AddToOrderList(float startTime) {
-            return new Order(0, pickupPoint, deliveryPoint, targetTime, maxReward, startTime);
+        public Order AddToOrderList(int index, float startTime) {
+            return new Order(index, pickupPoint, deliveryPoint, targetTime, maxReward, startTime);
         }
     }
     private void Awake() {
@@ -111,7 +111,7 @@ public class OrderManager : MonoBehaviour
         int pPNum = Random.Range(0, pickupPoints.Length);
         int dPNum = Random.Range(0, deliveryPoints.Length);
         PickupPoint pPoint = pickupPoints[Random.Range(0, pickupPoints.Length)];
-        DeliveryPoint dPoint = deliveryPoints[Random.Range(0, deliveryPoints.Length)];
+        DeliveryPoint dPoint = deliveryPoints[Random.Range(0, 2/*deliveryPoints.Length*/)];
         float dist = Vector2.Distance(pPoint.transform.position, dPoint.transform.position);
         float t = Mathf.RoundToInt(dist/8) + 17f;
         //mul: 나눠떨어지는 자리 baseC: 거리와 상관없이 기본보상 dM: 미터당 곱해지는 보상
@@ -163,10 +163,10 @@ public class OrderManager : MonoBehaviour
         orderPool.Add(new AvailableOrder(orderPoolIdx++, pPoint, dPoint, t, r));
     }
     public bool CheckIfNotFull() {
-        return (orders.Count < maxOrderCount);
+        return (orders.Count < maxOrderCount[GameManager.Instance.Day]);
     }
     public void MakeOrder(int index) {
-        Order order = orderPool[index].AddToOrderList(timer);
+        Order order = orderPool[index].AddToOrderList(index, timer);
         orders.Add(order);
         uIController.AddOrderToUI(new string[] {order.pickupPoint.transform.name,order.deliveryPoint.transform.name,order.targetTime.ToString(),order.maxReward.ToString()});
 
@@ -179,14 +179,13 @@ public class OrderManager : MonoBehaviour
     }
     public void Pickup(int index) {
         orders[index].state = 1;
-        orders[index].pickupPoint.pointOff();
+        //orders[index].pickupPoint.pointOff();
 
         arrows[index].GetComponent<Arrow>().followPoint = orders[index].deliveryPoint.transform;
         arrows[index].GetComponent<Arrow>().ChangeColor();
     }
     public void FinishOrder(int index) {
         Order order = orders[index];
-        order.deliveryPoint.pointOff();
         GameManager.Instance.DeliveryCount += 1;
 
         int clearTime = Mathf.FloorToInt(timer - order.startTime);

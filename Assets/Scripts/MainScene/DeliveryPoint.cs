@@ -7,7 +7,7 @@ public class DeliveryPoint : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public OrderManager orderManager;
     public ProgressBar progressBar;
-    public int orderIndex = -1;
+    public List<int> orderIndex;
     bool belowPlayer = false;
     float enterTime;
     private void Awake() {
@@ -16,14 +16,15 @@ public class DeliveryPoint : MonoBehaviour
     public void pointOn() {
         gameObject.SetActive(true);
     }
-    public void pointOff() {
-        gameObject.SetActive(false);
-    }
     private void OnTriggerEnter2D(Collider2D col) {
-        if (col.CompareTag("Player") && orderManager.orders[orderIndex].state == 1) {
-            enterTime = orderManager.timer;
-            belowPlayer = true;
-            progressBar.ShowBar();
+        if (col.CompareTag("Player")) {
+            bool pass = true;
+            orderManager.orders.FindAll((x) => x.index == orderIndex[0]).ForEach((x) => {if(x.state == 1) pass = false;});
+            if (!pass) {
+                enterTime = orderManager.timer;
+                belowPlayer = true;
+                progressBar.ShowBar();
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D col) {
@@ -36,11 +37,20 @@ public class DeliveryPoint : MonoBehaviour
         if (!belowPlayer)
             return;
         float time = orderManager.timer - enterTime;
-        if(time >= 2f) {
+        if(time >= 1f) {
             belowPlayer = false;
-            orderManager.FinishOrder(orderIndex);
+            List<int> save = new List<int>(orderIndex);
+            for (int i=0; i < save.Count; i++) {
+                int j = orderManager.orders.FindIndex((x) => x.index == save[i]);
+                if (orderManager.orders[j].state == 1) {
+                    orderManager.FinishOrder(j);
+                    orderIndex.Remove(save[i]);
+                }
+            }
             progressBar.FullBar();
+            if (orderIndex.Count == 0)
+                gameObject.SetActive(false);
         }
-        progressBar.SetValue(time/2);
+        progressBar.SetValue(time);
     }
 }
