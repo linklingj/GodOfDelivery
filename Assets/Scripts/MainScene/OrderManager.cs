@@ -111,7 +111,7 @@ public class OrderManager : MonoBehaviour
         int pPNum = Random.Range(0, pickupPoints.Length);
         int dPNum = Random.Range(0, deliveryPoints.Length);
         PickupPoint pPoint = pickupPoints[Random.Range(0, pickupPoints.Length)];
-        DeliveryPoint dPoint = deliveryPoints[Random.Range(0, 2/*deliveryPoints.Length*/)];
+        DeliveryPoint dPoint = deliveryPoints[Random.Range(0, deliveryPoints.Length)];
         float dist = Vector2.Distance(pPoint.transform.position, dPoint.transform.position);
         float t = Mathf.RoundToInt(dist/8) + 17f;
         //mul: 나눠떨어지는 자리 baseC: 거리와 상관없이 기본보상 dM: 미터당 곱해지는 보상
