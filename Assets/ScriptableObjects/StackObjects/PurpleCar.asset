@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb6c7db4655afe41b08252ee64693c1, type: 3}
   m_Name: PurpleCar
   m_EditorClassIdentifier: 
-  stack: []
+  stack:
+  - {fileID: 707513935, guid: 6a7b07fd2b6d908478d5bf17fe266377, type: 3}
+  - {fileID: -984191783, guid: 6a7b07fd2b6d908478d5bf17fe266377, type: 3}
+  - {fileID: -1933670145, guid: 6a7b07fd2b6d908478d5bf17fe266377, type: 3}
+  - {fileID: 397929281, guid: 6a7b07fd2b6d908478d5bf17fe266377, type: 3}
+  - {fileID: 1447069857, guid: 6a7b07fd2b6d908478d5bf17fe266377, type: 3}
+  - {fileID: -317198272, guid: 6a7b07fd2b6d908478d5bf17fe266377, type: 3}
+  - {fileID: -2033834741, guid: 6a7b07fd2b6d908478d5bf17fe266377, type: 3}
+  - {fileID: -1812411901, guid: 6a7b07fd2b6d908478d5bf17fe266377, type: 3}

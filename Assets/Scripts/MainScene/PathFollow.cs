@@ -30,11 +30,11 @@ namespace PathCreation {
             transform.rotation = angle;
             transform.Rotate(0,0,90);
             float dist = Vector2.Distance(player.position, transform.position);
-            if (dist < 30f && !active)
+            if (dist < 25f && !active)
                 disp.enabled = true;
-            if (dist >= 30f && active)
+            if (dist >= 25f && active)
                 disp.enabled = false;
-            if (dist < 30f)
+            if (dist < 25f)
                 disp.rotation = new Vector3(0, 0, (transform.localEulerAngles.z + 90) % 360);
         }
     }

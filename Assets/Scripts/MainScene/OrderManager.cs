@@ -23,7 +23,6 @@ public class OrderManager : MonoBehaviour
     public float timer;
     public GameObject arrowPrefab;
     public Transform canvas;
-    int spawnIdx = 1;
     int orderPoolIdx = 0;
     //오더 클래스
     //index: 리스트에서의 인덱스, state: 상태(0: 픽업 전, 1: 픽업후 배달전), 픽업.배달 포인트, 목표 시간, 최대 보상, 시작시간
@@ -82,7 +81,6 @@ public class OrderManager : MonoBehaviour
     public void GameStateChange(GameState gameState) {
         if (gameState == GameState.Play) {
             ResetTimer();
-            spawnIdx = 1;
             orders.RemoveAll(x => true);
             orderPool.RemoveAll(x => true);
         }
@@ -206,13 +204,13 @@ public class OrderManager : MonoBehaviour
         int point = 0;
         if (damage <= 0) {
             point = 5;
-        } else if (damage <= 1) {
-            point = 4;
         } else if (damage <= 2) {
-            point = 3;
+            point = 4;
         } else if (damage <= 4) {
-            point = 2;
+            point = 3;
         } else if (damage <= 6) {
+            point = 2;
+        } else if (damage <= 8) {
             point = 1;
         } else {
             point = 0;

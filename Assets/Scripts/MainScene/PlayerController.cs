@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour
         uIController = FindObjectOfType<UIController>();
         orderManager = FindObjectOfType<OrderManager>();
     }
+    private void Start() {
+        transform.position = new Vector3 (0.5f, 4f, 0);
+        transform.rotation = Quaternion.Euler(0,0,-90f);
+    }
 
     void Update() {
         if (GameManager.Instance.State == GameState.Play) {
@@ -119,16 +123,23 @@ public class PlayerController : MonoBehaviour
     bool collideable = true;
     private void OnCollisionEnter2D(Collision2D col) {
         ContactPoint2D c = col.contacts[0];
-        if (c.normalImpulse > 2f && collideable) {
+        if (/*c.normalImpulse > 1.5f && */collideable) {
             GameObject effect = Instantiate(hitEffect, c.point, Quaternion.identity);
             Destroy(effect, 0.3f);
-            int damage;
-            if (c.normalImpulse > 10)
-                damage = 3;
-            else if (c.normalImpulse > 5)
-                damage = 2;
-            else
-                damage = 1;
+            int damage = 0;
+            if (col.gameObject.CompareTag("NPC")) {
+                if (c.normalImpulse > 10)
+                    damage = 5;
+                else
+                    damage = 3;
+            } else {
+                if (c.normalImpulse > 10)
+                    damage = 3;
+                else if (c.normalImpulse > 5)
+                    damage = 2;
+                else
+                    damage = 1;
+            }
             orderManager.AddDamage(damage);
             collideable = false;
             StartCoroutine(ColWait());

@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb6c7db4655afe41b08252ee64693c1, type: 3}
   m_Name: WhiteMotorcycle
   m_EditorClassIdentifier: 
-  stack: []
+  stack:
+  - {fileID: -1167466488, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}
+  - {fileID: 1201551481, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}
+  - {fileID: 1672059857, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}
+  - {fileID: 1761421261, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}
+  - {fileID: -1799717310, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}
+  - {fileID: 1990350989, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}
+  - {fileID: 1864495172, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}
+  - {fileID: 362579128, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}
+  - {fileID: 823965376, guid: 9e67ef91e15f4ad45b1fdbc881754bcc, type: 3}

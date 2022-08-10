@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb6c7db4655afe41b08252ee64693c1, type: 3}
   m_Name: GreenCar
   m_EditorClassIdentifier: 
-  stack: []
+  stack:
+  - {fileID: -654790301, guid: 6178f5b717ee7f3428013e50142f8d96, type: 3}
+  - {fileID: 916649026, guid: 6178f5b717ee7f3428013e50142f8d96, type: 3}
+  - {fileID: -1423333704, guid: 6178f5b717ee7f3428013e50142f8d96, type: 3}
+  - {fileID: 1916338397, guid: 6178f5b717ee7f3428013e50142f8d96, type: 3}
+  - {fileID: -1458057067, guid: 6178f5b717ee7f3428013e50142f8d96, type: 3}
+  - {fileID: -562098896, guid: 6178f5b717ee7f3428013e50142f8d96, type: 3}
+  - {fileID: 1813652341, guid: 6178f5b717ee7f3428013e50142f8d96, type: 3}
