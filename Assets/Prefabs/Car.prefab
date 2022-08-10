@@ -103,7 +103,7 @@ MonoBehaviour:
   endOfPathInstruction: 0
   disp: {fileID: 7427662095802338865}
   player: {fileID: 0}
-  speed: 8
+  targetSpeed: 8
   startPoint: 0
 --- !u!114 &7427662095802338865
 MonoBehaviour:

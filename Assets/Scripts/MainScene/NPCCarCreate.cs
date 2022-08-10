@@ -7,56 +7,81 @@ namespace PathCreation{
     {
         public Transform NPCs;
         public GameObject carPrefab;
-        public PathCreator pathA1, pathA2, pathB1, pathB2, pathC1, pathD1, pathE1, pathF1;
+        public PathCreator[] paths;
         public stackobject blueCar, redMotorcycle, bigGreenCar, yellowCar, greenCar, whiteMotorcycle, purpleCar, brownMotorcycle, redCar;
         Vector3 spawnPos = new Vector3 (-1000, -1000, 0);
+        List<PathFollow>[] cars = new List<PathFollow>[8];
         void Start() {
+            for (int i = 0; i < 8; i++) {
+                cars[i] = new List<PathFollow>();
+            }
             //a
-            MakeCar(carPrefab, redCar, pathA1, 0);
-            MakeCar(carPrefab, redMotorcycle, pathA1, 0.25f);
-            MakeCar(carPrefab, yellowCar, pathA1, 0.5f);
-            MakeCar(carPrefab, bigGreenCar, pathA1, 0.75f);
-            MakeCar(carPrefab, redCar, pathA2, 0.15f);
-            MakeCar(carPrefab, brownMotorcycle, pathA2, 0.4f);
-            MakeCar(carPrefab, purpleCar, pathA2, 0.65f);
-            MakeCar(carPrefab, whiteMotorcycle, pathA2, 0.9f);
+            MakeCar(redCar, 0, 0);
+            MakeCar(redMotorcycle, 0, 0.25f);
+            MakeCar(yellowCar, 0, 0.5f);
+            MakeCar(bigGreenCar, 0, 0.75f);
+            MakeCar(redCar, 1, 0.15f);
+            MakeCar(brownMotorcycle, 1, 0.4f);
+            MakeCar(purpleCar, 1, 0.65f);
+            MakeCar(whiteMotorcycle, 1, 0.9f);
             //b
-            MakeCar(carPrefab, greenCar, pathB1, 0);
-            MakeCar(carPrefab, redMotorcycle, pathB1, 0.25f);
-            MakeCar(carPrefab, bigGreenCar, pathB1, 0.5f);
-            MakeCar(carPrefab, yellowCar, pathB1, 0.75f);
-            MakeCar(carPrefab, blueCar, pathB2, 0);
-            MakeCar(carPrefab, yellowCar, pathB2, 0.25f);
-            MakeCar(carPrefab, redCar, pathB2, 0.5f);
-            MakeCar(carPrefab, redMotorcycle, pathB2, 0.75f);
+            MakeCar(greenCar, 2, 0);
+            MakeCar(redMotorcycle, 2, 0.25f);
+            MakeCar(bigGreenCar, 2, 0.5f);
+            MakeCar(yellowCar, 2, 0.75f);
+            MakeCar(blueCar, 3, 0);
+            MakeCar(yellowCar, 3, 0.25f);
+            MakeCar(redCar, 3, 0.5f);
+            MakeCar(redMotorcycle, 3, 0.75f);
             //c
-            MakeCar(carPrefab, greenCar, pathC1, 0);
-            MakeCar(carPrefab, purpleCar, pathC1, 0.5f);
+            MakeCar(greenCar, 4, 0);
+            MakeCar(purpleCar, 4, 0.5f);
             //d
-            MakeCar(carPrefab, bigGreenCar, pathD1, 0);
-            MakeCar(carPrefab, whiteMotorcycle, pathD1, 0.5f);
+            MakeCar(bigGreenCar, 5, 0);
+            MakeCar(whiteMotorcycle, 5, 0.5f);
             //e
-            MakeCar(carPrefab, greenCar, pathE1, 0);
-            MakeCar(carPrefab, blueCar, pathE1, 0.2f);
-            MakeCar(carPrefab, yellowCar, pathE1, 0.4f);
-            MakeCar(carPrefab, brownMotorcycle, pathE1, 0.5f);
-            MakeCar(carPrefab, redCar, pathE1, 0.7f);
-            MakeCar(carPrefab, brownMotorcycle, pathE1, 0.85f);
+            MakeCar(greenCar, 6, 0);
+            MakeCar(blueCar, 6, 0.2f);
+            MakeCar(yellowCar, 6, 0.4f);
+            MakeCar(brownMotorcycle, 6, 0.5f);
+            MakeCar(redCar, 6, 0.7f);
+            MakeCar(brownMotorcycle, 6, 0.85f);
             //f
-            MakeCar(carPrefab, redCar, pathF1, 0);
-            MakeCar(carPrefab, purpleCar, pathF1, 0.2f);
-            MakeCar(carPrefab, yellowCar, pathF1, 0.4f);
-            MakeCar(carPrefab, redMotorcycle, pathF1, 0.5f);
-            MakeCar(carPrefab, bigGreenCar, pathF1, 0.7f);
-            MakeCar(carPrefab, purpleCar, pathF1, 0.85f);
+            MakeCar(redCar, 7, 0);
+            MakeCar(purpleCar, 7, 0.2f);
+            MakeCar(yellowCar, 7, 0.4f);
+            MakeCar(redMotorcycle, 7, 0.5f);
+            MakeCar(bigGreenCar, 7, 0.7f);
+            MakeCar(purpleCar, 7, 0.85f);
         }
 
-        void MakeCar(GameObject obj, stackobject so, PathCreator p, float sP) {
-            GameObject car = Instantiate(obj, spawnPos, Quaternion.identity);
-            car.GetComponent<PathFollow>().pathCreator = p;
-            car.GetComponent<PathFollow>().startPoint = sP;
+        void MakeCar(stackobject so, int num, float sP) {
+            GameObject car = Instantiate(carPrefab, spawnPos, Quaternion.identity);
+            PathFollow pf = car.GetComponent<PathFollow>();
+            pf.pathCreator = paths[num];
+            pf.startPoint = sP;
+            pf.pathNum = num;
             car.GetComponent<displayObject>().stackObject = so;
             car.transform.SetParent(NPCs);
+            cars[num].Add(pf);
+        }
+        private void Update() {
+            if (Input.GetKeyDown(KeyCode.R)) {
+                //c1[0].GetComponent<PathFollow>().StopCar();
+            }
+            if (Input.GetKeyDown(KeyCode.T)) {
+                //c1[0].GetComponent<PathFollow>().MoveCar();
+            }
+        }
+        public void Stop(int n) {
+            foreach (PathFollow car in cars[n]) {
+                car.StopCar();
+            }
+        }
+        public void Move(int n) {
+            foreach (PathFollow car in cars[n]) {
+                car.MoveCar();
+            }
         }
     }
 }
