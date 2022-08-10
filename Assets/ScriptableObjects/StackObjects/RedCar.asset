@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb6c7db4655afe41b08252ee64693c1, type: 3}
   m_Name: RedCar
   m_EditorClassIdentifier: 
-  stack: []
+  stack:
+  - {fileID: 1489723832, guid: 1caf40ab1e85a6b40843130927271345, type: 3}
+  - {fileID: -1177467124, guid: 1caf40ab1e85a6b40843130927271345, type: 3}
+  - {fileID: -337732392, guid: 1caf40ab1e85a6b40843130927271345, type: 3}
+  - {fileID: 698335234, guid: 1caf40ab1e85a6b40843130927271345, type: 3}
+  - {fileID: 1917868851, guid: 1caf40ab1e85a6b40843130927271345, type: 3}
+  - {fileID: -360362207, guid: 1caf40ab1e85a6b40843130927271345, type: 3}
+  - {fileID: 1988413658, guid: 1caf40ab1e85a6b40843130927271345, type: 3}
+  - {fileID: 578832400, guid: 1caf40ab1e85a6b40843130927271345, type: 3}

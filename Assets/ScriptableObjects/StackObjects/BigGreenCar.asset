@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb6c7db4655afe41b08252ee64693c1, type: 3}
   m_Name: BigGreenCar
   m_EditorClassIdentifier: 
-  stack: []
+  stack:
+  - {fileID: 1203483564, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: 865704138, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: 368217567, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: 820436947, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: 721746624, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: 2032471644, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: 688651525, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: 1408653576, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: 1455277164, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}
+  - {fileID: -242356461, guid: bfb4b0ee137b1a74f95a3594e315c542, type: 3}

@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb6c7db4655afe41b08252ee64693c1, type: 3}
   m_Name: BrownMotorcycle
   m_EditorClassIdentifier: 
-  stack: []
+  stack:
+  - {fileID: -1155167923, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: 1851541830, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: -1125103149, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: 1471738454, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: 164420002, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: -1120504735, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: -1566170302, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: 677070410, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: -1562601435, guid: 1c91489f915b14245805079fce060017, type: 3}
+  - {fileID: 605598721, guid: 1c91489f915b14245805079fce060017, type: 3}
