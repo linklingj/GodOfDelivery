@@ -16,6 +16,7 @@ namespace PathCreation {
         bool active;
 
         void Start() {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
             distanceTravelled = pathCreator.path.length * startPoint;
         }
 

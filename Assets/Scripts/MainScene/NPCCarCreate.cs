@@ -7,13 +7,13 @@ namespace PathCreation{
     {
         public GameObject carPrefab;
         public PathCreator pathA1, pathB1;
-        public stackobject blueCar, redMotorcycle;
+        public stackobject blueCar, redMotorcycle, bigGreenCar, yellowCar, greenCar, whiteMotorcycle, purpleCar, brownMotorcycle, redCar;
         Vector3 spawnPos = new Vector3 (-1000, -1000, 0);
         void Start() {
-            MakeCar(carPrefab, blueCar, pathA1, 0);
+            MakeCar(carPrefab, redCar, pathA1, 0);
             MakeCar(carPrefab, redMotorcycle, pathA1, 0.25f);
-            MakeCar(carPrefab, blueCar, pathA1, 0.5f);
-            MakeCar(carPrefab, redMotorcycle, pathA1, 0.75f);
+            MakeCar(carPrefab, yellowCar, pathA1, 0.5f);
+            MakeCar(carPrefab, bigGreenCar, pathA1, 0.75f);
         }
 
         void MakeCar(GameObject obj, stackobject so, PathCreator p, float sP) {
