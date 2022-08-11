@@ -57,24 +57,26 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.Title);
     }
     public void StartGamePlay() {
-        playDataExist = true;
-        UpdateGameState(GameState.Play);
-    }
-    public void StartTutorial() {
-        Day = 0;
-        UpdateGameState(GameState.Play);
+        if (!playDataExist) {
+            Day = 0;
+            playDataExist = true;
+            UpdateGameState(GameState.Play);
+        }
+        else {
+            UpdateGameState(GameState.Menu);
+        }
     }
     public void UpdateGameState(GameState newState) {
         State = newState;
         switch (newState) {
             case GameState.Title:
-                SceneManager.LoadScene("First");
+                SceneManager.LoadScene("Start");
                 break;
             case GameState.Story:
                 SceneManager.LoadScene("Story");
                 break;
             case GameState.Menu:
-                SceneManager.LoadScene("PreStart");
+                SceneManager.LoadScene("Pre_Start");
                 break;
             case GameState.Play:
                 Cash = 0;

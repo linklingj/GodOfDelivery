@@ -11,8 +11,7 @@ public class Sotry : MonoBehaviour
     public static int Num;
 
     public List<GameObject> images;
-    public Button buttonR, buttnL, skip, show, cont;
-    public Text titleText;
+    public Button buttonR, buttnL, startBtn, storyBtn, exitBtn, cont;
     private void Start() {
         gameManager = FindObjectOfType<GameManager>();
     }
@@ -21,10 +20,10 @@ public class Sotry : MonoBehaviour
         images[0].SetActive(false);
         images[1].SetActive(true);
 
-        skip.gameObject.SetActive(false);
-        show.gameObject.SetActive(false);
+        startBtn.gameObject.SetActive(false);
+        storyBtn.gameObject.SetActive(false);
+        exitBtn.gameObject.SetActive(false);
         buttonR.interactable = true;
-        titleText.gameObject.SetActive(false);
     }
     //n이 1일때 오른쪽 버튼, n이 2일때 왼쪽버튼
     public void Click(int n)
@@ -53,7 +52,11 @@ public class Sotry : MonoBehaviour
 
         num_before = num_now;
     }
-    public void Continue() {
-        gameManager.StartTutorial();
+    public void StartGame() {
+        gameManager.StartGamePlay();
+    }
+    public void ExitGame() {
+        Debug.Log("Exit");
+        //나가기 추가
     }
 }
