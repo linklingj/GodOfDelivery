@@ -12,14 +12,14 @@ public class BuildingScene : MonoBehaviour
     public List<Text> texts;
     public List<Image> btns;
     public Text money;
-    
+
     public void gotowhere() {
         SceneManager.LoadScene("Pre_Start");
     }
 
     //초기 세팅
     private void Start() {
-        money.GetComponent<Text>().text = CashToString(GameManager.Instance.Cash) + "원";
+        money.GetComponent<Text>().text = CashToString(GameManager.Instance.TotalCash) + "원";
         int[] bP = GameManager.Instance.buildPrice;
         int bs = GameManager.Instance.buildState;
         for (int i = 0; i < 6; i++) {
@@ -38,18 +38,19 @@ public class BuildingScene : MonoBehaviour
     }
     //버튼 눌렀을 때
     public void Build(int n) {
-        if (GameManager.Instance.Cash < GameManager.Instance.buildPrice[n] || GameManager.Instance.buildState != n) {
+        if (GameManager.Instance.TotalCash < GameManager.Instance.buildPrice[n] || GameManager.Instance.buildState != n) {
             return;
         }
-        GameManager.Instance.Cash -= GameManager.Instance.buildPrice[n];
+        GameManager.Instance.TotalCash -= GameManager.Instance.buildPrice[n];
         images[n].SetActive(true);
         buildings[n].SetActive(true);
-        money.GetComponent<Text>().text = CashToString(GameManager.Instance.Cash) + "원";
+        money.GetComponent<Text>().text = CashToString(GameManager.Instance.TotalCash) + "원";
         texts[n].GetComponent<Text>().text = "";
         if (n <= 4)
             btns[n+1].color = Color.white;
         GameManager.Instance.buildState++;
     }
+    //돈을 한국식 표현으로 전환하는 함수
     string CashToString(int cash) {
         string st = "0";
         if(cash >= 100000000) {

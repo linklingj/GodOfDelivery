@@ -1659,8 +1659,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BuildingScene, Assembly-CSharp
+      - m_Target: {fileID: 1086576760}
+        m_TargetAssemblyTypeName: EndingScene, Assembly-CSharp
         m_MethodName: gotowhere
         m_Mode: 1
         m_Arguments:

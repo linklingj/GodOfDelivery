@@ -11,6 +11,7 @@ public enum GameState {
     Tutorial,
     Play,
     Clear,
+    //나중에 지울 것
     GameOver
 }
 
@@ -24,10 +25,8 @@ public class GameManager : MonoBehaviour
     public int Day;
     public int Lvl;
     public int DeliveryCount;
-    //나중에 삭제
-    public int[] targetCashPerDay;
-    public int[] targetTimePerDay;
     public int buildState;
+    public int buildingBuilt;
     public int[] buildPrice;
     public static event Action<GameState> OnGameStateChanged;
     public int maxOrderPool = 3;
@@ -48,7 +47,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start() {
         TotalCash = 0;
-        Day = 1;
+        Day = 0;
         UpdateGameState(GameState.Title);
     }
     public void Title_GameStart() {
@@ -64,11 +63,13 @@ public class GameManager : MonoBehaviour
         if (!playDataExist) {
             Day = 0;
             buildState = 0;
+            buildingBuilt = 0;
+            Lvl = 1;
             playDataExist = true;
             UpdateGameState(GameState.Play);
         }
         else {
-            UpdateGameState(GameState.Menu);
+            UpdateGameState(GameState.Play);
         }
     }
     public void UpdateGameState(GameState newState) {
@@ -86,24 +87,28 @@ public class GameManager : MonoBehaviour
             case GameState.Play:
                 Cash = 0;
                 DeliveryCount = 0;
+                Lvl = buildState + 1;
                 if (Day == 0) {
                     maxOrderPool = 1;
                     orderAddingInterval = 100000; 
-                } else if (Day == 1) {
+                } else if (Lvl == 1) {
                     maxOrderPool = 3;
-                    orderAddingInterval = 20; 
-                } else if (Day == 2) {
+                    orderAddingInterval = 20;
+                } else if (Lvl == 2) {
                     maxOrderPool = 4;
-                    orderAddingInterval = 18; 
-                } else if (Day == 3) {
+                    orderAddingInterval = 18;
+                } else if (Lvl == 3) {
                     maxOrderPool = 4;
-                    orderAddingInterval = 16; 
-                } else if (Day == 4) {
+                    orderAddingInterval = 16;
+                } else if (Lvl == 4) {
                     maxOrderPool = 5;
-                    orderAddingInterval = 15; 
-                } else if (Day == 5) {
+                    orderAddingInterval = 15;
+                } else if (Lvl == 5) {
                     maxOrderPool = 5;
-                    orderAddingInterval = 12; 
+                    orderAddingInterval = 12;
+                } else if (Lvl == 6) {
+                    maxOrderPool = 6;
+                    orderAddingInterval = 10;
                 }
                 nextOrderTime = orderAddingInterval;
                 OnGameStateChanged = null;
@@ -138,10 +143,7 @@ public class GameManager : MonoBehaviour
             }
             if (Day == 0)
                 return;
-            // if (Cash >= targetCashPerDay[Day-1]) {
-            //     ClearDay();
-            // }
-            if (orderManager.timer >= /*targetTimePerDay[Day-1]*/3 * 60) {
+            if (orderManager.timer >= 3 * 60) {
                 ClearDay();
             }
         }
@@ -154,6 +156,7 @@ public class GameManager : MonoBehaviour
     }
     public void NewDay() {
         Day += 1;
+        Cash = 0;
         UpdateGameState(GameState.Menu);
     }
     public void ResetDay() {
@@ -162,6 +165,7 @@ public class GameManager : MonoBehaviour
     }
     public void EndTutorial() {
         Day = 1;
+        TotalCash = 1000;
         UpdateGameState(GameState.Menu);
     }
 }

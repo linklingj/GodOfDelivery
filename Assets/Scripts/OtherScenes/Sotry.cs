@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Sotry : MonoBehaviour
-{
+public class Sotry : MonoBehaviour {
     GameManager gameManager;
     public int num_before = 0;
     public int num_now = 1;
@@ -49,7 +48,6 @@ public class Sotry : MonoBehaviour
             cont.gameObject.SetActive(false);
             buttonR.interactable = true;
         }
-
         num_before = num_now;
     }
     public void StartGame() {

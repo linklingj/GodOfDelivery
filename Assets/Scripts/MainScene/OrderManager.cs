@@ -104,7 +104,7 @@ public class OrderManager : MonoBehaviour
         timer = 0;
     }
     public void AddOrderPool() {
-        int d = GameManager.Instance.Day;
+        int d = GameManager.Instance.Lvl;
         int poolSize = orderPool.Count;
         int pPNum = Random.Range(0, pickupPoints.Length);
         int dPNum = Random.Range(0, deliveryPoints.Length);
@@ -220,7 +220,6 @@ public class OrderManager : MonoBehaviour
     //속도 평가 (0~5의 정수 리턴)
     int ReviewSpeed(int clearTime, float targetTime) {
         int point = 0;
-        //수정 필요
         if (clearTime >= targetTime) {
             point = 0;
         } else if (clearTime <= targetTime * 0.5f) {

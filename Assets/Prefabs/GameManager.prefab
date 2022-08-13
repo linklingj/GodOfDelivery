@@ -51,9 +51,7 @@ MonoBehaviour:
   Day: 0
   Lvl: 0
   DeliveryCount: 0
-  targetCashPerDay: a0860100c027090080841e008096980000e1f505
-  targetTimePerDay: 0a0000000a0000000f0000000f00000014000000
   buildState: 0
-  buildPrice: 40420f00404b4c00002d31010087930300e1f50500c2eb0b
+  buildPrice: 400d030040420f00404b4c00002d31010087930300e1f505
   maxOrderPool: 3
   playDataExist: 0

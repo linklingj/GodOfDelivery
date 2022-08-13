@@ -60,11 +60,9 @@ public class UIController : MonoBehaviour
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Q)) {
             GameManager.Instance.Cash += 100000;
-            orderManager.timer += 10;
         }
         if(Input.GetKeyDown(KeyCode.W)) {
-            GameManager.Instance.Cash += 1000000;
-            orderManager.timer += 1;
+            orderManager.timer += 170;
         }
         if(Input.GetKeyDown(KeyCode.E)) {
             Debug.Log(orderManager.orders[0].index);
@@ -268,7 +266,7 @@ public class UIController : MonoBehaviour
     }
     //시간 업데이트
     void UpdateTimerDisplay() {
-        float timer = 180 - orderManager.timer;
+        float timer = (180 - orderManager.timer >= 0)? 180 - orderManager.timer : 0;
         float minutes = Mathf.FloorToInt(timer / 60);
         float seconds = Mathf.FloorToInt(timer % 60);
         string currentTime = string.Format("{00:00}:{1:00}",minutes,seconds);
