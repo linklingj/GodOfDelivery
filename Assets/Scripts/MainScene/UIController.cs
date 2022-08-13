@@ -87,8 +87,10 @@ public class UIController : MonoBehaviour
             }
             phoneOpen = !phoneOpen;
         }
-        UpdateTimerDisplay();
         UpdateMoneyDisplay();
+        if (GameManager.Instance.Day == 0)
+            return;
+        UpdateTimerDisplay();
     }
     public void OpenUI() {
         LeanTween.alpha(panelRT, 0.6f, 0.3f).setIgnoreTimeScale(true);
@@ -266,11 +268,13 @@ public class UIController : MonoBehaviour
     }
     //시간 업데이트
     void UpdateTimerDisplay() {
-        float timer = orderManager.timer;
+        float timer = 180 - orderManager.timer;
         float minutes = Mathf.FloorToInt(timer / 60);
         float seconds = Mathf.FloorToInt(timer % 60);
         string currentTime = string.Format("{00:00}:{1:00}",minutes,seconds);
         timeText.text = currentTime;
+        if (timer <= 10)
+            timeText.color = Color.red;
     }
     //돈 업데이트
     void UpdateMoneyDisplay() {

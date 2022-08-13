@@ -53,6 +53,7 @@ public class Sotry : MonoBehaviour
         num_before = num_now;
     }
     public void StartGame() {
+        gameManager = FindObjectOfType<GameManager>();
         gameManager.StartGamePlay();
     }
     public void ExitGame() {

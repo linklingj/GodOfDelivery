@@ -22,9 +22,13 @@ public class GameManager : MonoBehaviour
     public int Cash;
     public int TotalCash;
     public int Day;
+    public int Lvl;
     public int DeliveryCount;
+    //나중에 삭제
     public int[] targetCashPerDay;
     public int[] targetTimePerDay;
+    public int buildState;
+    public int[] buildPrice;
     public static event Action<GameState> OnGameStateChanged;
     public int maxOrderPool = 3;
     float timer;
@@ -59,6 +63,7 @@ public class GameManager : MonoBehaviour
     public void StartGamePlay() {
         if (!playDataExist) {
             Day = 0;
+            buildState = 0;
             playDataExist = true;
             UpdateGameState(GameState.Play);
         }
@@ -133,11 +138,11 @@ public class GameManager : MonoBehaviour
             }
             if (Day == 0)
                 return;
-            if (Cash >= targetCashPerDay[Day-1]) {
+            // if (Cash >= targetCashPerDay[Day-1]) {
+            //     ClearDay();
+            // }
+            if (orderManager.timer >= /*targetTimePerDay[Day-1]*/3 * 60) {
                 ClearDay();
-            }
-            if (orderManager.timer >= targetTimePerDay[Day-1] * 60) {
-                GameOver();
             }
         }
     }
