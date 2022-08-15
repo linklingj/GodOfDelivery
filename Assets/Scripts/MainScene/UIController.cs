@@ -11,6 +11,8 @@ public class UIController : MonoBehaviour
     [SerializeField]
     GameObject[] apps, appIcons, resultRow;
     [SerializeField]
+    GameObject[] informations;
+    [SerializeField]
     TextMeshProUGUI timeText, cashText;
     
     [SerializeField]
@@ -21,6 +23,8 @@ public class UIController : MonoBehaviour
     OrderManager orderManager;
     [SerializeField]
     CameraController mainCam;
+    [SerializeField]
+    PlayerController player;
     public AnimationCurve vibrateCurve;
     public ProgressBar progressBar;
     public bool phoneOpen = false;
@@ -124,6 +128,8 @@ public class UIController : MonoBehaviour
         app.SetActive(true);
         if (id == 0)
             DeliveryApp();
+        if (id == 1)
+            Upgrade_app();
         app.transform.position = appIcons[id].transform.position;
         app.transform.localScale = new Vector3(0.05f, 0.05f, 1f);
         LeanTween.moveLocal(app, new Vector3(400f, 10f, 0f), 0.3f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
@@ -427,143 +433,18 @@ public class UIController : MonoBehaviour
 
     void Upgrade_app()
     {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(false);
-        Shoes.onClick.AddListener(Show_Shoes);
-        Motorcycle.onClick.AddListener(Show_Motorcycle);
-        Smallcar.onClick.AddListener(Show_Smallcar);
-        Truck.onClick.AddListener(Show_Truck);
-        Policecar.onClick.AddListener(Show_Policecar);
-        Bus.onClick.AddListener(Show_Bus);
-        Tank.onClick.AddListener(Show_Tank);
-        Airplane.onClick.AddListener(Show_Airplane);
-        Dinosaur.onClick.AddListener(Show_Dinosaur);
+        TurnUpgradeOff();
     }
-
-    void Show_Shoes()
-    {
-        Shoes_text.SetActive(true);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(false);
-
-
+    void TurnUpgradeOff() {
+        foreach (GameObject item in informations) {
+            item.SetActive(false);
+        }
     }
-
-    void Show_Motorcycle()
-    {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(true);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(false);
-    }
-
-    void Show_Smallcar()
-    {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(true);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(false);
-    }
-
-    void Show_Truck()
-    {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(true);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(false);
-    }
-
-    void Show_Policecar()
-    {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(true);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(false);
-    }
-
-    void Show_Bus()
-    {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(true);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(false);
-    }
-
-    void Show_Tank()
-    {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(true);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(false);
-    }
-
-    void Show_Airplane()
-    {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(true);
-        Dinosaur_text.SetActive(false);
-    }
-
-    void Show_Dinosaur()
-    {
-        Shoes_text.SetActive(false);
-        Motorcycle_text.SetActive(false);
-        Smallcar_text.SetActive(false);
-        Truck_text.SetActive(false);
-        Policecar_text.SetActive(false);
-        Bus_text.SetActive(false);
-        Tank_text.SetActive(false);
-        Airplane_text.SetActive(false);
-        Dinosaur_text.SetActive(true);
+    public void UpgradeBtn(int n) {
+        TurnUpgradeOff();
+        informations[n].SetActive(true);
+        informations[n].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "test";
+        player.Change(n);
     }
 
 

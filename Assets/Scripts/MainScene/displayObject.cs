@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class displayObject : MonoBehaviour
 {
+    public stackobject bluecar, yellowTurck;
     public stackobject stackObject;
     public Vector3 rotation;
     public Vector3 offset = new Vector3(0, 0.05f, 0);
@@ -53,5 +54,14 @@ public class displayObject : MonoBehaviour
     void Update()
     {
         draw_stack();
+    }
+    public void ChangeBlueCar() {
+        stackObject = bluecar;
+    }
+    public void Disable() {
+        parts.SetActive(false);
+    }
+    public void Enable() {
+        parts.SetActive(true);
     }
 }

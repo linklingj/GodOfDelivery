@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     bool stopControl = false;
 
     Rigidbody2D rb;
+    SpriteRenderer sr;
     displayObject disp;
     MapManager mapManager;
     UIController uIController;
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public Camera cam;
     public TrailRenderer[] tireMarks;
     public GameObject hitEffect;
+    public Sprite Tank1;
+    public int[] speedValues;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -39,6 +42,7 @@ public class PlayerController : MonoBehaviour
         orderManager = FindObjectOfType<OrderManager>();
     }
     private void Start() {
+        sr = GetComponent<SpriteRenderer>();
         transform.position = new Vector3 (0.5f, 4f, 0);
         transform.rotation = Quaternion.Euler(0,0,-90f);
     }
@@ -166,5 +170,17 @@ public class PlayerController : MonoBehaviour
         float degree = (transform.eulerAngles.z + 90) % 360;
         Vector2 playerDir = new Vector2(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad));
         return Mathf.Abs((lookDir.normalized - playerDir).magnitude);
+    }
+    public void Change(int n) {
+        maxSpeed = speedValues[n];
+        if (n == 3) {
+            sr.sprite = Tank1;
+            disp.Disable();
+        }
+        if (n == 2) {
+            sr.sprite = null;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
     }
 }
