@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
         maxSpeed = speedValues[n];
         if (n == 0) {
             sr.sprite = Shoes;
-            disp.Disable();
+            disp.Enable();
         }
         if (n == 1) {
             sr.sprite = Motorcycle;
