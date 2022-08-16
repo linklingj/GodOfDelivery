@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     public GameObject hitEffect;
     public Sprite Shoes, Motorcycle, Smallcar, Truck, Policecar, Sportscar, Tank, Airplane, Dinosaur;
     public int[] speedValues;
+    public int[] accelerationValues;
+    public float[] fullTime;
+    int currentUpgrade;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -45,6 +48,8 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         transform.position = new Vector3 (0.5f, 4f, 0);
         transform.rotation = Quaternion.Euler(0,0,-90f);
+        currentUpgrade = GameManager.Instance.currentUpgrade;
+        Change(currentUpgrade);
     }
 
     void Update() {
@@ -172,7 +177,10 @@ public class PlayerController : MonoBehaviour
         return Mathf.Abs((lookDir.normalized - playerDir).magnitude);
     }
     public void Change(int n) {
+        currentUpgrade = n;
+        GameManager.Instance.currentUpgrade = currentUpgrade;
         maxSpeed = speedValues[n];
+        acceleration = accelerationValues[n];
         if (n == 0) {
             sr.sprite = Shoes;
             disp.Enable();

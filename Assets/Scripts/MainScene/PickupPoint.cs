@@ -10,6 +10,7 @@ public class PickupPoint : MonoBehaviour
     public List<int> orderIndex;
     bool belowPlayer = false;
     float enterTime;
+    public float fullTime;
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -33,7 +34,7 @@ public class PickupPoint : MonoBehaviour
         if (!belowPlayer)
             return;
         float time = orderManager.timer - enterTime;
-        if(time >= 1f) {
+        if(time >= fullTime) {
             belowPlayer = false;
             for (int i=0; i < orderIndex.Count; i++) {
                 int j = orderManager.orders.FindIndex((x) => x.index == orderIndex[i]);
