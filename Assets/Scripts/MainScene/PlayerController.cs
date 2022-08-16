@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public Camera cam;
     public TrailRenderer[] tireMarks;
     public GameObject hitEffect;
-    public Sprite Tank1;
+    public Sprite Shoes, Motorcycle, Smallcar, Truck, Policecar, Sportscar, Tank, Airplane, Dinosaur;
     public int[] speedValues;
 
     void Awake() {
@@ -173,14 +173,57 @@ public class PlayerController : MonoBehaviour
     }
     public void Change(int n) {
         maxSpeed = speedValues[n];
-        if (n == 3) {
-            sr.sprite = Tank1;
+        if (n == 0) {
+            sr.sprite = Shoes;
             disp.Disable();
         }
-        if (n == 2) {
-            sr.sprite = null;
+        if (n == 1) {
+            sr.sprite = Motorcycle;
             disp.Enable();
             disp.ChangeBlueCar();
         }
+        if (n == 2)
+        {
+            sr.sprite = Smallcar;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
+        if (n == 3)
+        {
+            sr.sprite = Truck;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
+        if (n == 4)
+        {
+            sr.sprite = Policecar;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
+        if (n == 5)
+        {
+            sr.sprite = Sportscar;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
+        if (n == 6)
+        {
+            sr.sprite = Tank;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
+        if (n == 7)
+        {
+            sr.sprite = Airplane;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
+        if (n == 8)
+        {
+            sr.sprite = Dinosaur;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
+
     }
 }

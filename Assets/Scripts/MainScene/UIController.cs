@@ -443,8 +443,18 @@ public class UIController : MonoBehaviour
     public void UpgradeBtn(int n) {
         TurnUpgradeOff();
         informations[n].SetActive(true);
-        informations[n].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "test";
         player.Change(n);
+        /*if (n == 0)
+        {
+            informations[n].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "0번";
+            player.Change(n);
+        }
+        if (n == 1)
+        {
+            informations[n].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "1번";
+            player.Change(n);
+        }*/
+        
     }
 
 
