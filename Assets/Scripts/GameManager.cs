@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     int orderAddingInterval;
     bool loading;
     public bool playDataExist;
+    public int currentUpgrade;
     
     private void Awake() {
         if (Instance == null) {
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour
             buildingBuilt = 0;
             Lvl = 1;
             playDataExist = true;
+            currentUpgrade = 0;
             UpdateGameState(GameState.Play);
         }
         else {
