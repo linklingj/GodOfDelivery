@@ -10,10 +10,12 @@ public class PickupPoint : MonoBehaviour
     public List<int> orderIndex;
     bool belowPlayer = false;
     float enterTime;
+    float fullTime = 1f;
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     public void pointOn() {
+        fullTime = GameManager.Instance.currentFullTime;
         gameObject.SetActive(true);
     }
     private void OnTriggerEnter2D(Collider2D col) {
@@ -33,7 +35,7 @@ public class PickupPoint : MonoBehaviour
         if (!belowPlayer)
             return;
         float time = orderManager.timer - enterTime;
-        if(time >= 1f) {
+        if(time >= fullTime) {
             belowPlayer = false;
             for (int i=0; i < orderIndex.Count; i++) {
                 int j = orderManager.orders.FindIndex((x) => x.index == orderIndex[i]);
@@ -44,6 +46,6 @@ public class PickupPoint : MonoBehaviour
             orderIndex.Clear();
             gameObject.SetActive(false);
         }
-        progressBar.SetValue(time);
+        progressBar.SetValue(time / fullTime);
     }
 }

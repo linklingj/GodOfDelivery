@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public Camera cam;
     public TrailRenderer[] tireMarks;
     public GameObject hitEffect;
+    public float[] fullTimes;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();

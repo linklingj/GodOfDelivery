@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     int orderAddingInterval;
     bool loading;
     public bool playDataExist;
+    public float currentFullTime = 1f;
     
     private void Awake() {
         if (Instance == null) {

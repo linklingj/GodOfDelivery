@@ -10,10 +10,12 @@ public class DeliveryPoint : MonoBehaviour
     public List<int> orderIndex;
     bool belowPlayer = false;
     float enterTime;
+    float fullTime = 1f;
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     public void pointOn() {
+        fullTime = GameManager.Instance.currentFullTime;
         gameObject.SetActive(true);
     }
     private void OnTriggerEnter2D(Collider2D col) {
@@ -37,7 +39,7 @@ public class DeliveryPoint : MonoBehaviour
         if (!belowPlayer)
             return;
         float time = orderManager.timer - enterTime;
-        if(time >= 1f) {
+        if(time >= fullTime) {
             belowPlayer = false;
             List<int> save = new List<int>(orderIndex);
             for (int i=0; i < save.Count; i++) {
@@ -51,6 +53,6 @@ public class DeliveryPoint : MonoBehaviour
             if (orderIndex.Count == 0)
                 gameObject.SetActive(false);
         }
-        progressBar.SetValue(time);
+        progressBar.SetValue(time / fullTime);
     }
 }
