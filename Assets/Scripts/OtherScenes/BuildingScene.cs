@@ -14,7 +14,7 @@ public class BuildingScene : MonoBehaviour
     public Text money;
 
     public void gotowhere() {
-        SceneManager.LoadScene("Pre_Start");
+        SceneManager.LoadScene("PreStart");
     }
 
     //초기 세팅
@@ -26,7 +26,9 @@ public class BuildingScene : MonoBehaviour
             texts[i].text = CashToString(bP[i]) + "원";
             if (bs > i) {
                 images[i].SetActive(true);
-                buildings[i].SetActive(true);
+                if (i == 0 || i == bs-1)
+                    buildings[i].SetActive(true);
+                btns[i].gameObject.SetActive(false);
                 texts[i].GetComponent<Text>().text = "";
             }
             if (bs == i) {
@@ -43,6 +45,8 @@ public class BuildingScene : MonoBehaviour
         }
         GameManager.Instance.TotalCash -= GameManager.Instance.buildPrice[n];
         images[n].SetActive(true);
+        if (n > 1)
+            buildings[n-1].SetActive(false);
         buildings[n].SetActive(true);
         money.GetComponent<Text>().text = CashToString(GameManager.Instance.TotalCash) + "원";
         texts[n].GetComponent<Text>().text = "";
@@ -70,7 +74,7 @@ public class BuildingScene : MonoBehaviour
     //테스트 용 나중에 지울 것
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Q)) {
-            GameManager.Instance.Cash = 1500000000;
+            GameManager.Instance.TotalCash = 1500000000;
         }
     }
 }

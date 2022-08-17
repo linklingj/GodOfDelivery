@@ -21,7 +21,14 @@ public class PreStart : MonoBehaviour
         gameManager.UpdateGameState(GameState.Title);
     }
     public void Building() {
-        SceneManager.LoadScene("Building");
+        if (gameManager.buildingNum == 0)
+            SceneManager.LoadScene("Building1");
+        if (gameManager.buildingNum == 1)
+            SceneManager.LoadScene("Building2");
+        if (gameManager.buildingNum == 2)
+            SceneManager.LoadScene("Building3");
+        if (gameManager.buildingNum == 3)
+            SceneManager.LoadScene("Building4");
     }
     public void Ending() {
         SceneManager.LoadScene("Ending");

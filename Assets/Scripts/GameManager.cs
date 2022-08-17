@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public int Lvl;
     public int DeliveryCount;
     public int buildState;
-    public int buildingBuilt;
+    public int buildingNum;
     public int[] buildPrice;
     public static event Action<GameState> OnGameStateChanged;
     public int maxOrderPool = 3;
@@ -64,8 +64,9 @@ public class GameManager : MonoBehaviour
         if (!playDataExist) {
             Day = 0;
             buildState = 0;
-            buildingBuilt = 0;
+            buildingNum = 0;
             Lvl = 1;
+            buildingNum = 0;
             playDataExist = true;
             UpdateGameState(GameState.Play);
         }
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("Story");
                 break;
             case GameState.Menu:
-                SceneManager.LoadScene("Pre_Start");
+                SceneManager.LoadScene("PreStart");
                 break;
             case GameState.Play:
                 Cash = 0;

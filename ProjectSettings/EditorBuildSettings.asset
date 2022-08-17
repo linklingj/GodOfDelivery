@@ -9,17 +9,35 @@ EditorBuildSettings:
     path: Assets/Scenes/Start.unity
     guid: 93e6f71c7d5a6d54ea67e3448d3c71b0
   - enabled: 1
-    path: Assets/Scenes/Pre_Start.unity
-    guid: 5f21be2ef7a477f45a50f0330006fafd
+    path: Assets/Scenes/PreStart.unity
+    guid: f2946eacaede5514faf28b7bf2a91602
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 8071f992bbc8e0940a9db1c5d539c43e
   - enabled: 1
-    path: Assets/Scenes/Building.unity
-    guid: 25c1964f146356548b0c5bd2637ba5eb
+    path: Assets/Scenes/Building1.unity
+    guid: c13bd172c69962548901bc6ad9ee3bce
+  - enabled: 1
+    path: Assets/Scenes/Building2.unity
+    guid: 63ecc65a65da1a24dab48e44bd97f1a1
+  - enabled: 1
+    path: Assets/Scenes/Building3.unity
+    guid: e057d6760751cad43a672278985ee0da
+  - enabled: 1
+    path: Assets/Scenes/Building4.unity
+    guid: 95ea521015084394d81ddbcb998e7d93
   - enabled: 1
     path: Assets/Scenes/Ending.unity
+    guid: d967cd25ee0bd024a8c37e440b6c012e
+  - enabled: 0
+    path: Assets/Scenes/abandoned/Ending.unity
     guid: 8b9f736c7372369469db0124da7e556e
+  - enabled: 0
+    path: Assets/Scenes/abandoned/Building.unity
+    guid: 25c1964f146356548b0c5bd2637ba5eb
+  - enabled: 0
+    path: Assets/Scenes/abandoned/Pre_Start.unity
+    guid: 5f21be2ef7a477f45a50f0330006fafd
   - enabled: 0
     path: Assets/Scenes/abandoned/First.unity
     guid: 66ddebd4458a085488e49e34acd6c1f4
