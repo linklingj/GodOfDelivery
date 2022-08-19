@@ -161,7 +161,7 @@ public class OrderManager : MonoBehaviour
         orderPool.Add(new AvailableOrder(orderPoolIdx++, pPoint, dPoint, t, r));
     }
     public bool CheckIfNotFull() {
-        return (orders.Count < maxOrderCount[GameManager.Instance.Day]);
+        return (orders.Count < maxOrderCount[GameManager.Instance.Lvl]);
     }
     public void MakeOrder(int index) {
         Order order = orderPool[index].AddToOrderList(index, timer);

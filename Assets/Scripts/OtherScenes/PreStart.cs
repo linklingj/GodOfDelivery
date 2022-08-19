@@ -12,7 +12,11 @@ public class PreStart : MonoBehaviour
     public TextMeshProUGUI dayText;
     private void Start() {
         gameManager = FindObjectOfType<GameManager>();
-        dayText.text = "DAY " + gameManager.Day.ToString();
+        int dayLeft = gameManager.buildDayLimits[gameManager.buildingNum] - gameManager.Day + 1;
+        if (dayLeft == 1)
+            dayText.text = "마지막날";
+        else
+            dayText.text = "D - " + dayLeft.ToString();
     }
     public void Play() {
         gameManager.StartGamePlay();

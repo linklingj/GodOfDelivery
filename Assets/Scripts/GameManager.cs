@@ -20,14 +20,24 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public OrderManager orderManager;
     public GameState State;
+    //그날 모은 돈
     public int Cash;
+    //총 돈
     public int TotalCash;
+    //총 날짜
     public int Day;
+    //현재 건물 짓기 시작한시점부터 날짜
+    public int buildDay;
+    //난이도및 보상
     public int Lvl;
+    //그날 배달 횟수
     public int DeliveryCount;
+    //현재 건물의 업그레이드 상태
     public int buildState;
+    //짓고있는 건물
     public int buildingNum;
     public int[] buildPrice;
+    public int[] buildDayLimits;
     public static event Action<GameState> OnGameStateChanged;
     public int maxOrderPool = 3;
     float timer;
@@ -63,6 +73,7 @@ public class GameManager : MonoBehaviour
     public void StartGamePlay() {
         if (!playDataExist) {
             Day = 0;
+            buildDay = 1;
             buildState = 0;
             buildingNum = 0;
             Lvl = 1;
@@ -158,6 +169,7 @@ public class GameManager : MonoBehaviour
     }
     public void NewDay() {
         Day += 1;
+        buildDay += 1;
         Cash = 0;
         UpdateGameState(GameState.Menu);
     }
@@ -167,6 +179,7 @@ public class GameManager : MonoBehaviour
     }
     public void EndTutorial() {
         Day = 1;
+        buildDay = 1;
         TotalCash = 1000;
         UpdateGameState(GameState.Menu);
     }

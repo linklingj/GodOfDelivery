@@ -62,13 +62,10 @@ public class UIController : MonoBehaviour
             GameManager.Instance.Cash += 100000;
         }
         if(Input.GetKeyDown(KeyCode.W)) {
-            orderManager.timer += 170;
+            GameManager.Instance.Cash += 10000000;
         }
         if(Input.GetKeyDown(KeyCode.E)) {
-            Debug.Log(orderManager.orders[0].index);
-            Debug.Log(orderManager.orders[0].state);
-            Debug.Log(orderManager.orders[1].index);
-            Debug.Log(orderManager.orders[1].state);
+            orderManager.timer += 170;
         }
         if(Input.GetButtonDown("Menu") && !onTransition && GameManager.Instance.State == GameState.Play) {
             onTransition = true;

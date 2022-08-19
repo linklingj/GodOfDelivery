@@ -48,6 +48,7 @@ public class BuildingScene : MonoBehaviour
         if (n > 1)
             buildings[n-1].SetActive(false);
         buildings[n].SetActive(true);
+        btns[n].gameObject.SetActive(false);
         money.GetComponent<Text>().text = CashToString(GameManager.Instance.TotalCash) + "원";
         texts[n].GetComponent<Text>().text = "";
         if (n <= 4)

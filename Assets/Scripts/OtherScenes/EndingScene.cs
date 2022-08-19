@@ -34,6 +34,7 @@ public class EndingScene : MonoBehaviour
     }
     public void Unlock(int n) {
         if (buildingNum == n && buildState == 6) {
+            GameManager.Instance.buildDay = 1;
             buildState = 0;
             GameManager.Instance.buildState = 0;
             buildingNum += 1;
