@@ -17,8 +17,11 @@ public class OrderManager : MonoBehaviour
         new int[] {0,0,0,5000,10000,20000},
         new int[] {0,0,0,20000,30000,60000},
         new int[] {0,0,0,100000,150000,300000},
+        new int[] {0,0,0,500000,1000000,5000000},
         new int[] {0,0,0,500000,1000000,5000000}
     };
+    public int[] pickupPerLvl;
+    public int[] deliveryPerLvl;
 
     public float timer;
     public GameObject arrowPrefab;
@@ -87,7 +90,6 @@ public class OrderManager : MonoBehaviour
     }
     private void Start() {
         ResetTimer();
-        //test
         if (GameManager.Instance.Day == 0) {
             orderPool.Add(new AvailableOrder(0, pickupPoints[0], deliveryPoints[0], 120, 1000));
         } else {
@@ -106,10 +108,9 @@ public class OrderManager : MonoBehaviour
     public void AddOrderPool() {
         int d = GameManager.Instance.Lvl;
         int poolSize = orderPool.Count;
-        int pPNum = Random.Range(0, pickupPoints.Length);
-        int dPNum = Random.Range(0, deliveryPoints.Length);
-        PickupPoint pPoint = pickupPoints[Random.Range(0, pickupPoints.Length)];
-        DeliveryPoint dPoint = deliveryPoints[Random.Range(0, deliveryPoints.Length)];
+        int actualLvl = (GameManager.Instance.buildingNum >= 1)? 6 : GameManager.Instance.Lvl;
+        PickupPoint pPoint = pickupPoints[Random.Range(0, pickupPerLvl[actualLvl]+1)];
+        DeliveryPoint dPoint = deliveryPoints[Random.Range(0, deliveryPerLvl[actualLvl]+1)];
         float dist = Vector2.Distance(pPoint.transform.position, dPoint.transform.position);
         float t = Mathf.RoundToInt(dist/8) + 17f;
         //mul: 나눠떨어지는 자리 baseC: 거리와 상관없이 기본보상 dM: 미터당 곱해지는 보상
@@ -136,6 +137,11 @@ public class OrderManager : MonoBehaviour
                 dM = 4000;
                 break;
             case 5:
+                mul = 100000;
+                baseC = 1000000;
+                dM = 30000;
+                break;
+            case 6:
                 mul = 100000;
                 baseC = 1000000;
                 dM = 30000;
@@ -190,7 +196,7 @@ public class OrderManager : MonoBehaviour
         int safteyStar = ReviewSaftey(order.damage);
         int speedStar = ReviewSpeed(clearTime, order.targetTime);
         int reward = orders[index].maxReward;
-        int b = bonus[GameManager.Instance.Day][Mathf.RoundToInt((speedStar + safteyStar) / 2)];
+        int b = bonus[GameManager.Instance.Lvl][Mathf.RoundToInt((speedStar + safteyStar) / 2)];
 
         GameManager.Instance.Cash += reward + b;
         uIController.CashAnim();

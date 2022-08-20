@@ -24,6 +24,7 @@ public class TutorialText : MonoBehaviour
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space) && clickAble) {
             if (idx == tutorialText.Length-1) {
+                Time.timeScale = 1f;
                 GameManager.Instance.EndTutorial();
             } else {
                 idx++;

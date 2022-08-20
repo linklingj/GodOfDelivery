@@ -39,7 +39,9 @@ public class GameManager : MonoBehaviour
     public int[] buildPrice;
     public int[] buildDayLimits;
     public static event Action<GameState> OnGameStateChanged;
-    public int maxOrderPool = 3;
+    public int maxOrderPool = 1;
+    public int unlock = 1;
+    public bool unlockMessage = false;
     float timer;
     int nextOrderTime;
     int orderAddingInterval;
@@ -78,6 +80,7 @@ public class GameManager : MonoBehaviour
             buildingNum = 0;
             Lvl = 1;
             buildingNum = 0;
+            unlock = 1;
             playDataExist = true;
             UpdateGameState(GameState.Play);
         }
@@ -101,27 +104,44 @@ public class GameManager : MonoBehaviour
                 Cash = 0;
                 DeliveryCount = 0;
                 Lvl = buildState + 1;
+                orderAddingInterval = 10;
+                if (Lvl > 6)
+                    Lvl = 6;
                 if (Day == 0) {
                     maxOrderPool = 1;
                     orderAddingInterval = 100000; 
                 } else if (Lvl == 1) {
                     maxOrderPool = 3;
-                    orderAddingInterval = 20;
                 } else if (Lvl == 2) {
                     maxOrderPool = 4;
-                    orderAddingInterval = 18;
                 } else if (Lvl == 3) {
                     maxOrderPool = 4;
-                    orderAddingInterval = 16;
                 } else if (Lvl == 4) {
                     maxOrderPool = 5;
-                    orderAddingInterval = 15;
                 } else if (Lvl == 5) {
                     maxOrderPool = 5;
-                    orderAddingInterval = 12;
                 } else if (Lvl == 6) {
                     maxOrderPool = 6;
-                    orderAddingInterval = 10;
+                }
+                unlockMessage = true;
+                if (buildingNum == 0 && buildState == 1 && unlock != 2) {
+                    unlock = 2;
+                } else if (buildingNum == 0 && buildState == 3 && unlock != 3) {
+                    unlock = 3;
+                } else if (buildingNum == 1 && buildState == 0 && unlock != 4) {
+                    unlock = 4;
+                }else if (buildingNum == 1 && buildState == 3 && unlock != 5) {
+                    unlock = 5;
+                } else if (buildingNum == 2 && buildState == 0 && unlock != 6) {
+                    unlock = 6;
+                }else if (buildingNum == 2 && buildState == 3 && unlock != 7) {
+                    unlock = 7;
+                } else if (buildingNum == 3 && buildState == 0 && unlock != 8) {
+                    unlock = 8;
+                } else if (buildingNum == 4 && buildState == 0 && unlock != 9) {
+                    unlock = 9;
+                } else {
+                    unlockMessage = false;
                 }
                 nextOrderTime = orderAddingInterval;
                 OnGameStateChanged = null;

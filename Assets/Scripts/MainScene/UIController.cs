@@ -7,11 +7,11 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage, resultScreen, resultText, resultBox, clearText, contBtn, reBtn;
+    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage, resultScreen, resultText, resultBox, clearText, contBtn, reBtn, basicMessage;
     [SerializeField]
     GameObject[] apps, appIcons, resultRow;
     [SerializeField]
-    TextMeshProUGUI timeText, cashText;
+    TextMeshProUGUI timeText, cashText, multiDeliv;
     
     [SerializeField]
     RectTransform panelRT;
@@ -44,6 +44,11 @@ public class UIController : MonoBehaviour
     };
     private void Awake() {
         StartCoroutine("AddEvent");
+    }
+    private void Start() {
+        if (GameManager.Instance.unlockMessage) {
+            UnlockMessage(GameManager.Instance.unlock);
+        }
     }
     IEnumerator AddEvent() {
         yield return new WaitForSeconds(0.2f);
@@ -202,6 +207,7 @@ public class UIController : MonoBehaviour
         foreach (Transform child in availableOrderParent.transform) {
             GameObject.Destroy(child.gameObject);
         }
+        multiDeliv.text = "동시 배달 가능: " + orderManager.maxOrderCount[GameManager.Instance.Lvl].ToString();
         List<string[]> orders = orderManager.PassOrders();
         foreach (string[] order in orders) {
             GameObject item = Instantiate(deliveringOrderPrefab, Vector3.zero, Quaternion.identity);
@@ -399,5 +405,48 @@ public class UIController : MonoBehaviour
     public void PressRestart() {
         GameManager.Instance.ResetDay();
         Time.timeScale = 1f;
+    }
+    GameObject unlockM;
+    public void UnlockMessage(int unlock) {
+        unlockM = Instantiate(basicMessage, new Vector3(600f, -350f, 0f), Quaternion.identity);
+        unlockM.transform.SetParent(bg.transform);
+        unlockM.GetComponent<RectTransform>().sizeDelta = new Vector2(695f, 170f);
+        string unlockName;
+        switch (unlock) {
+            case 2:
+                unlockName = "오토바이";
+                break;
+            case 3:
+                unlockName = "소형차";
+                break;
+            case 4:
+                unlockName = "트럭";
+                break;
+            case 5:
+                unlockName = "경찰차";
+                break;
+            case 6:
+                unlockName = "버스";
+                break;
+            case 7:
+                unlockName = "탱크";
+                break;
+            case 8:
+                unlockName = "비행기";
+                break;
+            case 9:
+                unlockName = "공룡";
+                break;
+            default:
+                unlockName = "error";
+                break;
+        }
+        unlockM.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"이제부터 {unlockName} 이용하실 수 있습니다.\n핸드폰의 업그레이드 앱에서 탈것을 바꾸세요.";
+        LeanTween.move(unlockM, new Vector3(700f, 60f, 0f), 0.3f).setEase(LeanTweenType.easeOutBack).setIgnoreTimeScale(true);
+        //complete
+        LeanTween.move(unlockM, new Vector3(700f, 300f, 0f), 0.5f).setDelay(5f).setEase(LeanTweenType.easeOutCubic).setIgnoreTimeScale(true);
+        LeanTween.alpha(unlockM.GetComponent<RectTransform>(), 0f, 0.5f).setDelay(5f).setIgnoreTimeScale(true);
+        LeanTween.alphaCanvas(unlockM.GetComponent<CanvasGroup>(), 0f, 0.5f).setDelay(5f).setIgnoreTimeScale(true);
+        Destroy(unlockM, 5.55f);
     }
 }
