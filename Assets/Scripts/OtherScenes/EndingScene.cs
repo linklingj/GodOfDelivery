@@ -55,9 +55,6 @@ public class EndingScene : MonoBehaviour
             LeanTween.alphaCanvas(endings[n].GetComponent<CanvasGroup>(), 1f, 1f).setOnComplete(() => waitForClick = true);
         }
     }
-    public void ShowCards() {
-
-    }
     void GetCard() {
         LeanTween.alphaCanvas(endings[currentCard].GetComponent<CanvasGroup>(), 0f, 1f);
         cards[currentCard].SetActive(true);

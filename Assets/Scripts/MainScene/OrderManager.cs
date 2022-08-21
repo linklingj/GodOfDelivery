@@ -10,15 +10,15 @@ public class OrderManager : MonoBehaviour
     public List<Order> orders = new List<Order>();
     public List<GameObject> arrows = new List<GameObject>();
     public List<AvailableOrder> orderPool = new List<AvailableOrder>();
-    public int[] maxOrderCount;
+    
     public int[][] bonus = {
         new int[] {0,0,0,0,0,0},
         new int[] {0,0,0,1000,2000,3000},
-        new int[] {0,0,0,5000,10000,20000},
-        new int[] {0,0,0,20000,30000,60000},
-        new int[] {0,0,0,100000,150000,300000},
-        new int[] {0,0,0,500000,1000000,5000000},
-        new int[] {0,0,0,500000,1000000,5000000}
+        new int[] {0,0,3000,6000,8000,10000},
+        new int[] {0,0,10000,20000,30000,50000},
+        new int[] {0,0,50000,80000,100000,150000},
+        new int[] {0,0,100000,200000,300000,500000},
+        new int[] {0,0,200000,400000,600000,1000000}
     };
     public int[] pickupPerLvl;
     public int[] deliveryPerLvl;
@@ -118,32 +118,32 @@ public class OrderManager : MonoBehaviour
         switch (d) {
             case 1:
                 mul = 100;
-                baseC = 3000;
-                dM = 80;
+                baseC = 4000;
+                dM = 90;
                 break;
             case 2:
                 mul = 100;
-                baseC = 15000;
-                dM = 400;
+                baseC = 10000;
+                dM = 330;
                 break;
             case 3:
                 mul = 1000;
-                baseC = 40000;
-                dM = 1000;
+                baseC = 47000;
+                dM = 1200;
                 break;
             case 4:
                 mul = 10000;
-                baseC = 120000;
-                dM = 4000;
+                baseC = 130000;
+                dM = 5000;
                 break;
             case 5:
-                mul = 100000;
-                baseC = 1000000;
-                dM = 30000;
+                mul = 10000;
+                baseC = 380000;
+                dM = 20000;
                 break;
             case 6:
                 mul = 100000;
-                baseC = 1000000;
+                baseC = 800000;
                 dM = 30000;
                 break;
             default:
@@ -167,7 +167,7 @@ public class OrderManager : MonoBehaviour
         orderPool.Add(new AvailableOrder(orderPoolIdx++, pPoint, dPoint, t, r));
     }
     public bool CheckIfNotFull() {
-        return (orders.Count < maxOrderCount[GameManager.Instance.Lvl]);
+        return (orders.Count < GameManager.Instance.maxOrder);
     }
     public void MakeOrder(int index) {
         Order order = orderPool[index].AddToOrderList(index, timer);
@@ -199,6 +199,12 @@ public class OrderManager : MonoBehaviour
         int b = bonus[GameManager.Instance.Lvl][Mathf.RoundToInt((speedStar + safteyStar) / 2)];
 
         GameManager.Instance.Cash += reward + b;
+
+        if (GameManager.Instance.mission == 2 && clearTime > 30f)
+            GameManager.Instance.missionSuccess = false;
+        else if (GameManager.Instance.mission == 5 && clearTime > 25f)
+            GameManager.Instance.missionSuccess = false;
+
         uIController.CashAnim();
         uIController.ReviewMessage(speedStar,safteyStar,clearTime,reward,b);
         orders.RemoveAt(index);

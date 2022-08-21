@@ -21,6 +21,7 @@ namespace PathCreation {
         void Start() {
             player = GameObject.FindGameObjectWithTag("Player").transform;
             nPCCarCreate = FindObjectOfType<NPCCarCreate>();
+            targetSpeed = GameManager.Instance.npcSpeed;
             distanceTravelled = pathCreator.path.length * startPoint;
             speed = targetSpeed;
         }

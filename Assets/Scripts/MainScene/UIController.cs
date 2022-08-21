@@ -7,7 +7,7 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage, resultScreen, resultText, resultBox, clearText, contBtn, reBtn, basicMessage;
+    GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage, resultScreen, resultText, resultBox, clearText, contBtn, reBtn, basicMessage, missionText;
     [SerializeField]
     GameObject[] apps, appIcons, resultRow;
     [SerializeField]
@@ -48,6 +48,12 @@ public class UIController : MonoBehaviour
     private void Start() {
         if (GameManager.Instance.unlockMessage) {
             UnlockMessage(GameManager.Instance.unlock);
+        }
+        if (GameManager.Instance.orderCountMessage) {
+            OrderCountMessage(GameManager.Instance.maxOrder);
+        }
+        if (GameManager.Instance.missionMessage) {
+            MissionMessage(GameManager.Instance.mission);
         }
     }
     IEnumerator AddEvent() {
@@ -207,7 +213,7 @@ public class UIController : MonoBehaviour
         foreach (Transform child in availableOrderParent.transform) {
             GameObject.Destroy(child.gameObject);
         }
-        multiDeliv.text = "동시 배달 가능: " + orderManager.maxOrderCount[GameManager.Instance.Lvl].ToString();
+        multiDeliv.text = "동시 배달 가능: " + GameManager.Instance.maxOrder.ToString();
         List<string[]> orders = orderManager.PassOrders();
         foreach (string[] order in orders) {
             GameObject item = Instantiate(deliveringOrderPrefab, Vector3.zero, Quaternion.identity);
@@ -309,6 +315,10 @@ public class UIController : MonoBehaviour
     }
     //결과 창
     public void DayClear(bool pass) {
+        if (GameManager.Instance.mission == 3 && GameManager.Instance.DeliveryCount < 12)
+            GameManager.Instance.missionSuccess = false;
+        else if (GameManager.Instance.mission == 6 && GameManager.Instance.DeliveryCount < 15)
+            GameManager.Instance.missionSuccess = false;
         if (pass) {
             contBtn.SetActive(true);
             reBtn.SetActive(false);
@@ -356,6 +366,18 @@ public class UIController : MonoBehaviour
             moneyText.text = CashToString(Mathf.RoundToInt(cash)) + "원";
         });
         //세번째 줄
+        if (GameManager.Instance.mission == 0) {
+            missionText.SetActive(false);
+        } else {
+            if (GameManager.Instance.missionSuccess) {
+                missionText.GetComponent<TextMeshProUGUI>().text = "미션 성공!";
+                missionText.GetComponent<TextMeshProUGUI>().color = Color.green;
+            } else {
+                missionText.GetComponent<TextMeshProUGUI>().text = "미션 실패";
+                missionText.GetComponent<TextMeshProUGUI>().color = new Color32(214, 48, 49, 255);
+            }
+            LeanTween.alphaCanvas(missionText.GetComponent<CanvasGroup>(), 1f, 0.3f).setDelay(9f).setIgnoreTimeScale(true);
+        }
         resultRow[2].GetComponent<RectTransform>().localPosition = new Vector2(0, -65f);
         LeanTween.moveLocalY(resultRow[2], 30f, 0.3f).setDelay(9f).setIgnoreTimeScale(true);
         LeanTween.alphaCanvas(resultRow[2].GetComponent<CanvasGroup>(), 1f, 0.3f).setDelay(9f).setIgnoreTimeScale(true);
@@ -407,41 +429,71 @@ public class UIController : MonoBehaviour
         Time.timeScale = 1f;
     }
     GameObject unlockM;
-    public void UnlockMessage(int unlock) {
-        unlockM = Instantiate(basicMessage, new Vector3(600f, -350f, 0f), Quaternion.identity);
-        unlockM.transform.SetParent(bg.transform);
-        unlockM.GetComponent<RectTransform>().sizeDelta = new Vector2(695f, 170f);
-        string unlockName;
+    void UnlockMessage(int unlock) {
+        string unlockText;
         switch (unlock) {
             case 2:
-                unlockName = "오토바이";
+                unlockText = "오토바이를";
                 break;
             case 3:
-                unlockName = "소형차";
+                unlockText = "소형차를";
                 break;
             case 4:
-                unlockName = "트럭";
+                unlockText = "트럭을";
                 break;
             case 5:
-                unlockName = "경찰차";
+                unlockText = "경찰차를";
                 break;
             case 6:
-                unlockName = "버스";
+                unlockText = "버스를";
                 break;
             case 7:
-                unlockName = "탱크";
+                unlockText = "탱크를";
                 break;
             case 8:
-                unlockName = "비행기";
+                unlockText = "비행기를";
                 break;
             case 9:
-                unlockName = "공룡";
+                unlockText = "공룡을";
                 break;
             default:
-                unlockName = "error";
+                unlockText = "error";
                 break;
         }
-        unlockM.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"이제부터 {unlockName} 이용하실 수 있습니다.\n핸드폰의 업그레이드 앱에서 탈것을 바꾸세요.";
+        unlockText = $"이제부터 {unlockText} 이용하실 수 있습니다.\n핸드폰의 업그레이드 앱에서 탈것을 바꾸세요.";
+        InfoMessage(unlockText, new Vector2(695f, 170f));
+    }
+    void OrderCountMessage(int count) {
+        string t = $"이제부터 {count.ToString()}개의 배달을 동시에 처리할 수 있습니다.";
+        InfoMessage(t, new Vector2(770f, 80f));
+    }
+    void MissionMessage(int mission) {
+        string t = "";
+        if (mission == 1) {
+            t = "[오늘의 미션!]\n지나가는 차에 10번 이하로 부딪히기\n달성시 보상 1.5배";
+        }
+        else if (mission == 2) {
+            t = "[오늘의 미션!]\n모든 배달을 30초 안에 하기\n달성시 보상 1.5배";
+        }
+        else if (mission == 3) {
+            t = "[오늘의 미션!]\n배달 12건 이상 하기\n달성시 보상 1.5배";
+        }
+        else if (mission == 4) {
+            t = "[오늘의 미션!]\n지나가는 차에 5번 이하로 부딪히기\n달성시 보상 2배";
+        }
+        else if (mission == 5) {
+            t = "[오늘의 미션!]\n모든 배달을 25초 안에 하기\n달성시 보상 2배";
+        }
+        else if (mission == 6) {
+            t = "[오늘의 미션!]\n배달 15건 이상 하기\n달성시 보상 2배";
+        }
+        InfoMessage(t, new Vector2(605f, 180f));
+    }
+    void InfoMessage(string st, Vector2 size) {
+        unlockM = Instantiate(basicMessage, new Vector3(600f, -350f, 0f), Quaternion.identity);
+        unlockM.transform.SetParent(bg.transform);
+        unlockM.GetComponent<RectTransform>().sizeDelta = size;
+        unlockM.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = st;
         LeanTween.move(unlockM, new Vector3(700f, 60f, 0f), 0.3f).setEase(LeanTweenType.easeOutBack).setIgnoreTimeScale(true);
         //complete
         LeanTween.move(unlockM, new Vector3(700f, 300f, 0f), 0.5f).setDelay(5f).setEase(LeanTweenType.easeOutCubic).setIgnoreTimeScale(true);

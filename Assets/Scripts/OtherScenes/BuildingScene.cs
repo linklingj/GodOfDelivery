@@ -20,7 +20,7 @@ public class BuildingScene : MonoBehaviour
     //초기 세팅
     private void Start() {
         money.GetComponent<Text>().text = CashToString(GameManager.Instance.TotalCash) + "원";
-        int[] bP = GameManager.Instance.buildPrice;
+        int[] bP = (GameManager.Instance.buildingNum == 0)? GameManager.Instance.buildPrice : GameManager.Instance.buildPrice2;
         int bs = GameManager.Instance.buildState;
         for (int i = 0; i < 6; i++) {
             texts[i].text = CashToString(bP[i]) + "원";
@@ -40,10 +40,11 @@ public class BuildingScene : MonoBehaviour
     }
     //버튼 눌렀을 때
     public void Build(int n) {
-        if (GameManager.Instance.TotalCash < GameManager.Instance.buildPrice[n] || GameManager.Instance.buildState != n) {
+        int p = (GameManager.Instance.buildingNum == 0)? GameManager.Instance.buildPrice[n] : GameManager.Instance.buildPrice2[n];
+        if (GameManager.Instance.TotalCash < p || GameManager.Instance.buildState != n) {
             return;
         }
-        GameManager.Instance.TotalCash -= GameManager.Instance.buildPrice[n];
+        GameManager.Instance.TotalCash -= p;
         images[n].SetActive(true);
         if (n > 1)
             buildings[n-1].SetActive(false);

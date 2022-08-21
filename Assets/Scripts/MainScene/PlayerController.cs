@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     Vector2 mousePos;
     Vector2 lookDir;
     bool stopControl = false;
+    int bumpCount;
 
     Rigidbody2D rb;
     displayObject disp;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         transform.position = new Vector3 (0.5f, 4f, 0);
         transform.rotation = Quaternion.Euler(0,0,-90f);
+        bumpCount = 0;
     }
 
     void Update() {
@@ -133,6 +135,11 @@ public class PlayerController : MonoBehaviour
                     damage = 5;
                 else
                     damage = 3;
+                bumpCount += 1;
+                if (GameManager.Instance.mission == 1 && bumpCount > 10)
+                    GameManager.Instance.missionSuccess = false;
+                else if (GameManager.Instance.mission == 4 && bumpCount > 5)
+                    GameManager.Instance.missionSuccess = false;
             } else {
                 if (c.normalImpulse > 10)
                     damage = 3;

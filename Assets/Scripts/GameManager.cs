@@ -37,11 +37,18 @@ public class GameManager : MonoBehaviour
     //짓고있는 건물
     public int buildingNum;
     public int[] buildPrice;
+    public int[] buildPrice2;
     public int[] buildDayLimits;
     public static event Action<GameState> OnGameStateChanged;
+    public int maxOrder;
     public int maxOrderPool = 1;
     public int unlock = 1;
+    public int mission = 1;
+    public bool missionSuccess;
     public bool unlockMessage = false;
+    public bool orderCountMessage = false;
+    public bool missionMessage = false;
+    public int npcSpeed = 6;
     float timer;
     int nextOrderTime;
     int orderAddingInterval;
@@ -80,6 +87,7 @@ public class GameManager : MonoBehaviour
             buildingNum = 0;
             Lvl = 1;
             buildingNum = 0;
+            maxOrder = 1;
             unlock = 1;
             playDataExist = true;
             UpdateGameState(GameState.Play);
@@ -103,51 +111,34 @@ public class GameManager : MonoBehaviour
             case GameState.Play:
                 Cash = 0;
                 DeliveryCount = 0;
-                Lvl = buildState + 1;
+                Lvl = (buildingNum == 0)? buildState + 1 : 6;
                 orderAddingInterval = 10;
                 if (Lvl > 6)
                     Lvl = 6;
                 if (Day == 0) {
                     maxOrderPool = 1;
                     orderAddingInterval = 100000; 
-                } else if (Lvl == 1) {
+                } else if (Lvl == 5 || Lvl == 6 || buildingNum != 0) {
+                    maxOrderPool = 5;
+                } else if (Lvl == 3 || Lvl == 4) {
+                    maxOrderPool = 4;
+                } else if (Lvl == 1 || Lvl == 2) {
                     maxOrderPool = 3;
-                } else if (Lvl == 2) {
-                    maxOrderPool = 4;
-                } else if (Lvl == 3) {
-                    maxOrderPool = 4;
-                } else if (Lvl == 4) {
-                    maxOrderPool = 5;
-                } else if (Lvl == 5) {
-                    maxOrderPool = 5;
-                } else if (Lvl == 6) {
-                    maxOrderPool = 6;
                 }
-                unlockMessage = true;
-                if (buildingNum == 0 && buildState == 1 && unlock != 2) {
-                    unlock = 2;
-                } else if (buildingNum == 0 && buildState == 3 && unlock != 3) {
-                    unlock = 3;
-                } else if (buildingNum == 1 && buildState == 0 && unlock != 4) {
-                    unlock = 4;
-                }else if (buildingNum == 1 && buildState == 3 && unlock != 5) {
-                    unlock = 5;
-                } else if (buildingNum == 2 && buildState == 0 && unlock != 6) {
-                    unlock = 6;
-                }else if (buildingNum == 2 && buildState == 3 && unlock != 7) {
-                    unlock = 7;
-                } else if (buildingNum == 3 && buildState == 0 && unlock != 8) {
-                    unlock = 8;
-                } else if (buildingNum == 4 && buildState == 0 && unlock != 9) {
-                    unlock = 9;
-                } else {
-                    unlockMessage = false;
-                }
+                npcSpeed = Lvl + 5;
+                CheckEvent();
+
                 nextOrderTime = orderAddingInterval;
                 OnGameStateChanged = null;
                 StartCoroutine(Loading());
                 break;
             case GameState.Clear:
+                if (mission != 0 && missionSuccess) {
+                    if (mission <= 3)
+                        Cash = Mathf.CeilToInt(Mathf.Round(Cash * 1.5f)/1000)*1000;
+                    else
+                        Cash *= 2;
+                }
                 TotalCash += Cash;
                 break;
             case GameState.GameOver:
@@ -179,6 +170,56 @@ public class GameManager : MonoBehaviour
             if (orderManager.timer >= 3 * 60) {
                 ClearDay();
             }
+        }
+    }
+    void CheckEvent() {
+        unlockMessage = true;
+        if (buildingNum == 0 && buildState == 1 && unlock != 2) {
+            unlock = 2;
+        } else if (buildingNum == 0 && buildState == 3 && unlock != 3) {
+            unlock = 3;
+        } else if (buildingNum == 1 && buildState == 0 && unlock != 4) {
+            unlock = 4;
+        }else if (buildingNum == 1 && buildState == 3 && unlock != 5) {
+            unlock = 5;
+        } else if (buildingNum == 2 && buildState == 0 && unlock != 6) {
+            unlock = 6;
+        }else if (buildingNum == 2 && buildState == 3 && unlock != 7) {
+            unlock = 7;
+        } else if (buildingNum == 3 && buildState == 0 && unlock != 8) {
+            unlock = 8;
+        } else if (buildingNum == 4 && buildState == 0 && unlock != 9) {
+            unlock = 9;
+        } else {
+            unlockMessage = false;
+        }
+        orderCountMessage = true;
+        if (buildingNum == 0 && buildState == 2 && maxOrder != 2) {
+            maxOrder = 2;
+        } else if (buildingNum == 1 && buildState == 1 && maxOrder != 3) {
+            maxOrder = 3;
+        } else if (buildingNum == 2 && buildState == 2 && maxOrder != 4) {
+            maxOrder = 4;
+        } else {
+            orderCountMessage = false;
+        }
+        if (!unlockMessage && !orderCountMessage && Day != 0 && Day != 1) {
+            float randNum = UnityEngine.Random.Range(0f, 1f);
+            if (randNum > 0.66f) {
+                missionMessage = true;
+                missionSuccess = true;
+                mission = UnityEngine.Random.Range(1, 4);
+                if (buildingNum >= 1)
+                    mission += 3;
+            } else {
+                missionMessage = false;
+                missionSuccess = false;
+                mission = 0;
+            }
+        } else {
+            missionMessage = false;
+            missionSuccess = false;
+            mission = 0;
         }
     }
     void ClearDay() {

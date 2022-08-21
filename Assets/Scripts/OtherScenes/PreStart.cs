@@ -9,12 +9,18 @@ public class PreStart : MonoBehaviour
 {
     public GameManager gameManager;
     public TextMeshProUGUI dayText;
-    public GameObject canBuy;
+    public GameObject canBuy, seeEnding;
     public Slider slider;
     private void Start() {
         gameManager = FindObjectOfType<GameManager>();
-        int dayLeft = gameManager.buildDayLimits[gameManager.buildingNum] - gameManager.buildDay + 1;
-        if (dayLeft == 1)
+        int dayLeft = 1000;
+        if (gameManager.buildingNum < 4)
+            dayLeft = gameManager.buildDayLimits[gameManager.buildingNum] - gameManager.buildDay + 1;
+        if (dayLeft == 1000)
+            dayText.text = "제한 없음";
+        else if (dayLeft < 1)
+            dayText.text = "제한날짜초과";
+        else if (dayLeft == 1)
             dayText.text = "마지막날";
         else
             dayText.text = "D - " + dayLeft.ToString();
@@ -26,6 +32,10 @@ public class PreStart : MonoBehaviour
                 canBuy.SetActive(true);
             }
         }
+        if (gameManager.buildState == 6)
+            seeEnding.SetActive(true);
+        else
+            seeEnding.SetActive(false);
     }
     public void Play() {
         gameManager.StartGamePlay();

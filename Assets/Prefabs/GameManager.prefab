@@ -49,12 +49,21 @@ MonoBehaviour:
   Cash: 0
   TotalCash: 0
   Day: 0
+  buildDay: 0
   Lvl: 0
   DeliveryCount: 0
   buildState: 0
   buildingNum: 0
   buildPrice: 400d030040420f00404b4c00002d31010087930300e1f505
+  buildPrice2: 80f0fa0200879303801d2c0400b4c404804a5d0500e1f505
   buildDayLimits: 0f0000000c0000000900000006000000
+  maxOrder: 0
   maxOrderPool: 3
+  unlock: 1
+  mission: 1
+  missionSuccess: 0
+  unlockMessage: 0
+  orderCountMessage: 0
+  missionMessage: 0
   playDataExist: 0
   currentFullTime: 1
