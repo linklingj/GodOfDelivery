@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
         } else {
             rb.drag = envDrag;
         }
-        Vector2 forceVector;
+        Vector2 forceVector = Vector2.zero;
         if (deccelerationInput == 1) {
             //후진
             forceVector = -transform.up * deccelerationInput * reverseSpeed;
@@ -110,11 +110,16 @@ public class PlayerController : MonoBehaviour
             //전진
             forceVector = transform.up * accelerationInput * acceleration;
         }
-        rb.AddForce(forceVector, ForceMode2D.Force);
+        if (maxSpeed - rb.velocity.magnitude < 0.1f) //quick fix
+            rb.AddForce(forceVector * (maxSpeed - rb.velocity.magnitude) * 10f, ForceMode2D.Force);
+        else
+            rb.AddForce(forceVector, ForceMode2D.Force);
+
         //최대속도 넘지 않도록
-        if(rb.velocity.magnitude > maxSpeed) {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
-        }
+        // quick fix.........
+        // if(rb.velocity.magnitude > maxSpeed) {
+        //     rb.velocity = rb.velocity.normalized * maxSpeed;
+        // }
     }
     //옆으로 가는 힘 줄임
     void KillOrthogonalVelocity() {
