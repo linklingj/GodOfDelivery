@@ -33,7 +33,7 @@ public class displayObject : MonoBehaviour
     void Start()
     {
         GenerateStack();
-        parts.SetActive(false);
+        parts.SetActive(true);
     }
     void draw_stack()
     {

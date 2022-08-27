@@ -208,6 +208,7 @@ public class PlayerController : MonoBehaviour
         }
         if (n == 3)
         {
+            Debug.Log("a");
             sr.sprite = Truck;
             disp.Disable();
         }
