@@ -197,14 +197,14 @@ public class PlayerController : MonoBehaviour
         }
         if (n == 1) {
             sr.sprite = null;
-            disp.Enable();
-            disp.ChangeBlueCar();
+            disp.Enable(); 
+            disp.ChangeMotorcycle();
         }
         if (n == 2)
         {
             sr.sprite = null;
             disp.Enable();
-            disp.ChangeMotorcycle();
+            disp.ChangeBlueCar();
         }
         if (n == 3)
         {
