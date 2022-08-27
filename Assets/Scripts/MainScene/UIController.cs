@@ -444,16 +444,7 @@ public class UIController : MonoBehaviour
         TurnUpgradeOff();
         informations[n].SetActive(true);
         player.Change(n);
-        /*if (n == 0)
-        {
-            informations[n].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "0번";
-            player.Change(n);
-        }
-        if (n == 1)
-        {
-            informations[n].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "1번";
-            player.Change(n);
-        }*/
+        
         
     }
 
