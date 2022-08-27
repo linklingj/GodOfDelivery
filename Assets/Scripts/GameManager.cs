@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     bool loading;
     public bool playDataExist;
     public float currentFullTime = 1f;
+    public int currentUpgrade = 0;
     
     private void Awake() {
         if (Instance == null) {

@@ -9,7 +9,7 @@ public class UIController : MonoBehaviour
     [SerializeField]
     GameObject bg, panel, phone, deliveringOrderParent, deliveringOrderPrefab, availableOrderParent, availableOrderPrefab, reviewMessage, resultScreen, resultText, resultBox, clearText, contBtn, reBtn, basicMessage, missionText;
     [SerializeField]
-    GameObject[] apps, appIcons, resultRow;
+    GameObject[] apps, appIcons, resultRow, informations;
     [SerializeField]
     TextMeshProUGUI timeText, cashText, multiDeliv;
     
@@ -17,6 +17,8 @@ public class UIController : MonoBehaviour
     RectTransform panelRT;
     [SerializeField]
     Sprite[] stars;
+    [SerializeField]
+    PlayerController player;
     [SerializeField]
     OrderManager orderManager;
     [SerializeField]
@@ -130,6 +132,8 @@ public class UIController : MonoBehaviour
         app.SetActive(true);
         if (id == 0)
             DeliveryApp();
+        if (id == 1)
+            Upgrade_app();
         app.transform.position = appIcons[id].transform.position;
         app.transform.localScale = new Vector3(0.05f, 0.05f, 1f);
         LeanTween.moveLocal(app, new Vector3(400f, 10f, 0f), 0.3f).setEase(LeanTweenType.easeOutQuad).setIgnoreTimeScale(true);
@@ -500,5 +504,18 @@ public class UIController : MonoBehaviour
         LeanTween.alpha(unlockM.GetComponent<RectTransform>(), 0f, 0.5f).setDelay(5f).setIgnoreTimeScale(true);
         LeanTween.alphaCanvas(unlockM.GetComponent<CanvasGroup>(), 0f, 0.5f).setDelay(5f).setIgnoreTimeScale(true);
         Destroy(unlockM, 5.55f);
+    }
+    void Upgrade_app() {
+        TurnUpgradeOff();
+    }
+    void TurnUpgradeOff() {
+        foreach (GameObject item in informations) {
+            item.SetActive(false);
+        }
+    }
+    public void UpgradeBtn(int n) {
+        TurnUpgradeOff();
+        informations[n].SetActive(true);
+        player.Change(n);
     }
 }

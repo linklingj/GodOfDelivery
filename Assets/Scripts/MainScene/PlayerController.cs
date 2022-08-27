@@ -28,10 +28,15 @@ public class PlayerController : MonoBehaviour
     MapManager mapManager;
     UIController uIController;
     OrderManager orderManager;
+    SpriteRenderer sr;
     public Camera cam;
     public TrailRenderer[] tireMarks;
     public GameObject hitEffect;
     public float[] fullTimes;
+    public int currentUpgrade;
+    public Sprite Shoes, Motorcycle, Smallcar, Truck, Policecar, Sportscar, Tank, Airplane, Dinosaur;
+    public int[] speedValues;
+    public int[] accelerationValues;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -44,6 +49,7 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3 (0.5f, 4f, 0);
         transform.rotation = Quaternion.Euler(0,0,-90f);
         bumpCount = 0;
+        sr = GetComponent<SpriteRenderer>();
     }
 
     void Update() {
@@ -179,5 +185,57 @@ public class PlayerController : MonoBehaviour
         float degree = (transform.eulerAngles.z + 90) % 360;
         Vector2 playerDir = new Vector2(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad));
         return Mathf.Abs((lookDir.normalized - playerDir).magnitude);
+    }
+    public void Change(int n) {
+        currentUpgrade = n;
+        GameManager.Instance.currentUpgrade = currentUpgrade;
+        maxSpeed = speedValues[n];
+        acceleration = accelerationValues[n];
+        if (n == 0) {
+            sr.sprite = Shoes;
+            disp.Disable();
+        }
+        if (n == 1) {
+            sr.sprite = null;
+            disp.Enable();
+            disp.ChangeBlueCar();
+        }
+        if (n == 2)
+        {
+            sr.sprite = null;
+            disp.Enable();
+            disp.ChangeMotorcycle();
+        }
+        if (n == 3)
+        {
+            sr.sprite = Truck;
+            disp.Disable();
+        }
+        if (n == 4)
+        {
+            sr.sprite = Policecar;
+            disp.Disable();
+        }
+        if (n == 5)
+        {
+            sr.sprite = Sportscar;
+            disp.Disable();
+        }
+        if (n == 6)
+        {
+            sr.sprite = Tank;
+            disp.Disable();
+        }
+        if (n == 7)
+        {
+            sr.sprite = Airplane;
+            disp.Disable();
+        }
+        if (n == 8)
+        {
+            sr.sprite = Dinosaur;
+            disp.Disable();
+        }
+
     }
 }

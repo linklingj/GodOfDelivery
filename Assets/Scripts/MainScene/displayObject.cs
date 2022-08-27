@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class displayObject : MonoBehaviour
 {
+    public stackobject blueCar, motorcycle;
     public stackobject stackObject;
     public Vector3 rotation;
     public Vector3 offset = new Vector3(0, 0.05f, 0);
@@ -13,7 +14,6 @@ public class displayObject : MonoBehaviour
     GameObject parts;
     void GenerateStack()
     {
-        
         parts = new GameObject("Parts");
         parts.transform.parent = transform;
         parts.transform.localPosition = Vector3.zero;
@@ -33,6 +33,7 @@ public class displayObject : MonoBehaviour
     void Start()
     {
         GenerateStack();
+        parts.SetActive(false);
     }
     void draw_stack()
     {
@@ -53,5 +54,23 @@ public class displayObject : MonoBehaviour
     void Update()
     {
         draw_stack();
+    }
+    public void Enable() {
+        parts.SetActive(true);
+    }
+    public void Disable() {
+        parts.SetActive(false);
+    }
+    public void ChangeBlueCar() {
+        stackObject = blueCar;
+        Destroy(parts);
+        partList.Clear();
+        GenerateStack();
+    }
+    public void ChangeMotorcycle() {
+        stackObject = motorcycle;
+        Destroy(parts);
+        partList.Clear();
+        GenerateStack();
     }
 }
