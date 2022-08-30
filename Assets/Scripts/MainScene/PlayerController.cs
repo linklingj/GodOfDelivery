@@ -23,22 +23,25 @@ public class PlayerController : MonoBehaviour
     bool stopControl = false;
     int bumpCount;
 
+    BoxCollider2D col;
     Rigidbody2D rb;
     displayObject disp;
     MapManager mapManager;
     UIController uIController;
     OrderManager orderManager;
-    SpriteRenderer sr;
+    SpriteRenderer sr,sr2;
     public Camera cam;
     public TrailRenderer[] tireMarks;
     public GameObject hitEffect;
     public float[] fullTimes;
     public int currentUpgrade;
     public Sprite Shoes, Motorcycle, Smallcar, Truck, Policecar, Sportscar, Tank, Airplane, Dinosaur;
+    public GameObject tankChild, spriteChild;
     public int[] speedValues;
     public int[] accelerationValues;
 
     void Awake() {
+        col = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         disp = GetComponent<displayObject>();
         mapManager = FindObjectOfType<MapManager>();
@@ -49,7 +52,8 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3 (0.5f, 4f, 0);
         transform.rotation = Quaternion.Euler(0,0,-90f);
         bumpCount = 0;
-        sr = GetComponent<SpriteRenderer>();
+        sr = spriteChild.GetComponent<SpriteRenderer>();
+        sr2 = GetComponent<SpriteRenderer>();
     }
 
     void Update() {
@@ -89,12 +93,18 @@ public class PlayerController : MonoBehaviour
         else
             turnSmoothTime = driveTurnSmoothTime;
         //마우스위치 방향벡터로 각 구함
-        lookDir = mousePos - rb.position;
         float targetAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         
         //자연스럽게 회전하도록 중간값 설정
         float angle = Mathf.SmoothDampAngle(transform.localEulerAngles.z, targetAngle, ref turnSmoothVelocity, Time.deltaTime * turnSmoothTime);
         rb.rotation = angle;
+        lookDir = mousePos - rb.position;
+
+        //애니메이터 방향 설정
+        if (lookDir.x > 0)
+            spriteChild.GetComponent<SpriteFreeze>().rigth = true;
+        else
+            spriteChild.GetComponent<SpriteFreeze>().rigth = false;
     }
     //가속
     void ApplyForce() {
@@ -135,6 +145,7 @@ public class PlayerController : MonoBehaviour
     }
     //충격 vfx 생성
     bool collideable = true;
+    //충돌
     private void OnCollisionEnter2D(Collision2D col) {
         ContactPoint2D c = col.contacts[0];
         if (/*c.normalImpulse > 1.5f && */collideable) {
@@ -192,51 +203,91 @@ public class PlayerController : MonoBehaviour
         maxSpeed = speedValues[n];
         acceleration = accelerationValues[n];
         if (n == 0) {
+            spriteChild.GetComponent<Animator>().enabled = true;
             sr.sprite = Shoes;
+            sr2.sprite = null;
             disp.Disable();
+            spriteChild.GetComponent<SpriteFreeze>().freeze = true;
+            spriteChild.GetComponent<SpriteFreeze>().Walk();
+
         }
         if (n == 1) {
+            spriteChild.GetComponent<Animator>().enabled = false;
             sr.sprite = null;
+            sr2.sprite = null;
             disp.Enable(); 
             disp.ChangeMotorcycle();
         }
         if (n == 2)
         {
+            spriteChild.GetComponent<Animator>().enabled = false;
             sr.sprite = null;
+            sr2.sprite = null;
             disp.Enable();
             disp.ChangeBlueCar();
         }
         if (n == 3)
         {
-            Debug.Log("a");
-            sr.sprite = Truck;
-            disp.Disable();
+            spriteChild.GetComponent<Animator>().enabled = false;
+            sr.sprite = null;
+            sr2.sprite = null;
+            disp.Enable();
+            disp.ChangeTruck();
         }
         if (n == 4)
         {
-            sr.sprite = Policecar;
+            spriteChild.GetComponent<Animator>().enabled = false;
+            sr.sprite = null;
+            sr2.sprite = Policecar;
             disp.Disable();
+            spriteChild.GetComponent<SpriteFreeze>().freeze = false;
         }
         if (n == 5)
         {
-            sr.sprite = Sportscar;
-            disp.Disable();
+            spriteChild.GetComponent<Animator>().enabled = false;
+            sr.sprite = null;
+            sr2.sprite = null;
+            disp.Enable(); 
+            disp.ChangeSportsCar();
         }
         if (n == 6)
         {
-            sr.sprite = Tank;
+            spriteChild.GetComponent<Animator>().enabled = false;
+            sr.sprite = null;
+            sr2.sprite = Tank;
             disp.Disable();
+            spriteChild.GetComponent<SpriteFreeze>().freeze = false;
         }
         if (n == 7)
         {
-            sr.sprite = Airplane;
+            spriteChild.GetComponent<Animator>().enabled = false;
+            sr.sprite = null;
+            sr2.sprite = Airplane;
             disp.Disable();
+            spriteChild.GetComponent<SpriteFreeze>().freeze = false;
         }
         if (n == 8)
         {
+            spriteChild.GetComponent<Animator>().enabled = true;
             sr.sprite = Dinosaur;
+            sr2.sprite = null;
             disp.Disable();
+            spriteChild.GetComponent<SpriteFreeze>().freeze = true;
+            spriteChild.GetComponent<SpriteFreeze>().Dino();
         }
 
+        if (n == 7) {
+            col.enabled = false;
+            sr.sortingLayerName = "Plane";
+        } else {
+            col.enabled = true;
+            sr.sortingLayerName = "Character";
+        }
+
+        if (n == 6) {
+            tankChild.SetActive(true);
+        } else {
+            tankChild.SetActive(false);
+        }
     }
 }
