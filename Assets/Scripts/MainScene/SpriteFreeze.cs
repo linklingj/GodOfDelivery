@@ -20,10 +20,13 @@ public class SpriteFreeze : MonoBehaviour
         else
             transform.localScale = new Vector3(-1,1,1);
     }
-    public void Walk() {
-        anim.SetTrigger("Walk");
-    }
-    public void Dino() {
-        anim.SetTrigger("Dino");
+    // public void Walk() {
+    //     anim.SetTrigger("Walk");
+    // }
+    public void Change(int n) {
+        if (n == 1)
+            anim.SetTrigger("Walk");
+        if (n == 2)
+            anim.SetTrigger("Dino");
     }
 }

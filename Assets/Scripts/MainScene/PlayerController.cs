@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
     public GameObject tankChild, spriteChild;
     public int[] speedValues;
     public int[] accelerationValues;
+    public int[] reverseValues;
+    public float[] driftValues;
+    public float[] dragValues;
 
     void Awake() {
         col = GetComponent<BoxCollider2D>();
@@ -54,6 +57,10 @@ public class PlayerController : MonoBehaviour
         bumpCount = 0;
         sr = spriteChild.GetComponent<SpriteRenderer>();
         sr2 = GetComponent<SpriteRenderer>();
+        if (GameManager.Instance.currentUpgrade == 0)
+            Change(1);
+        else
+            Change(GameManager.Instance.currentUpgrade);
     }
 
     void Update() {
@@ -65,11 +72,15 @@ public class PlayerController : MonoBehaviour
             //회전 애니메이션 설정
             disp.rotation = new Vector3(0, 0, (transform.localEulerAngles.z + 90) % 360);
             //바퀴자국
-            CheckTrail();
+            if (currentUpgrade == 1 || currentUpgrade == 2 || currentUpgrade == 3 || currentUpgrade == 5)
+                CheckTrail();
         } else {
             accelerationInput = 0;
             deccelerationInput = 0;
         }
+        // 테스트용
+        // if (Input.GetKeyDown(KeyCode.R))
+        //     GameManager.Instance.unlock = 8;
     }
 
     void FixedUpdate() {
@@ -96,7 +107,7 @@ public class PlayerController : MonoBehaviour
         float targetAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         
         //자연스럽게 회전하도록 중간값 설정
-        float angle = Mathf.SmoothDampAngle(transform.localEulerAngles.z, targetAngle, ref turnSmoothVelocity, Time.deltaTime * turnSmoothTime);
+        float angle = Mathf.SmoothDampAngle(transform.localEulerAngles.z, targetAngle, ref turnSmoothVelocity, Time.smoothDeltaTime * turnSmoothTime);
         rb.rotation = angle;
         lookDir = mousePos - rb.position;
 
@@ -112,11 +123,14 @@ public class PlayerController : MonoBehaviour
         float envDrag = mapManager.GetTileDrag(transform.position);
         //감속
         if(deccelerationInput == 1) {
-            rb.drag = envDrag + Mathf.Lerp(rb.drag, breakForce, Time.deltaTime * dragTime);
+            rb.drag = envDrag + Mathf.Lerp(rb.drag, breakForce, Time.smoothDeltaTime * dragTime);
         } else if(accelerationInput == 0) {
-            rb.drag = envDrag + Mathf.Lerp(rb.drag, roadDrag, Time.deltaTime * dragTime);
+            rb.drag = envDrag + Mathf.Lerp(rb.drag, roadDrag, Time.smoothDeltaTime * dragTime);
         } else {
-            rb.drag = envDrag;
+            if (currentUpgrade != 7)
+                rb.drag = envDrag;
+            else 
+                rb.drag = 0;
         }
         Vector2 forceVector = Vector2.zero;
         if (deccelerationInput == 1) {
@@ -202,14 +216,17 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.currentUpgrade = currentUpgrade;
         maxSpeed = speedValues[n];
         acceleration = accelerationValues[n];
+        reverseSpeed = reverseValues[n];
+        driftFactor = driftValues[n];
+        roadDrag = dragValues[n];
+        GameManager.Instance.currentFullTime = fullTimes[n];
         if (n == 0) {
             spriteChild.GetComponent<Animator>().enabled = true;
             sr.sprite = Shoes;
             sr2.sprite = null;
             disp.Disable();
             spriteChild.GetComponent<SpriteFreeze>().freeze = true;
-            spriteChild.GetComponent<SpriteFreeze>().Walk();
-
+            spriteChild.GetComponent<SpriteFreeze>().Change(1);
         }
         if (n == 1) {
             spriteChild.GetComponent<Animator>().enabled = false;
@@ -270,24 +287,31 @@ public class PlayerController : MonoBehaviour
         {
             spriteChild.GetComponent<Animator>().enabled = true;
             sr.sprite = Dinosaur;
+            sr.sortingLayerName = "Character";
             sr2.sprite = null;
             disp.Disable();
             spriteChild.GetComponent<SpriteFreeze>().freeze = true;
-            spriteChild.GetComponent<SpriteFreeze>().Dino();
+            spriteChild.GetComponent<SpriteFreeze>().Change(2);
         }
 
         if (n == 7) {
             col.enabled = false;
-            sr.sortingLayerName = "Plane";
+            sr2.sortingLayerName = "Plane";
         } else {
             col.enabled = true;
-            sr.sortingLayerName = "Character";
+            sr2.sortingLayerName = "Character";
         }
 
         if (n == 6) {
             tankChild.SetActive(true);
         } else {
             tankChild.SetActive(false);
+        }
+
+        if (n != 1 && n != 2 && n != 3 && n != 5) {
+            foreach(TrailRenderer tr in tireMarks) {
+                tr.emitting = false;
+            }
         }
     }
 }
